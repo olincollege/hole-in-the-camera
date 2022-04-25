@@ -6,12 +6,14 @@
 #ret, frame = cv.threshold(frame,100,155, cv.THRESH_BINARY)
 # frame = cv.Canny(frame,100,150)    #---> edge detection
 # (0, 0, 200), (145, 60, 255)
+from itertools import count
 import cv2 as cv
+from cv2 import compare
 import numpy as np
 import pygame
 
 cap = cv.VideoCapture(0)
-pygame.init()
+# pygame.init()
 compare_mask = cv.imread("mask.png")
 while True:
     isTrue, frame = cap.read()
@@ -32,15 +34,13 @@ while True:
     # screen.blit(new_surf, (0, 0))
     # pygame.display.update()
     if cv.waitKey(20) & 0xFF == ord('d'):
-        cv.imwrite("compare_mask.png", mask)
-        mask = cv.imread("compare_mask.png")
-        res = cv.absdiff(mask, compare_mask)
-        # --- convert the result to integer type ---
-        res = res.astype(np.uint8)
-
-        # --- find percentage difference based on number of pixels that are not zero ---
-        percentage = (np.count_nonzero(res) * 100) / res.size
-        print(percentage)
+        compare_mask = cv.cvtColor(compare_mask, cv.COLOR_BGR2GRAY)
+        count = 0
+        for i in range(0, mask.shape[0]):
+            for j in range(0, mask.shape[1]):
+                if mask[i][j] == compare_mask[i][j]:
+                    count += 1
+        print((count/(mask.shape[0]*mask.shape[1]))*100)
         break
 
 cap.release()
