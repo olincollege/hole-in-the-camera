@@ -12,23 +12,35 @@ import pygame
 
 cap = cv.VideoCapture(0)
 pygame.init()
+compare_mask = cv.imread("mask.png")
 while True:
     isTrue, frame = cap.read()
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     mask = cv.inRange(frame, (0, 35, 0), (210, 255, 255))
     mask = cv.erode(mask, None, iterations=2)
     mask = cv.dilate(mask, None, iterations=2)
-    cnts, hier = cv.findContours(mask.copy(), cv.RETR_EXTERNAL,
-                                 cv.CHAIN_APPROX_SIMPLE)
-    frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    cv.drawContours(frame, cnts, -1, (0, 255, 0), 3)
-    # cv.imshow("video", mask)
-    screen = pygame.display.set_mode((mask.shape[1], mask.shape[0]))
-    new_surf = pygame.transform.rotate(
-        pygame.surfarray.make_surface(mask), -90)
-    screen.blit(new_surf, (0, 0))
-    pygame.display.update()
+    # cnts, hier = cv.findContours(mask.copy(), cv.RETR_EXTERNAL,
+    #                              cv.CHAIN_APPROX_SIMPLE)
+    # frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    # cv.drawContours(frame, cnts, -1, (0, 255, 0), 3)
+    frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
+    dst = cv.bitwise_and(frame, compare_mask)
+    cv.imshow("video", dst)
+    # screen = pygame.display.set_mode((mask.shape[1], mask.shape[0]))
+    # new_surf = pygame.transform.rotate(
+    #     pygame.surfarray.make_surface(mask), -90)
+    # screen.blit(new_surf, (0, 0))
+    # pygame.display.update()
     if cv.waitKey(20) & 0xFF == ord('d'):
+        cv.imwrite("compare_mask.png", mask)
+        mask = cv.imread("compare_mask.png")
+        res = cv.absdiff(mask, compare_mask)
+        # --- convert the result to integer type ---
+        res = res.astype(np.uint8)
+
+        # --- find percentage difference based on number of pixels that are not zero ---
+        percentage = (np.count_nonzero(res) * 100) / res.size
+        print(percentage)
         break
 
 cap.release()
