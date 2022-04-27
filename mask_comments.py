@@ -12,7 +12,7 @@ compare_mask = cv.imread("mask.png")
 while True:
     isTrue, frame = cap.read()
     # apply HSV color space
-    frame = cv.cvtColor(frame, cv.COLOR_BRG2HSV)
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     # 
     mask = cv.inRange(frame, (0,35,0), (210, 255, 255))
     # apply image erosion and dilation (why!)
