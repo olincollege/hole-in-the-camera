@@ -1,30 +1,34 @@
 import cv2 as cv
 from cv2 import compare
 import numpy
-import pygame
-from itertools import count
 
 # Open a camera for video capturing. 
-cap = cv.VideoCapture(0)
-# import hole in the wall image
-compare_mask = cv.imread("mask.png")
+cap = cv.VideoCapture(-1)
+path = r'/home/jiayuan/hole-in-the-camera/mask.png'
 
+# import hole in the wall image
+compare_mask = cv.imread(path)
+print(compare_mask.shape)
 while True:
     isTrue, frame = cap.read()
-    # apply HSV color space
+    # convert to HSV colorspace and apply threshold
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    # 
     mask = cv.inRange(frame, (0,35,0), (210, 255, 255))
-    # apply image erosion and dilation (why!)
+    # apply image erosion and dilation to sharpen edges
     mask = cv.erode(mask, None, iterations=2)
     mask = cv.dilate(mask, None, iterations=2)
-    # return to BGR color
+    # return to BGR color to display to user
     frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
+    # resize hole in the wall image to user's camera size
+    user_camera_size = frame.shape
+    #print(user_camera_size)
+    dsize = [user_camera_size[1], user_camera_size[0]]
+    compare_mask = cv.resize(compare_mask, dsize)
     # stack up current frame and hole in the wall image
     dst = cv.bitwise_and(frame, compare_mask)
     # show BGR color frame of user with "hole" on top
     cv.imshow("video", dst)
-
+    
     if cv.waitKey(20) & 0xFF == ord('d'):
         # gray scale of hole in the wall
         compare_mask = cv.cvtColor(compare_mask, cv.COLOR_BGR2GRAY)
