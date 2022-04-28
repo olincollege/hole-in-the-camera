@@ -3,12 +3,17 @@ from cv2 import compare
 import numpy
 
 # Open a camera for video capturing. 
-cap = cv.VideoCapture(-1)
+cap = cv.VideoCapture(0)
 path = r'/home/jiayuan/hole-in-the-camera/mask.png'
 
 # import hole in the wall image
 compare_mask = cv.imread(path)
-print(compare_mask.shape)
+# resize hole in the wall image to user's camera size   
+isTrue, frame = cap.read()
+user_camera_size = frame.shape
+dsize = [user_camera_size[1], user_camera_size[0]]
+compare_mask = cv.resize(compare_mask, dsize)
+
 while True:
     isTrue, frame = cap.read()
     # convert to HSV colorspace and apply threshold
@@ -42,5 +47,5 @@ while True:
         print((count/(mask.shape[0]*mask.shape[1]))*100)
         break
     # close video and destroy all windows
-    cap.release()
-    cv.destroyAllWindows()
+cap.release()
+cv.destroyAllWindows()
