@@ -13,7 +13,7 @@ isTrue, frame = cap.read()
 user_camera_size = frame.shape
 dsize = [user_camera_size[1], user_camera_size[0]]
 compare_mask = cv.resize(compare_mask, dsize)
-
+print(compare_mask.shape)
 while True:
     isTrue, frame = cap.read()
     # convert to HSV colorspace and apply threshold
@@ -26,7 +26,6 @@ while True:
     frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
     # resize hole in the wall image to user's camera size
     user_camera_size = frame.shape
-    #print(user_camera_size)
     dsize = [user_camera_size[1], user_camera_size[0]]
     compare_mask = cv.resize(compare_mask, dsize)
     # stack up current frame and hole in the wall image
@@ -46,6 +45,6 @@ while True:
         # print out the score of how well fit through hole
         print((count/(mask.shape[0]*mask.shape[1]))*100)
         break
-    # close video and destroy all windows
+# close video and destroy all windows
 cap.release()
 cv.destroyAllWindows()
