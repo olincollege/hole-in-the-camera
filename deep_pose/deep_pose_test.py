@@ -1,14 +1,11 @@
-import cv2
-import matplotlib.pyplot as plt
-import copy
 import numpy as np
-
 import util
 from body import Body
 import pdb
 import cv2 as cv
 import csv
 import pygame
+import copy
 
 new_contour = False
 
@@ -38,11 +35,16 @@ pygame.display.set_caption("Hole in the Camera")
 icon = pygame.image.load(r'gameicon.png')
 pygame.display.set_icon(icon)
 font = pygame.font.SysFont("Helvetica", 40)
+isTrue, oriImg = cap.read()
 while running:
     isTrue, oriImg = cap.read()
-    if not isTrue:
-        continue
-    print(oriImg)
+    # if not isTrue:
+    #     continue
+    # cv.imshow('frame', oriImg)
+    # if cv.waitKey(20) & 0xFF == ord('d'):
+    #     break
+    # pdb.set_trace()
+    oriImg = cv.cvtColor(oriImg, cv.COLOR_BGR2RGB)
     screen = pygame.display.set_mode((oriImg.shape[1], oriImg.shape[0]))
     new_surf = pygame.transform.rotate(
         pygame.surfarray.make_surface(oriImg), -90)
@@ -50,14 +52,14 @@ while running:
     events = pygame.event.get()
 
     counting_time = pygame.time.get_ticks() - start_time
-    counting_string = f'{30-counting_time//100}'
+    counting_string = f'{10-counting_time//500}'
     counting_text = font.render(str(counting_string), 1, (255,255,255))
     counting_rect = counting_text.get_rect(bottomright = screen.get_rect().bottomright)
     screen.blit(counting_text, counting_rect)
 
     pygame.display.update()
 
-    if 3000 -counting_time < 0:
+    if 5000 - counting_time < 0:
         final_frame = oriImg
         # send frame to be processed
         # then determine next trial
@@ -72,9 +74,9 @@ candidate, subset = body_estimation(oriImg)
 canvas = copy.deepcopy(oriImg)
 canvas = util.draw_bodypose(canvas, candidate, subset)
 
-plt.imshow(canvas[:, :, [2, 1, 0]])
-plt.axis('off')
-plt.show()
+# plt.imshow(canvas[:, :, [2, 1, 0]])
+# plt.axis('off')
+# plt.show()
 
 joint_positions = {}
 for index, value in enumerate(subset[0]):
@@ -100,12 +102,20 @@ else:
         for row in csv_reader:
             joint_fits.append(row)
     for joint in joint_fits:
-        if joint[0] in joint_positions.keys() and joint_positions[joint[0]][1] != -1:
+        if joint[0] in joint_positions.keys() and joint_positions[joint[0]][1] != -1 and joint[1] != '-1':
             joint_counts += 1
             a = np.array([int(float(joint[1])), int(float(joint[2]))])
             b = np.array(joint_positions[joint[0]])
             dist = np.linalg.norm(a-b)
             print(dist)
-            if dist < 15:
+            if dist < 20:
                 accuracy += 1
+            elif dist < 30:
+                accuracy += .5
+            elif dist < 40:
+                accuracy += .25
+        else:
+            print("Nope")
     print(accuracy/joint_counts)
+
+pdb.set_trace()

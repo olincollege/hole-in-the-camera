@@ -3,8 +3,7 @@ import numpy as np
 import math
 import time
 from scipy.ndimage.filters import gaussian_filter
-import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib.pyplot as plt
 import torch
 from torchvision import transforms
 
@@ -225,5 +224,3 @@ if __name__ == "__main__":
     oriImg = cv2.imread(test_image)  # B,G,R order
     candidate, subset = body_estimation(oriImg)
     canvas = util.draw_bodypose(oriImg, candidate, subset)
-    plt.imshow(canvas[:, :, [2, 1, 0]])
-    plt.show()
