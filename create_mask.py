@@ -16,8 +16,8 @@ while True:
     # break if user presses 'd'
     if cv.waitKey(1) & 0xFF == ord('d'):
         # save the current frame and the mask applied on it
-        cv.imwrite("body_pose.png", frame)
-        cv.imwrite("new_mask.png", mask)
+        cv.imwrite("images/poses/body_pose.png", frame)
+        cv.imwrite("images/masks/new_mask.png", mask)
         break
 
 # close video and destroy all windows
