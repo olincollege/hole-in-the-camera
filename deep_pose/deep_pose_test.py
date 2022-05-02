@@ -25,6 +25,7 @@ GRAY = (200, 200, 200)
 WHITE = (255, 255, 255)
 BLUE = (50, 50, 200)
 BLUE_BACKGROUND = (153,204,255)
+SIZE = (640, 480)
 
 # initialize pygame
 pygame.init()
@@ -36,18 +37,15 @@ icon = pygame.image.load(r'gameicon.png')
 pygame.display.set_icon(icon)
 font = pygame.font.SysFont("Helvetica", 40)
 isTrue, oriImg = cap.read()
+mask = cv.imread("new_mask.png")
+mask = cv.resize(mask, SIZE)
 while running:
     isTrue, oriImg = cap.read()
-    # if not isTrue:
-    #     continue
-    # cv.imshow('frame', oriImg)
-    # if cv.waitKey(20) & 0xFF == ord('d'):
-    #     break
-    # pdb.set_trace()
     oriImg = cv.cvtColor(oriImg, cv.COLOR_BGR2RGB)
-    screen = pygame.display.set_mode((oriImg.shape[1], oriImg.shape[0]))
+    display = cv.bitwise_and(mask, oriImg)
+    screen = pygame.display.set_mode((display.shape[1], display.shape[0]))
     new_surf = pygame.transform.rotate(
-        pygame.surfarray.make_surface(oriImg), -90)
+        pygame.surfarray.make_surface(display), -90)
     screen.blit(new_surf, (0, 0))
     events = pygame.event.get()
 
@@ -114,8 +112,6 @@ else:
                 accuracy += .5
             elif dist < 40:
                 accuracy += .25
-        else:
-            print("Nope")
     print(accuracy/joint_counts)
 
-pdb.set_trace()
+# pdb.set_trace()
