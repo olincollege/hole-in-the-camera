@@ -1,27 +1,23 @@
 import cv2 as cv
 
+# Open a camera for video capturing.
 cap = cv.VideoCapture(0)
-compare_mask = cv.imread("mask.png")
-isTrue, frame = cap.read()
-compare_mask = cv.resize(compare_mask, (frame.shape[1], frame.shape[0]))
+
 while True:
+    # Capture frame-by-frame
     isTrue, frame = cap.read()
+    # convert to HSV colorspace and apply threshold
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     mask = cv.inRange(frame, (0, 35, 0), (210, 255, 255))
+    # apply image erosion and dilation to sharpen edges
     mask = cv.erode(mask, None, iterations=10)
     mask = cv.dilate(mask, None, iterations=10)
-    cnts, hier = cv.findContours(mask.copy(), cv.RETR_EXTERNAL,
-                                 cv.CHAIN_APPROX_SIMPLE)
-    # frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
-    mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-    cv.drawContours(mask, cnts, -1, (0, 255, 0), 3)
-    dst = cv.bitwise_and(frame, mask)
-    cv.imshow("video", dst)
+    cv.imshow("video", mask)
     if cv.waitKey(1) & 0xFF == ord('d'):
         cv.imwrite("body_pose.png", frame)
         cv.imwrite("new_mask.png", mask)
         break
 
+# close video and destroy all windows
 cap.release()
 cv.destroyAllWindows()
