@@ -13,7 +13,9 @@ while True:
     mask = cv.erode(mask, None, iterations=10)
     mask = cv.dilate(mask, None, iterations=10)
     cv.imshow("video", mask)
+    # break if user presses 'd'
     if cv.waitKey(1) & 0xFF == ord('d'):
+        # save the current frame and the mask applied on it
         cv.imwrite("body_pose.png", frame)
         cv.imwrite("new_mask.png", mask)
         break
