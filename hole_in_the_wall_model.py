@@ -13,34 +13,38 @@ class HoleInTheWallGame:
     """
 
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
-    path_mask = "images/masks/"
-    path_csv = "mask_joint_positions/"
-    CSV_PATHS = ["pose_test_1.csv"]
-    JOINT_FITS = []
-    for joints_csv in CSV_PATHS:
-        with open(f'{path_csv}{joints_csv}', 'r') as csv_file:
-            csv_reader = csv.reader(csv_file)
-            for row in csv_reader:
-                JOINT_FITS.append(row)
+    MASK_NAMES = ['first_mask', 'first_mask']
 
     def __init__(self):
-        self.masks = []
-        self._MASK_PATHS = ["new_mask.png"]
-        for mask in self._MASK_PATHS:
-            frame = cv.imread(f'{self.path_mask}{mask}')
-            cv.cvtColor(frame, cv.COLOR_BGR2RGB, frame)
+        self._mask_and_joints = []
+        for mask in self.MASK_NAMES:
+            frame = cv.imread(f'images/masks/{mask}.png')
+            cv.cvtColor(frame, cv.COLOR_BGR2RGB)
             frame = cv.resize(frame, (640, 480))
-            self.masks.append(frame)
+            joints = f'mask_joint_positions/{mask}.csv'
+            self._mask_and_joints.append((frame, joints))
         self._joint_positions = {}
         self._joint_candidates = []
         self._joint_subsets = []
-        self._score = 0
+        self._total_score = 0
+        self._trial_score = 0
 
-    def get_mask(self):
-        mask_index = random.randint(0, len(self.masks)-1)
-        random_mask = self.masks[mask_index]
-        self.masks.pop(mask_index)
-        return random_mask
+    @property
+    def total_score(self):
+        return self._total_score
+        
+    @property
+    def trial_score(self):
+        return self._trial_score
+    
+    def num_holes_remaining(self):
+        return len(self._mask_and_joints)
+
+    def get_mask_and_joints(self):
+        index = random.randint(0, len(self._mask_and_joints)-1)
+        random_mask_and_joint = self._mask_and_joints[index]
+        self._mask_and_joints.pop(index)
+        return random_mask_and_joint[0], random_mask_and_joint[1]
 
     def analyze_frame(self, frame):
         self._joint_candidates, self._joint_subsets = self.BODY_ESTIMATION(frame)
@@ -48,7 +52,7 @@ class HoleInTheWallGame:
     def parse_for_joint_positions(self):
         for index, value in enumerate(self._joint_subsets[0]):
             if value >= 0:
-                self._joint_positions[f'{index}'] = [self._candidate[int(value)][0], self._joint_candidates[int(value)][1]]
+                self._joint_positions[f'{index}'] = [self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
             else:
                 self._joint_positions[f'{index}'] = [-1, -1]
             if index >= 17:
@@ -77,9 +81,10 @@ class HoleInTheWallGame:
                     accuracy += .5
                 elif distance < 40:
                     accuracy += 0.25
-        return accuracy/joint_counts
+        self._total_score += accuracy/joint_counts * 100
+        self._trial_score = accuracy/joint_counts * 100
     
-    def check_win(self,score):
-        if score >= 0.5:
+    def check_win(self):
+        if self._trial_score >= 0:
             return True
         return False

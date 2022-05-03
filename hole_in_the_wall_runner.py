@@ -33,21 +33,45 @@ def show_instructions():
     return "instruction_screen"
 
 def run_trial():
-    hole_mask = game_model.get_mask()
+    hole_mask, joints_file = game_model.get_mask_and_joints()
+    # pdb.set_trace()
     game_controller.start_timer()
     current_timer_value = game_controller.get_timer_string()
-    while not game_controller.determine_end_timer():
+    # game_controller.start_camera()
+    while True:
         current_frame = game_controller.get_camera_frame()
         current_timer_value = game_controller.get_timer_string()
         game_view.display_frame(current_frame, current_timer_value, hole_mask)
+        if game_controller.determine_end_timer():
+            final_frame = current_frame
+            break
+    game_model.analyze_frame(final_frame)
+    game_model.parse_for_joint_positions()
+    game_model.compute_accuracy(joints_file)
+    game_view.display_win(game_model.check_win(), game_model.trial_score)
+    if game_model.check_win():
+        while not game_controller.next_screen():
+            continue
+        return "playing_game"
+    return "player_lost"
+    
+def end_game():
+    game_view.display_end_game(game_model.total_score)
+    while not game_controller.next_screen():
+        continue
 
 game_states = {
     "start_screen": game_start,
     "instruction_screen": show_instructions,
-    "playing_game": run_trial
+    "playing_game": run_trial,
+    "player_lost": end_game
 }
 
-while True:
+while game_model.num_holes_remaining() > 0:
     current_game_state = game_states[current_game_state]()
     if game_controller.quit_game():
         break
+
+game_controller.release_camera()
+current_game_state = "player_lost"
+game_states[current_game_state]()

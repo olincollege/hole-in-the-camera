@@ -59,6 +59,7 @@ mask = cv.imread("images/masks/new_mask.png")
 mask = cv.resize(mask, SIZE)
 while running:
     isTrue, oriImg = cap.read()
+    pdb.set_trace()
     oriImg = cv.cvtColor(oriImg, cv.COLOR_BGR2RGB)
     display = cv.bitwise_and(mask, oriImg)
     screen = pygame.display.set_mode((display.shape[1], display.shape[0]))

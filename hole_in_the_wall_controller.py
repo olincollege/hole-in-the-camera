@@ -38,6 +38,12 @@ class OpenCVController(HoleInTheWallController):
         self._start_time = 0
         self._current_time = 0
 
+    def start_camera(self):
+        self._camera_capture = cv2.VideoCapture(self._camera_index)
+
+    def release_camera(self):
+        self._camera_capture.release()
+
     def next_screen(self):
         """
         Listen for key press to start the game.

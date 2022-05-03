@@ -49,7 +49,7 @@ class PygameViewer(HoleInTheWallView):
     BLUE_BACKGROUND = (153,204,255)
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
-    BACKGROUND_PATHS = ["images/assets/background.png"]
+    BACKGROUND_PATHS = ["images/assets/background.png", "images/assets/lost_background.png", "images/assets/won_background.png"]
 
     def __init__(self, display_size):
         """
@@ -140,10 +140,14 @@ class PygameViewer(HoleInTheWallView):
             win (bool): True if the user has won, False otherwise.
         """
         if win:
-            lost_text = [f"You lost! Your score is {score*100}"]
-            self.display_background()
-            self.display_text(lost_text)
-        else:
             won_text = [f"You won! You fit through the hole!"]
-            self.display_background()
+            self.display_background(2)
             self.display_text(won_text)
+        else:
+            lost_text = [f"You lost! Your score is {int(score)}"]
+            self.display_background(1)
+            self.display_text(lost_text)
+    
+    def display_end_game(self, score):
+        self.display_background(2)
+        self.display_text(["Game Over!", f"Final Score: {score}"])
