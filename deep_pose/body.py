@@ -7,8 +7,10 @@ from scipy.ndimage.filters import gaussian_filter
 import torch
 from torchvision import transforms
 
-import util
-from model import bodypose_model
+import deep_pose.util as util
+from deep_pose.model import bodypose_model
+# import util
+# from model import bodypose_model
 
 class Body(object):
     def __init__(self, model_path):
