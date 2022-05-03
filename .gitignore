@@ -1,2 +1,2 @@
 deep_pose/body_pose_model.pth
-deep_pose/__pycache__*
+*__pycache__*
