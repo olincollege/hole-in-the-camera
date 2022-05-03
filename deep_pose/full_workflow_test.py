@@ -11,11 +11,9 @@ new_contour = False
 
 body_estimation = Body('deep_pose/body_pose_model.pth')
 
-mask_image = cv.imread("body_pose.png")
+mask_image = cv.imread("images/poses/body_pose.png")
 mask_image = cv.resize(mask_image, (640, 480))
 candidate, subset = body_estimation(mask_image)
-canvas = copy.deepcopy(mask_image)
-canvas = util.draw_bodypose(canvas, candidate, subset)
 joint_positions = {}
 for index, value in enumerate(subset[0]):
     if value >= 0:
@@ -36,7 +34,7 @@ cap = cv.VideoCapture(-1)
 
 # create third game loop to display video and time countdown
 running = True
-clock = pygame.time.Clock()
+# clock = pygame.time.Clock()
 start_time = pygame.time.get_ticks()
 # set up colors
 BLACK = (0,0,0)
@@ -53,11 +51,11 @@ pygame.init()
 # create game window, title, and icon
 screen = pygame.display.set_mode((640,480), pygame.RESIZABLE)
 pygame.display.set_caption("Hole in the Camera")
-icon = pygame.image.load(r'gameicon.png')
+icon = pygame.image.load('images/assets/gameicon.png')
 pygame.display.set_icon(icon)
 font = pygame.font.SysFont("Helvetica", 40)
 isTrue, oriImg = cap.read()
-mask = cv.imread("new_mask.png")
+mask = cv.imread("images/masks/new_mask.png")
 mask = cv.resize(mask, SIZE)
 while running:
     isTrue, oriImg = cap.read()
@@ -89,8 +87,6 @@ while running:
             running = False
 cap.release()
 candidate, subset = body_estimation(oriImg)
-canvas = copy.deepcopy(oriImg)
-canvas = util.draw_bodypose(canvas, candidate, subset)
 
 # plt.imshow(canvas[:, :, [2, 1, 0]])
 # plt.axis('off')
