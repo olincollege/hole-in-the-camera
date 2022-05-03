@@ -6,6 +6,7 @@ import csv
 import numpy as np
 import cv2 as cv
 import pdb
+import random
 
 class HoleInTheWallGame:
     """
@@ -14,14 +15,8 @@ class HoleInTheWallGame:
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
     path_mask = "images/masks/"
     path_csv = "mask_joint_positions/"
-    MASK_PATHS = ["new_mask.png"]
     CSV_PATHS = ["pose_test_1.csv"]
-    MASKS = []
     JOINT_FITS = []
-    for mask in MASK_PATHS:
-        frame = cv.imread(f'{path_mask}{mask}')
-        cv.cvtColor(frame, cv.COLOR_BGR2RGB, frame)
-        MASKS.append(frame)
     for joints_csv in CSV_PATHS:
         with open(f'{path_csv}{joints_csv}', 'r') as csv_file:
             csv_reader = csv.reader(csv_file)
@@ -29,21 +24,23 @@ class HoleInTheWallGame:
                 JOINT_FITS.append(row)
 
     def __init__(self):
+        self.masks = []
+        self._MASK_PATHS = ["new_mask.png"]
+        for mask in self._MASK_PATHS:
+            frame = cv.imread(f'{self.path_mask}{mask}')
+            cv.cvtColor(frame, cv.COLOR_BGR2RGB, frame)
+            frame = cv.resize(frame, (640, 480))
+            self.masks.append(frame)
         self._joint_positions = {}
         self._joint_candidates = []
         self._joint_subsets = []
+        self._score = 0
 
-    @property
-    def joint_candidates(self):
-        """
-        """
-        return self._joint_candidates
-
-    @property
-    def joint_subsets(self):
-        """
-        """
-        return self._joint_subsets
+    def get_mask(self):
+        mask_index = random.randint(0, len(self.masks)-1)
+        random_mask = self.masks[mask_index]
+        self.masks.pop(mask_index)
+        return random_mask
 
     def analyze_frame(self, frame):
         self._joint_candidates, self._joint_subsets = self.BODY_ESTIMATION(frame)

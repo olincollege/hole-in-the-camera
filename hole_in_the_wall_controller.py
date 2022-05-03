@@ -38,7 +38,7 @@ class OpenCVController(HoleInTheWallController):
         self._start_time = 0
         self._current_time = 0
 
-    def start_game(self):
+    def next_screen(self):
         """
         Listen for key press to start the game.
 
@@ -50,6 +50,9 @@ class OpenCVController(HoleInTheWallController):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
                 return True
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.quit_game()
+                return False
             else:
                 return False
 
@@ -67,7 +70,7 @@ class OpenCVController(HoleInTheWallController):
                 return True
             return False
     
-    def _start_timer(self):
+    def start_timer(self):
         """
         Start the game window timer.
         """

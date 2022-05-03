@@ -4,6 +4,7 @@ Hole in the wall game view.
 import pygame
 from abc import ABC, abstractmethod
 import cv2 as cv
+import pdb
 
 class HoleInTheWallView(ABC):
     """
@@ -111,7 +112,7 @@ class PygameViewer(HoleInTheWallView):
         instruction_text = ["Instructions"]
         self.display_text(instruction_text)
         
-    def display_frame(self, frame, timer_text, mask):
+    def display_frame(self, frame, timer_text, camera_mask):
         """
         Display the frame on the game window.
 
@@ -120,7 +121,8 @@ class PygameViewer(HoleInTheWallView):
             timer_text (str): The timer text to be displayed.
             mask (numpy.ndarray): The mask to be overlaid on the frame.
         """
-        frame = cv.bitwise_and(frame, mask)
+        frame = cv.bitwise_and(frame, camera_mask)
+        frame = pygame.transform.rotate(pygame.surfarray.make_surface(frame), -90)
         self._screen.blit(frame, (0,0))
         counting_text = self.font.render(timer_text, 1, self.WHITE)
         counting_rect = counting_text.get_rect(bottomright=self._screen.get_rect().bottomright)
