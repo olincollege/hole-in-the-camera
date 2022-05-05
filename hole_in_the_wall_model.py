@@ -85,6 +85,6 @@ class HoleInTheWallGame:
         self._trial_score = accuracy/joint_counts * 100
     
     def check_win(self):
-        if self._trial_score >= 0:
+        if self._trial_score >= 50:
             return True
         return False

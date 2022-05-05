@@ -18,6 +18,8 @@ game_model = HoleInTheWallGame()
 game_view.initialize_view()
 current_game_state = 'start_screen'
 
+pdb.set_trace()
+
 def game_start():
     game_view.display_background(0)
     game_view.display_introduction()
@@ -34,10 +36,8 @@ def show_instructions():
 
 def run_trial():
     hole_mask, joints_file = game_model.get_mask_and_joints()
-    # pdb.set_trace()
     game_controller.start_timer()
     current_timer_value = game_controller.get_timer_string()
-    # game_controller.start_camera()
     while True:
         current_frame = game_controller.get_camera_frame()
         current_timer_value = game_controller.get_timer_string()
