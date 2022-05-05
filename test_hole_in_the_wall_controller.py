@@ -1,6 +1,5 @@
 """
 untested functions:
-release_camera
 next_screen
 quit_game
 """
@@ -37,16 +36,78 @@ def test_camera_capture_initialization():
 
     assert type(test_controller._camera_capture) == cv2.VideoCapture
 
+def test_next_screen_space_press():
+    test_controller = OpenCVController(0)
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_view.display_introduction()
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
+    state = test_controller.next_screen()
+    pygame.quit()
+    assert state == "continue"
+
 def test_next_screen_letter_press():
     test_controller = OpenCVController(0)
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    posted = pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_a))
-    time.sleep(.5)
+    test_view.display_introduction()
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_a))
     state = test_controller.next_screen()
     pygame.quit()
-    pdb.set_trace()
-    assert state == True
+    assert state == "continue"
+
+def test_next_screen_no_press():
+    test_controller = OpenCVController(0)
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_view.display_introduction()
+    state = test_controller.next_screen()
+    pygame.quit()
+    assert state == "stay"
+
+def test_next_screen_escape_press():
+    test_controller = OpenCVController(0)
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_view.display_introduction()
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE))
+    state = test_controller.next_screen()
+    pygame.quit()
+    assert state == "quit"
+
+def test_next_screen_escape_and_letter_press():
+    test_controller = OpenCVController(0)
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_view.display_introduction()
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE))
+    time.sleep(.2)
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_a))
+    state = test_controller.next_screen()
+    pygame.quit()
+    assert state == "quit"
+
+def test_next_screen_escape_and_space_press():
+    test_controller = OpenCVController(0)
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_view.display_introduction()
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE))
+    time.sleep(.2)
+    pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
+    state = test_controller.next_screen()
+    pygame.quit()
+    assert state == "quit"
+
+def test_release_camera():
+    test_controller = OpenCVController(0)
+    test_controller.release_camera()
+
+    try:
+        test_controller.get_camera_frame()
+        assert False
+    except cv2.error:
+        assert True
 
 def test_non_started_timer():
     test_controller = OpenCVController(0)
