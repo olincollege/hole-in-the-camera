@@ -6,6 +6,7 @@ import pygame
 from abc import ABC, abstractmethod
 import pdb
 
+
 class HoleInTheWallController(ABC):
     """
     Create abstract class for the game controller.
@@ -16,16 +17,19 @@ class HoleInTheWallController(ABC):
         _start_time (float): Start time of the game.
         end_time (float): End time of the game.
     """
+
     def __init__(self):
         """
         """
         pass
+
     def start_game(self):
         """
         Start the game.
         """
         pass
-    
+
+
 class OpenCVController(HoleInTheWallController):
     def __init__(self, camera_index):
         """
@@ -57,7 +61,7 @@ class OpenCVController(HoleInTheWallController):
             elif event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
                 return "continue"
         return "stay"
-    
+
     def start_timer(self):
         """
         Start the game window timer.
@@ -72,6 +76,7 @@ class OpenCVController(HoleInTheWallController):
             frame (numpy.ndarray): RGB image frame from the camera.
         """
         _, frame = self._camera_capture.read()
+        frame = cv2.resize(frame, (640, 480))
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return frame
 
