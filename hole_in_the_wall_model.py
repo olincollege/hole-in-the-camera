@@ -14,7 +14,7 @@ class HoleInTheWallGame:
     """
 
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
-    MASK_NAMES = ['first_mask']
+    MASK_NAMES = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask', 'fifth_mask']
 
     def __init__(self):
         self._mask_and_joints = []
