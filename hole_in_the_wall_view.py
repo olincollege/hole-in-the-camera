@@ -11,19 +11,31 @@ class HoleInTheWallView(ABC):
     Create abstract class for game view.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, display_size):
+        self._display_size = display_size
 
     @abstractmethod
     def initialize_view(self):
         pass
-        
-    @abstractmethod
-    def display_text(self, texts):
-        pass
     
     @abstractmethod
     def display_introduction(self):
+        pass
+
+    @abstractmethod
+    def display_instructions(self):
+        pass
+
+    @abstractmethod
+    def display_frame(self):
+        pass
+
+    @abstractmethod
+    def display_win(self, win_state, score):
+        pass
+
+    @abstractmethod
+    def display_end_game(self, score):
         pass
 
 
@@ -58,7 +70,7 @@ class PygameViewer(HoleInTheWallView):
         Args:
             display_size (tuple): The size of the display.
         """
-        self._display_size = display_size
+        super().__init__(display_size)
         self._screen = pygame.display.set_mode(self._display_size, pygame.RESIZABLE)
 
     def initialize_view(self):
@@ -71,7 +83,7 @@ class PygameViewer(HoleInTheWallView):
         pygame.display.set_icon(icon)
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
     
-    def display_background(self, background_num):
+    def _display_background(self, background_num):
         """
         Display background image.
 
@@ -83,7 +95,7 @@ class PygameViewer(HoleInTheWallView):
         self._screen.blit(background, (0,0))
 
     
-    def display_text(self, texts):
+    def _display_text(self, texts):
         """
         Display text on the game window with background image.
 
@@ -103,14 +115,16 @@ class PygameViewer(HoleInTheWallView):
         Display the introduction text.
         """
         welcome_text = ["Welcome to Hole in the Camera!", "Press any key to continue."]
-        self.display_text(welcome_text)
+        self._display_background(0)
+        self._display_text(welcome_text)
     
     def display_instructions(self):
         """
         Display the instructions text.
         """
         instruction_text = ["Instructions"]
-        self.display_text(instruction_text)
+        self._display_background(0)
+        self._display_text(instruction_text)
         
     def display_frame(self, frame, timer_text, camera_mask):
         """
@@ -129,7 +143,7 @@ class PygameViewer(HoleInTheWallView):
         self._screen.blit(counting_text, counting_rect)
         pygame.display.update()
 
-    def display_win(self, win, score):
+    def display_win(self, win_state, score):
         """
         Check if the user has won or lost and display text in
         pygame window corresponds to the result.
@@ -139,15 +153,15 @@ class PygameViewer(HoleInTheWallView):
             accuracy of how well player fits through the hole.
             win (bool): True if the user has won, False otherwise.
         """
-        if win:
+        if win_state:
             won_text = [f"You won! You fit through the hole!"]
-            self.display_background(2)
-            self.display_text(won_text)
+            self._display_background(2)
+            self._display_text(won_text)
         else:
             lost_text = [f"You lost! Your score is {int(score)}"]
-            self.display_background(1)
-            self.display_text(lost_text)
+            self._display_background(1)
+            self._display_text(lost_text)
     
     def display_end_game(self, score):
-        self.display_background(2)
-        self.display_text(["Game Over!", f"Final Score: {score}"])
+        self._display_background(2)
+        self._display_text(["Game Over!", f"Final Score: {score}"])
