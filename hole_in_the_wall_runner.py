@@ -86,5 +86,6 @@ while game_model.num_holes_remaining() > 0:
     if current_game_state == "game_complete":
         break
 
+current_game_state = "game_complete"
 game_controller.release_camera()
 game_states[current_game_state]()

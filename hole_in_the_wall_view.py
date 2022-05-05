@@ -164,4 +164,4 @@ class PygameViewer(HoleInTheWallView):
     
     def display_end_game(self, score):
         self._display_background(2)
-        self._display_text(["Game Over!", f"Final Score: {score}"])
+        self._display_text(["Game Over!", f"Final Score: {int(score)}/500"])
