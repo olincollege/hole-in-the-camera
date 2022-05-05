@@ -83,8 +83,6 @@ game_states = {
 
 while game_model.num_holes_remaining() > 0:
     current_game_state = game_states[current_game_state]()
-    if game_controller.quit_game():
-        break
     if current_game_state == "game_complete":
         break
 
