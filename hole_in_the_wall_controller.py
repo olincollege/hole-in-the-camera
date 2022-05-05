@@ -4,6 +4,7 @@ Hole in the wall game controller.
 import cv2
 import pygame
 from abc import ABC, abstractmethod
+import pdb
 
 class HoleInTheWallController(ABC):
     """
@@ -51,27 +52,11 @@ class OpenCVController(HoleInTheWallController):
         """
         events = pygame.event.get()
         for event in events:
-            if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
-                return True
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                self.quit_game()
-                return False
-            else:
-                return False
-
-    def quit_game(self):
-        """
-        Quit the game when pygame window is closed.
-
-        Returns:
-            bool: True if the game is quit, False otherwise.
-        """
-        events = pygame.event.get()
-        for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                return True
-            return False
+                return "quit"
+            elif event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
+                return "continue"
+        return "stay"
     
     def start_timer(self):
         """
