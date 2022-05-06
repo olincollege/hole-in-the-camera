@@ -1,12 +1,11 @@
 """
 
 """
-from deep_pose.body import Body
 import csv
-import numpy as np
 import cv2 as cv
-import pdb
 import random
+import numpy as np
+from deep_pose.body import Body
 
 
 class HoleInTheWallGame:
@@ -14,7 +13,7 @@ class HoleInTheWallGame:
     """
 
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
-    MASK_NAMES = ['first_mask']
+    MASK_NAMES = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask', 'fifth_mask']
 
     def __init__(self):
         self._mask_and_joints = []
@@ -42,7 +41,10 @@ class HoleInTheWallGame:
         return len(self._mask_and_joints)
 
     def get_mask_and_joints(self):
-        index = random.randint(0, len(self._mask_and_joints)-1)
+        if len(self._mask_and_joints) == 1:
+            index = 0
+        else:
+            index = random.randint(0, len(self._mask_and_joints)-1)
         random_mask_and_joint = self._mask_and_joints[index]
         self._mask_and_joints.pop(index)
         return random_mask_and_joint[0], random_mask_and_joint[1]

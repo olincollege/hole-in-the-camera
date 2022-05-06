@@ -1,11 +1,13 @@
+"""
+"""
 import cv2 as cv
 
 # Open a camera for video capturing.
-cap = cv.VideoCapture(0)
+CAMERA = cv.VideoCapture(0)
 
 while True:
     # Capture frame-by-frame
-    isTrue, frame = cap.read()
+    isTrue, frame = CAMERA.read()
     # convert to HSV colorspace and apply threshold
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     mask = cv.inRange(frame, (0, 35, 0), (210, 255, 255))
@@ -21,5 +23,5 @@ while True:
         break
 
 # close video and destroy all windows
-cap.release()
+CAMERA.release()
 cv.destroyAllWindows()
