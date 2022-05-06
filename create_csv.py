@@ -1,20 +1,18 @@
-import numpy as np
-import deep_pose.util
+"""
+"""
 from deep_pose.body import Body
-import pdb
 import cv2
 import csv
-import pygame
-import copy
+import numpy as np
 
-body_estimation = Body('deep_pose/body_pose_model.pth')
+BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
 
 mask_names = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask', 'fifth_mask']
 
 for file_name in mask_names:
     image = cv2.imread(f'images/poses/{file_name}.png')
     # pdb.set_trace()
-    candidate, subset = body_estimation(image)
+    candidate, subset = BODY_ESTIMATION(image)
 
     joint_positions = {}
     for index, value in enumerate(subset[0]):

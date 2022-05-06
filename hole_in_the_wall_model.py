@@ -1,12 +1,11 @@
 """
 
 """
-from deep_pose.body import Body
 import csv
-import numpy as np
 import cv2 as cv
-import pdb
 import random
+import numpy as np
+from deep_pose.body import Body
 
 
 class HoleInTheWallGame:

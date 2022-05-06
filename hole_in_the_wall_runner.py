@@ -4,16 +4,13 @@ Main runner code for hole in the camera game.
 from hole_in_the_wall_controller import OpenCVController
 from hole_in_the_wall_view import PygameViewer
 from hole_in_the_wall_model import HoleInTheWallGame
-import cv2
-import pdb
-import pygame
 import sys
 
-camera_index = 0
-display_size = (640, 480)
+CAMERA_INDEX = 0
+DISPLAY_SIZE = (640, 480)
 
-game_controller = OpenCVController(camera_index)
-game_view = PygameViewer(display_size)
+game_controller = OpenCVController(CAMERA_INDEX)
+game_view = PygameViewer(DISPLAY_SIZE)
 game_model = HoleInTheWallGame()
 
 game_view.initialize_view()
@@ -64,7 +61,7 @@ def run_trial():
     if game_model.check_win():
         return "playing_game"
     return "game_complete"
-    
+
 def end_game():
     game_view.display_end_game(game_model.total_score)
     next_screen_state = game_controller.next_screen()
@@ -74,7 +71,7 @@ def end_game():
         next_screen_state = game_controller.next_screen()
     return "game_complete"
 
-game_states = {
+GAME_STATES = {
     "start_screen": game_start,
     "instruction_screen": show_instructions,
     "playing_game": run_trial,
@@ -82,7 +79,7 @@ game_states = {
 }
 
 while game_model.num_holes_remaining() > 0:
-    current_game_state = game_states[current_game_state]()
+    current_game_state = GAME_STATES[current_game_state]()
     if current_game_state == "game_complete":
         break
 

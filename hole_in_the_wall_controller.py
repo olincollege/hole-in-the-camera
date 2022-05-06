@@ -1,10 +1,9 @@
 """
 Hole in the wall game controller.
 """
-import cv2
 import pygame
 from abc import ABC, abstractmethod
-import pdb
+import cv2
 
 
 class HoleInTheWallController(ABC):
@@ -21,13 +20,10 @@ class HoleInTheWallController(ABC):
     def __init__(self):
         """
         """
-        pass
 
-    def start_game(self):
+    def next_screen(self):
         """
-        Start the game.
         """
-        pass
 
 
 class OpenCVController(HoleInTheWallController):
@@ -58,7 +54,7 @@ class OpenCVController(HoleInTheWallController):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return "quit"
-            elif event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
+            if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
                 return "continue"
         return "stay"
 
