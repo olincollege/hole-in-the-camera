@@ -21,7 +21,28 @@ class HoleInTheWallController(ABC):
         """
         """
 
+    @abstractmethod
     def next_screen(self):
+        """
+        """
+
+    @abstractmethod
+    def start_timer(self):
+        """
+        """
+    
+    @abstractmethod
+    def get_display_frame(self):
+        """
+        """
+
+    @abstractmethod
+    def get_timer_string(self):
+        """
+        """
+
+    @abstractmethod
+    def determine_end_timer(self):
         """
         """
 
@@ -64,7 +85,7 @@ class OpenCVController(HoleInTheWallController):
         """
         self._start_time = pygame.time.get_ticks()
 
-    def get_camera_frame(self):
+    def get_display_frame(self):
         """
         Get the camera frame and covert it to RGB.
 

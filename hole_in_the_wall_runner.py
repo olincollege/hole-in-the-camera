@@ -41,7 +41,7 @@ def run_trial():
     game_controller.start_timer()
     current_timer_value = game_controller.get_timer_string()
     while True:
-        current_frame = game_controller.get_camera_frame()
+        current_frame = game_controller.get_display_frame()
         current_timer_value = game_controller.get_timer_string()
         game_view.display_frame(current_frame, current_timer_value, hole_mask)
         if game_controller.next_screen() == "quit":
@@ -85,4 +85,4 @@ while game_model.num_holes_remaining() > 0:
 
 current_game_state = "game_complete"
 game_controller.release_camera()
-game_states[current_game_state]()
+GAME_STATES[current_game_state]()

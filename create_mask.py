@@ -23,5 +23,5 @@ while True:
         break
 
 # close video and destroy all windows
-cap.release()
+CAMERA.release()
 cv.destroyAllWindows()
