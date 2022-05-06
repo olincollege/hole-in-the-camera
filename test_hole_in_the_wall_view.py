@@ -5,7 +5,7 @@ Tests for the PygameViewer class.
 from hole_in_the_wall_view import PygameViewer
 import pygame
 import numpy as np
-
+import cv2
 
 def test_pygame_display_size_default():
     """
@@ -233,6 +233,174 @@ def test_display_instructions_screen_pixel_values():
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_view.display_instructions()
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_frame_screen_width():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_frame = cv2.imread('images/poses/first_mask.png')
+    test_timer = '10'
+    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_view.display_frame(test_frame, test_timer, test_mask)
+    test_width = test_view._screen.get_width()
+    pygame.quit()
+    assert test_width == 640
+
+def test_display_frame_screen_height():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_frame = cv2.imread('images/poses/first_mask.png')
+    test_timer = '10'
+    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_view.display_frame(test_frame, test_timer, test_mask)
+    test_width = test_view._screen.get_height()
+    pygame.quit()
+    assert test_width == 480
+
+def test_display_frame_screen_pixel_shape():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_frame = cv2.imread('images/poses/first_mask.png')
+    test_timer = '10'
+    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_view.display_frame(test_frame, test_timer, test_mask)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.shape(pixel_values) == (640, 480, 3)
+
+def test_display_frame_screen_pixel_values():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_frame = cv2.imread('images/poses/first_mask.png')
+    test_timer = '10'
+    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_view.display_frame(test_frame, test_timer, test_mask)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_width():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = 100
+    test_view.display_win(test_win_state, test_score)
+    test_width = test_view._screen.get_width()
+    pygame.quit()
+    assert test_width == 640
+
+def test_display_win_screen_height():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = 100
+    test_view.display_win(test_win_state, test_score)
+    test_width = test_view._screen.get_height()
+    pygame.quit()
+    assert test_width == 480
+
+def test_display_win_screen_pixel_shape():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = 100
+    test_view.display_win(test_win_state, test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.shape(pixel_values) == (640, 480, 3)
+
+def test_display_win_screen_pixel_values_win():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = 100
+    test_view.display_win(test_win_state, test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_pixel_values_loss():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = False
+    test_score = 100
+    test_view.display_win(test_win_state, test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_pixel_values_zero_score():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = 0
+    test_view.display_win(test_win_state, test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_pixel_values_negative_score():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_win_state = True
+    test_score = -100
+    test_view.display_win(test_win_state, test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_end_game_screen_width():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = 100
+    test_view.display_end_game(test_score)
+    test_width = test_view._screen.get_width()
+    pygame.quit()
+    assert test_width == 640
+
+def test_display_end_game_screen_height():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = 100
+    test_view.display_end_game(test_score)
+    test_width = test_view._screen.get_height()
+    pygame.quit()
+    assert test_width == 480
+
+def test_display_end_game_screen_pixel_shape():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = 100
+    test_view.display_end_game(test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.shape(pixel_values) == (640, 480, 3)
+
+def test_display_end_game_screen_pixel_values_positive_Score():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = 100
+    test_view.display_end_game(test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_pixel_values_negative_score():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = -100
+    test_view.display_end_game(test_score)
+    pixel_values = pygame.surfarray.array3d(test_view._screen)
+    pygame.quit()
+    assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
+
+def test_display_win_screen_pixel_values_zero_score():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    test_score = 0
+    test_view.display_end_game(test_score)
     pixel_values = pygame.surfarray.array3d(test_view._screen)
     pygame.quit()
     assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
