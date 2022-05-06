@@ -46,8 +46,6 @@ class HoleInTheWallGame:
             index = 0
         else:
             index = random.randint(0, len(self._mask_and_joints)-1)
-        print(f"index: {index}")
-        print(f"len: {len(self._mask_and_joints)}")
         random_mask_and_joint = self._mask_and_joints[index]
         self._mask_and_joints.pop(index)
         return random_mask_and_joint[0], random_mask_and_joint[1]
