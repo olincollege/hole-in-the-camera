@@ -7,7 +7,8 @@ import numpy as np
 
 BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
 
-mask_names = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask', 'fifth_mask']
+mask_names = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask', 
+                'fifth_mask']
 
 for file_name in mask_names:
     image = cv2.imread(f'images/poses/{file_name}.png')
@@ -17,7 +18,8 @@ for file_name in mask_names:
     joint_positions = {}
     for index, value in enumerate(subset[0]):
         if value >= 0:
-            joint_positions[f'{index}'] = [candidate[int(value)][0], candidate[int(value)][1]]
+            joint_positions[f'{index}'] = [candidate[int(value)][0], 
+            candidate[int(value)][1]]
         else:
             joint_positions[f'{index}'] = [-1, -1]
         if index >= 17:

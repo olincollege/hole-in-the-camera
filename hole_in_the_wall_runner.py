@@ -6,19 +6,29 @@ from hole_in_the_wall_view import PygameViewer
 from hole_in_the_wall_model import HoleInTheWallGame
 import sys
 
+# Set up view constants
 CAMERA_INDEX = 0
 DISPLAY_SIZE = (640, 480)
 
+# Create controller, model, and view objects.
 game_controller = OpenCVController(CAMERA_INDEX)
 game_view = PygameViewer(DISPLAY_SIZE)
 game_model = HoleInTheWallGame()
 
+# Start the game and initialize pygame
 game_view.initialize_view()
+# set current game state to start screen
 current_game_state = 'start_screen'
 
-# pdb.set_trace()
 
 def game_start():
+    """
+    Display the introduction screen and wait for the user to continue
+    or quit the game.
+
+    Returns:
+        (str): The next game state.
+    """
     game_view.display_introduction()
     next_screen_state = game_controller.next_screen()
     if next_screen_state == "continue":
@@ -27,7 +37,15 @@ def game_start():
         sys.exit()
     return "start_screen"
 
+
 def show_instructions():
+    """
+    Display the instructions screen and wait for the user to continue
+    or quit the game.
+
+    Returns:
+        (str): The next game state.
+    """
     game_view.display_instructions()
     next_screen_state = game_controller.next_screen()
     if next_screen_state == "continue":
@@ -36,7 +54,14 @@ def show_instructions():
         sys.exit()
     return "instruction_screen"
 
+
 def run_trial():
+    """
+    Run a single trial of the game.
+
+    Returns:
+        (str): The next game state.
+    """
     hole_mask, joints_file = game_model.get_mask_and_joints()
     game_controller.start_timer()
     current_timer_value = game_controller.get_timer_string()
@@ -62,7 +87,14 @@ def run_trial():
         return "playing_game"
     return "game_complete"
 
+
 def end_game():
+    """
+    Display the end game screen and wait for the user to quit the game.
+
+    Returns:
+        (str): The next game state.
+    """
     game_view.display_end_game(game_model.total_score)
     next_screen_state = game_controller.next_screen()
     while next_screen_state == "stay":
@@ -71,6 +103,8 @@ def end_game():
         next_screen_state = game_controller.next_screen()
     return "game_complete"
 
+
+# Dictionary of game states and their corresponding functions.
 GAME_STATES = {
     "start_screen": game_start,
     "instruction_screen": show_instructions,
@@ -78,11 +112,13 @@ GAME_STATES = {
     "game_complete": end_game
 }
 
+# Run the game until the user quits.
 while game_model.num_holes_remaining() > 0:
     current_game_state = GAME_STATES[current_game_state]()
     if current_game_state == "game_complete":
         break
 
+# Close the game.
 current_game_state = "game_complete"
 game_controller.release_camera()
 GAME_STATES[current_game_state]()
