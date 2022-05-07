@@ -62,7 +62,8 @@ class PygameViewer(HoleInTheWallView):
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
     BACKGROUND_PATHS = ["images/assets/background.png",
-                        "images/assets/lost_background.png", "images/assets/won_background.png"
+                        "images/assets/lost_background.png", 
+                        "images/assets/won_background.png"
                         ]
 
     def __init__(self, display_size):
@@ -83,7 +84,8 @@ class PygameViewer(HoleInTheWallView):
 
     def initialize_view(self):
         """
-        Initialize the game view by creating game window title, icon, and font style.
+        Initialize the game view by creating game window title, icon, and
+        font style.
         """
         pygame.init()
         pygame.display.set_caption("Hole in the Camera")
@@ -158,8 +160,8 @@ class PygameViewer(HoleInTheWallView):
         pygame window corresponds to the result.
 
         Arg:
-            score (float): A float between 0 and 1 (inclusive) that represents the
-            accuracy of how well player fits through the hole.
+            score (float): A float between 0 and 1 (inclusive) that represents
+            the accuracy of how well player fits through the hole.
             win (bool): True if the user has won, False otherwise.
         """
         if win_state:
