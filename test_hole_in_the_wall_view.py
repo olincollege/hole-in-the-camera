@@ -240,7 +240,7 @@ def test_display_instructions_screen_pixel_values():
     assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
 
 
-def test_display_frame_screen_width():
+def test_display_disp_screen_width():
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_frame = cv2.imread('images/poses/first_mask.png')

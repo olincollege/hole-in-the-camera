@@ -155,7 +155,7 @@ def test_release_camera():
     test_controller.release_camera()
 
     try:
-        test_controller.get_camera_frame()
+        test_controller.get_display_frame()
         assert False
     except cv2.error:
         assert True
@@ -184,23 +184,23 @@ def test_started_timer():
     assert test_controller._start_time != 0
 
 
-def test_get_camera_frame_shape():
+def test_get_display_frame_shape():
     """
-    Test to ensure that the get_camera_frame function returns a frame
+    Test to ensure that the get_display_frame function returns a frame
     with the correct shape.
     """
     test_controller = OpenCVController(0)
-    test_frame = test_controller.get_camera_frame()
+    test_frame = test_controller.get_display_frame()
     assert np.shape(test_frame) == (480, 640, 3)
 
 
-def test_get_camera_frame_values():
+def test_get_display_frame_values():
     """
-    Test to ensure that the get_camera_frame function returns a frame
+    Test to ensure that the get_display_frame function returns a frame
     with the correct RGB values.
     """
     test_controller = OpenCVController(0)
-    test_frame = test_controller.get_camera_frame()
+    test_frame = test_controller.get_display_frame()
     if np.min(test_frame) < 0 or np.max(test_frame) > 255:
         assert False
     assert True
