@@ -32,6 +32,18 @@ class HoleInTheWallGame:
         self._trial_score = 0
 
     @property
+    def joint_positions(self):
+        return self._joint_positions
+
+    @property
+    def joint_candidates(self):
+        return self._joint_candidates
+
+    @property
+    def joint_subsets(self):
+        return self._joint_subsets
+
+    @property
     def mask_and_joints(self):
         return self._mask_and_joints
 
@@ -60,14 +72,15 @@ class HoleInTheWallGame:
             frame)
 
     def parse_for_joint_positions(self):
-        for index, value in enumerate(self._joint_subsets[0]):
-            if value >= 0:
-                self._joint_positions[f'{index}'] = [
-                    self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
-            else:
-                self._joint_positions[f'{index}'] = [-1, -1]
-            if index >= 17:
-                break
+        if len(self.joint_subsets) > 0:
+            for index, value in enumerate(self._joint_subsets[0]):
+                if value >= 0:
+                    self._joint_positions[f'{index}'] = [
+                        self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
+                else:
+                    self._joint_positions[f'{index}'] = [-1, -1]
+                if index >= 17:
+                    break
 
     def compute_accuracy(self, saved_csv_for_mask):
         accuracy = 0
