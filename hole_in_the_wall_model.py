@@ -10,7 +10,13 @@ from deep_pose.body import Body
 
 class HoleInTheWallGame:
     """
+    Hole in the wall game model.
 
+    Args:
+        BODY_ESTIMATION (Body): Body estimation object from deep_pose.
+        MASK_NAMES (list): List of mask file names.
+        _join_positions (dict): Dictionary of joint positions.
+        _joint_candidates (list): List of all possible joint candidates.
     """
 
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
@@ -19,6 +25,7 @@ class HoleInTheWallGame:
 
     def __init__(self):
         self._mask_and_joints = []
+        # read in the masks and joints
         for mask in self.MASK_NAMES:
             frame = cv.imread(f'images/masks/{mask}.png')
             cv.cvtColor(frame, cv.COLOR_BGR2RGB)
