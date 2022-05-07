@@ -73,6 +73,7 @@ class PygameViewer(HoleInTheWallView):
         """
         super().__init__(display_size)
         self._screen = pygame.display.set_mode(self._display_size, pygame.RESIZABLE)
+        pygame.font.init()
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
 
     @property

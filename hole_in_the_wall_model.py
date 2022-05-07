@@ -30,6 +30,10 @@ class HoleInTheWallGame:
         self._trial_score = 0
 
     @property
+    def mask_and_joints(self):
+        return self._mask_and_joints
+
+    @property
     def total_score(self):
         return self._total_score
 
