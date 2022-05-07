@@ -12,30 +12,66 @@ class HoleInTheWallView(ABC):
     """
 
     def __init__(self, display_size):
+        """
+        Initialize the game view object.
+
+        Args:
+            display_size (tuple): Size of the display.
+        """
         self._display_size = display_size
 
     @abstractmethod
     def initialize_view(self):
+        """
+        Initialize the game view.
+        """
         pass
 
     @abstractmethod
     def display_introduction(self):
+        """
+        Display the introduction screen.
+        """
         pass
 
     @abstractmethod
     def display_instructions(self):
+        """
+        Display the instructions screen.
+        """
         pass
 
     @abstractmethod
     def display_frame(self, frame, timer_text, camera_mask):
+        """
+        Display the current frame.
+
+        Args:
+            frame (numpy.ndarray): Current frame to display.
+            timer_text (str): Current timer value.
+            camera_mask (numpy.ndarray): Current camera mask.
+        """
         pass
 
     @abstractmethod
     def display_win(self, win_state, score):
+        """
+        Display the win screen.
+
+        Args:
+            win_state (str): Win state.
+            score (int): Current score.
+        """
         pass
 
     @abstractmethod
     def display_end_game(self, score):
+        """
+        Display the end game screen.
+
+        Args:
+            score (int): Final player score.
+        """
         pass
 
 
@@ -45,13 +81,16 @@ class PygameViewer(HoleInTheWallView):
 
     Attributes:
         BLACK (tuple): RGB value for black.
-        WHITE (tuple): RGB value for white.
+        RED (tuple): RGB value for red.
         GRAY (tuple): RGB value for gray.
+        WHITE (tuple): RGB value for white.
         BLUE (tuple): RGB value for blue.
         BLUE_BACKGROUND (tuple): RGB value for blue background.
-        FONT (str): Font name.
+        FONT_NAME (str): The name of the font.
         FONT_SIZE (int): Font size.
-        _display_size (tuple): The size of the display.
+        BACKGROUND_PATHS (list): The paths of the background images.
+        _screen (pygame.Surface): The game window.
+        font (pygame.font.SysFont): The font used to display text.
     """
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
@@ -62,13 +101,13 @@ class PygameViewer(HoleInTheWallView):
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
     BACKGROUND_PATHS = ["images/assets/background.png",
-                        "images/assets/lost_background.png", 
+                        "images/assets/lost_background.png",
                         "images/assets/won_background.png"
                         ]
 
     def __init__(self, display_size):
         """
-        Initialize the game view.
+        Initialize the game view object.
 
         Args:
             display_size (tuple): The size of the display.
@@ -81,6 +120,12 @@ class PygameViewer(HoleInTheWallView):
 
     @property
     def screen(self):
+        """
+        Return the game window.
+
+        Returns:
+            pygame.Surface: The game window.
+        """
         return self._screen
 
     def initialize_view(self):
@@ -175,5 +220,12 @@ class PygameViewer(HoleInTheWallView):
             self._display_text(lost_text)
 
     def display_end_game(self, score):
+        """
+        Display the end game text.
+
+        Args:
+            score (float): A float that represents the accuracy of
+            how well player fits through the hole.
+        """
         self._display_background(2)
         self._display_text(["Game Over!", f"Final Score: {int(score)}/700"])
