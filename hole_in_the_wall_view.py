@@ -3,6 +3,8 @@ Hole in the wall game view.
 """
 from abc import ABC, abstractmethod
 import pygame
+from pygame.locals import *
+from pygame import mixer
 import cv2 as cv
 
 
@@ -48,7 +50,6 @@ class PygameViewer(HoleInTheWallView):
         WHITE (tuple): RGB value for white.
         GRAY (tuple): RGB value for gray.
         BLUE (tuple): RGB value for blue.
-        BLUE_BACKGROUND (tuple): RGB value for blue background.
         FONT (str): Font name.
         FONT_SIZE (int): Font size.
         _display_size (tuple): The size of the display.
@@ -58,17 +59,16 @@ class PygameViewer(HoleInTheWallView):
     GRAY = (200, 200, 200)
     WHITE = (255, 255, 255)
     BLUE = (50, 50, 200)
-    BLUE_BACKGROUND = (153, 204, 255)
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
-    BACKGROUND_PATHS = ["images/assets/background.png",
-                        "images/assets/lost_background.png", 
-                        "images/assets/won_background.png"
+    BACKGROUND_PATHS = ["images/assets/background.jpg",
+                        "images/assets/lost_background.jpg", 
+                        "images/assets/win_background.jpg"
                         ]
 
     def __init__(self, display_size):
         """
-        Initialize the game view.
+        Initialize the game view and music.
 
         Args:
             display_size (tuple): The size of the display.
@@ -78,6 +78,10 @@ class PygameViewer(HoleInTheWallView):
         self._screen = pygame.display.set_mode(
             self._display_size, pygame.RESIZABLE)
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
+
+        mixer.init()
+        mixer.music.load("Sound/No Doubt - Yung Logos.wav")
+        mixer.music.play()
 
     @property
     def screen(self):
@@ -90,7 +94,7 @@ class PygameViewer(HoleInTheWallView):
         """
         pygame.init()
         pygame.display.set_caption("Hole in the Camera")
-        icon = pygame.image.load('images/assets/gameicon.png')
+        icon = pygame.image.load('images/assets/gameicon.jpg')
         pygame.display.set_icon(icon)
 
     def _display_background(self, background_num):
@@ -102,6 +106,7 @@ class PygameViewer(HoleInTheWallView):
             of the game window
         """
         background = pygame.image.load(self.BACKGROUND_PATHS[background_num])
+        background = pygame.transform.scale(background,(640, 480))
         self._screen.blit(background, (0, 0))
 
     def _display_text(self, texts):
@@ -115,7 +120,7 @@ class PygameViewer(HoleInTheWallView):
         for text in texts:
             _, font_height = self.font.size(text)
             image = self.font.render(text, True, self.WHITE, self.BLACK)
-            self._screen.blit(image, (20, 200+y_offset))
+            self._screen.blit(image, (55, 210+y_offset))
             y_offset += font_height
         pygame.display.update()
 
@@ -124,7 +129,8 @@ class PygameViewer(HoleInTheWallView):
         Display the introduction text.
         """
         welcome_text = ["Welcome to Hole in the Camera!",
-                        "Press any key to continue."]
+                        "Press any key to continue",
+                        "Or press esc to exit (Bye!)"]
         self._display_background(0)
         self._display_text(welcome_text)
 
@@ -135,6 +141,14 @@ class PygameViewer(HoleInTheWallView):
         instruction_text = ["Instructions"]
         self._display_background(0)
         self._display_text(instruction_text)
+
+    def display_instructions_content(self):
+        """
+        Display the detailed content of instructions.
+        """
+        instruction_content = ["Adjust your pose (or camera) to \
+                                fit into the holes",
+                                "You have 10 seconds each round"]
 
     def display_frame(self, frame, timer_text, camera_mask):
         """
@@ -166,11 +180,17 @@ class PygameViewer(HoleInTheWallView):
             win (bool): True if the user has won, False otherwise.
         """
         if win_state:
-            won_text = [f"You won! You fit through the hole!"]
+            mixer.music.stop()
+            win_sound = mixer.Sound("Sound/mixkit-fantasy-game-success-notification-270.wav")
+            win_sound.play()
+            won_text = [f"Your score is: {int(score)}"]
             self._display_background(2)
             self._display_text(won_text)
         else:
-            lost_text = [f"You lost! Your score is {int(score)}"]
+            mixer.music.stop()
+            crash_sound = mixer.Sound("Sound/Crash .wav")
+            crash_sound.play()
+            lost_text = ["You lost!", f"Your score is {int(score)}"]
             self._display_background(1)
             self._display_text(lost_text)
 
