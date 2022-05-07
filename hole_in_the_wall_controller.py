@@ -30,7 +30,7 @@ class HoleInTheWallController(ABC):
     def start_timer(self):
         """
         """
-    
+
     @abstractmethod
     def get_display_frame(self):
         """

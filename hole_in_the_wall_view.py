@@ -101,7 +101,7 @@ class PygameViewer(HoleInTheWallView):
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
     BACKGROUND_PATHS = ["images/assets/background.jpg",
-                        "images/assets/lost_background.jpg", 
+                        "images/assets/lost_background.jpg",
                         "images/assets/win_background.jpg"
                         ]
 
@@ -151,7 +151,7 @@ class PygameViewer(HoleInTheWallView):
             of the game window
         """
         background = pygame.image.load(self.BACKGROUND_PATHS[background_num])
-        background = pygame.transform.scale(background,(640, 480))
+        background = pygame.transform.scale(background, (640, 480))
         self._screen.blit(background, (0, 0))
 
     def _display_text(self, texts):
@@ -193,7 +193,7 @@ class PygameViewer(HoleInTheWallView):
         """
         instruction_content = ["Adjust your pose (or camera) to \
                                 fit into the holes",
-                                "You have 10 seconds each round"]
+                               "You have 10 seconds each round"]
 
     def display_frame(self, frame, timer_text, camera_mask):
         """
@@ -226,7 +226,8 @@ class PygameViewer(HoleInTheWallView):
         """
         if win_state:
             mixer.music.stop()
-            win_sound = mixer.Sound("Sound/mixkit-fantasy-game-success-notification-270.wav")
+            win_sound = mixer.Sound(
+                "Sound/mixkit-fantasy-game-success-notification-270.wav")
             win_sound.play()
             won_text = [f"Your score is: {int(score)}"]
             self._display_background(2)
