@@ -228,11 +228,11 @@ class HoleInTheCameraGame:
                 # Gives users a score based on how well they fit, where a
                 # perfect match (distance is less than 20 pixels) corresponds
                 # to a perfect score.
-                if distance < 20:
+                if distance < 30:
                     accuracy += 1
-                elif distance < 30:
-                    accuracy += .5
                 elif distance < 40:
+                    accuracy += .5
+                elif distance < 50:
                     accuracy += 0.25
         # Updates the _total_score and _trial_score variables with the results
         # of this trial.
@@ -248,6 +248,6 @@ class HoleInTheCameraGame:
             (bool): True if the user was successful in their last trial and
                 false if they weren't.
         """
-        if self._trial_score >= 50:
+        if self._trial_score >= 70:
             return True
         return False

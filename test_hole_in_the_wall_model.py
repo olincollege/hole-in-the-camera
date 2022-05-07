@@ -316,7 +316,7 @@ def test_computer_accuracy_diff_image_total_score():
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
-    assert test_model.total_score < 50
+    assert test_model.total_score < 70
 
 
 def test_computer_accuracy_diff_image_trial_score():
@@ -326,7 +326,7 @@ def test_computer_accuracy_diff_image_trial_score():
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
-    assert test_model.trial_score < 50
+    assert test_model.trial_score < 70
 
 
 def test_computer_accuracy_diff_image_total_score_three_trials():
@@ -337,7 +337,7 @@ def test_computer_accuracy_diff_image_total_score_three_trials():
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
         test_model.compute_accuracy(test_csv)
-    assert test_model.total_score < 150
+    assert test_model.total_score < 210
 
 
 def test_computer_accuracy_diff_image_trial_score_three_trials():
@@ -348,7 +348,7 @@ def test_computer_accuracy_diff_image_trial_score_three_trials():
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
         test_model.compute_accuracy(test_csv)
-    assert test_model.trial_score < 50
+    assert test_model.trial_score < 70
 
 
 def test_check_win_same_image():

@@ -1,9 +1,8 @@
 """
-Hole in the wall game view.
+Hole in the camera game view.
 """
 from abc import ABC, abstractmethod
 import pygame
-from pygame.locals import *
 from pygame import mixer
 import cv2 as cv
 
@@ -250,3 +249,11 @@ class PygameViewer(HoleInTheWallView):
         """
         self._display_background(2)
         self._display_text(["Game Over!", f"Final Score: {int(score)}/700"])
+
+    def display_round_screen(self, round_num):
+        if round_num != 1:
+            mixer.stop()
+            mixer.music.load("Sound/No Doubt - Yung Logos.wav")
+            mixer.music.play()
+        self._display_background(0)
+        self._display_text([f'Round #{round_num}'])
