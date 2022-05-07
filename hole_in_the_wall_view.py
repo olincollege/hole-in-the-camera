@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 import pygame
 import cv2 as cv
 
+
 class HoleInTheWallView(ABC):
     """
     Create abstract class for game view.
@@ -61,8 +62,8 @@ class PygameViewer(HoleInTheWallView):
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
     BACKGROUND_PATHS = ["images/assets/background.png",
-        "images/assets/lost_background.png", "images/assets/won_background.png"
-        ]
+                        "images/assets/lost_background.png", "images/assets/won_background.png"
+                        ]
 
     def __init__(self, display_size):
         """
@@ -72,7 +73,8 @@ class PygameViewer(HoleInTheWallView):
             display_size (tuple): The size of the display.
         """
         super().__init__(display_size)
-        self._screen = pygame.display.set_mode(self._display_size, pygame.RESIZABLE)
+        self._screen = pygame.display.set_mode(
+            self._display_size, pygame.RESIZABLE)
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
 
     @property
@@ -97,9 +99,8 @@ class PygameViewer(HoleInTheWallView):
             of the game window
         """
         background = pygame.image.load(self.BACKGROUND_PATHS[background_num])
-        self._screen.blit(background, (0,0 ))
+        self._screen.blit(background, (0, 0))
 
-    
     def _display_text(self, texts):
         """
         Display text on the game window with background image.
@@ -119,7 +120,8 @@ class PygameViewer(HoleInTheWallView):
         """
         Display the introduction text.
         """
-        welcome_text = ["Welcome to Hole in the Camera!", "Press any key to continue."]
+        welcome_text = ["Welcome to Hole in the Camera!",
+                        "Press any key to continue."]
         self._display_background(0)
         self._display_text(welcome_text)
 
@@ -141,10 +143,12 @@ class PygameViewer(HoleInTheWallView):
             mask (numpy.ndarray): The mask to be overlaid on the frame.
         """
         frame = cv.bitwise_and(frame, camera_mask)
-        frame = pygame.transform.rotate(pygame.surfarray.make_surface(frame), -90)
+        frame = pygame.transform.rotate(
+            pygame.surfarray.make_surface(frame), -90)
         self._screen.blit(frame, (0, 0))
         counting_text = self.font.render(timer_text, 1, self.WHITE)
-        counting_rect = counting_text.get_rect(bottomright=self._screen.get_rect().bottomright)
+        counting_rect = counting_text.get_rect(
+            bottomright=self._screen.get_rect().bottomright)
         self._screen.blit(counting_text, counting_rect)
         pygame.display.update()
 
@@ -169,4 +173,4 @@ class PygameViewer(HoleInTheWallView):
 
     def display_end_game(self, score):
         self._display_background(2)
-        self._display_text(["Game Over!", f"Final Score: {int(score)}/500"])
+        self._display_text(["Game Over!", f"Final Score: {int(score)}/700"])
