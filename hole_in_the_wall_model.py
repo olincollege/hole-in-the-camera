@@ -11,6 +11,7 @@ import random
 import cv2 as cv
 import numpy as np
 from deep_pose.body import Body
+import pdb
 
 
 class HoleInTheCameraGame:
@@ -182,15 +183,15 @@ class HoleInTheCameraGame:
             for index, value in enumerate(self._joint_subsets[0]):
                 # Value will be -1 if the joint is not present in the image.
                 if value >= 0:
+                    pdb.set_trace()
                     self._joint_positions[f'{index}'] = [
-                        self._joint_candidates[int(value)][0],\
-                            self._joint_candidates[int(value)][1]]
+                        self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
                 else:
                     self._joint_positions[f'{index}'] = [-1, -1]
-                # After 17, the _joint_subsets variable contains information
+                # After 16, the _joint_subsets variable contains information
                 # about the data and accuracy, but is not useful for mapping
                 # joint positions so it is ignored.
-                if index > 17:
+                if index > 16:
                     break
 
     def compute_accuracy(self, saved_csv_for_mask):
