@@ -1,8 +1,5 @@
 """
 Tests for the OpenCVController class.
-untested functions:
-next_screen
-quit_game
 """
 from hole_in_the_wall_controller import OpenCVController
 import cv2
