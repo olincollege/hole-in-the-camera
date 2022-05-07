@@ -1,5 +1,5 @@
 """
-
+This is the model for the hole in the camera
 """
 import csv
 import cv2 as cv
@@ -8,9 +8,15 @@ import numpy as np
 from deep_pose.body import Body
 
 
-class HoleInTheWallGame:
+class HoleInTheCameraGame:
     """
+    Hole in the wall game model.
 
+    Args:
+        BODY_ESTIMATION (Body): Body estimation object from deep_pose.
+        MASK_NAMES (list): List of mask file names.
+        _join_positions (dict): Dictionary of joint positions.
+        _joint_candidates (list): List of all possible joint candidates.
     """
 
     BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
@@ -19,6 +25,7 @@ class HoleInTheWallGame:
 
     def __init__(self):
         self._mask_and_joints = []
+        # read in the masks and joints
         for mask in self.MASK_NAMES:
             frame = cv.imread(f'images/masks/{mask}.png')
             cv.cvtColor(frame, cv.COLOR_BGR2RGB)
@@ -30,6 +37,18 @@ class HoleInTheWallGame:
         self._joint_subsets = []
         self._total_score = 0
         self._trial_score = 0
+
+    @property
+    def joint_positions(self):
+        return self._joint_positions
+
+    @property
+    def joint_candidates(self):
+        return self._joint_candidates
+
+    @property
+    def joint_subsets(self):
+        return self._joint_subsets
 
     @property
     def mask_and_joints(self):
@@ -60,14 +79,15 @@ class HoleInTheWallGame:
             frame)
 
     def parse_for_joint_positions(self):
-        for index, value in enumerate(self._joint_subsets[0]):
-            if value >= 0:
-                self._joint_positions[f'{index}'] = [
-                    self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
-            else:
-                self._joint_positions[f'{index}'] = [-1, -1]
-            if index >= 17:
-                break
+        if len(self.joint_subsets) > 0:
+            for index, value in enumerate(self._joint_subsets[0]):
+                if value >= 0:
+                    self._joint_positions[f'{index}'] = [
+                        self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
+                else:
+                    self._joint_positions[f'{index}'] = [-1, -1]
+                if index >= 17:
+                    break
 
     def compute_accuracy(self, saved_csv_for_mask):
         accuracy = 0

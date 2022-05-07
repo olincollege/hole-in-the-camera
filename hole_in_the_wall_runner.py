@@ -3,7 +3,7 @@ Main runner code for hole in the camera game.
 """
 from hole_in_the_wall_controller import OpenCVController
 from hole_in_the_wall_view import PygameViewer
-from hole_in_the_wall_model import HoleInTheWallGame
+from hole_in_the_wall_model import HoleInTheCameraGame
 import sys
 
 # Set up view constants
@@ -13,7 +13,7 @@ DISPLAY_SIZE = (640, 480)
 # Create controller, model, and view objects.
 game_controller = OpenCVController(CAMERA_INDEX)
 game_view = PygameViewer(DISPLAY_SIZE)
-game_model = HoleInTheWallGame()
+game_model = HoleInTheCameraGame()
 
 # Start the game and initialize pygame
 game_view.initialize_view()
