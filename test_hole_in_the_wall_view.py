@@ -216,8 +216,8 @@ def test_display_instructions_screen_height():
 
 def test_display_instructions_screen_pixel_shape():
     """
-    Test that the "display instructions" screen's pixel values
-    have correct dimensions.
+    Test that the "display instructions" screen's has correct
+    pixel dimensions.
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
@@ -241,6 +241,9 @@ def test_display_instructions_screen_pixel_values():
 
 
 def test_display_disp_screen_width():
+    """
+    Test that the game screen with mask overlaid has the correct width.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_frame = cv2.imread('images/poses/first_mask.png')
@@ -253,6 +256,9 @@ def test_display_disp_screen_width():
 
 
 def test_display_frame_screen_height():
+    """
+    Test that the game screen with mask overlaid has the correct width.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_frame = cv2.imread('images/poses/first_mask.png')
@@ -265,6 +271,10 @@ def test_display_frame_screen_height():
 
 
 def test_display_frame_screen_pixel_shape():
+    """
+    Test that the game screen with mask overlaid has correct
+    pixel dimensions. 
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_frame = cv2.imread('images/poses/first_mask.png')
@@ -277,6 +287,10 @@ def test_display_frame_screen_pixel_shape():
 
 
 def test_display_frame_screen_pixel_values():
+    """
+    Test that the game screen with mask overlaid has correct
+    pixel values.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_frame = cv2.imread('images/poses/first_mask.png')
@@ -289,6 +303,9 @@ def test_display_frame_screen_pixel_values():
 
 
 def test_display_win_screen_width():
+    """
+    Test that the win game screen has correct width.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -300,6 +317,9 @@ def test_display_win_screen_width():
 
 
 def test_display_win_screen_height():
+    """
+    Test that the win game screen has correct height.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -311,6 +331,9 @@ def test_display_win_screen_height():
 
 
 def test_display_win_screen_pixel_shape():
+    """
+    Test that the win game screen has correct pixel dimensions.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -322,6 +345,9 @@ def test_display_win_screen_pixel_shape():
 
 
 def test_display_win_screen_pixel_values_win():
+    """
+    Test that the win game screen has correct pixel values.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -333,6 +359,9 @@ def test_display_win_screen_pixel_values_win():
 
 
 def test_display_win_screen_pixel_values_loss():
+    """
+    Test that the losing game screen has correct pixel values.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = False
@@ -344,6 +373,9 @@ def test_display_win_screen_pixel_values_loss():
 
 
 def test_display_win_screen_pixel_values_zero_score():
+    """
+    Test that the win game screen has correct pixel values.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -355,6 +387,10 @@ def test_display_win_screen_pixel_values_zero_score():
 
 
 def test_display_win_screen_pixel_values_negative_score():
+    """
+    Test that the win game screen has correct pixel values
+    when the score is negative.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_win_state = True
@@ -366,6 +402,9 @@ def test_display_win_screen_pixel_values_negative_score():
 
 
 def test_display_end_game_screen_width():
+    """
+    Test that the end game screen has correct width.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -376,6 +415,9 @@ def test_display_end_game_screen_width():
 
 
 def test_display_end_game_screen_height():
+    """
+    Test that the end game screen has correct height.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -386,6 +428,9 @@ def test_display_end_game_screen_height():
 
 
 def test_display_end_game_screen_pixel_shape():
+    """
+    Test that the end game screen has correct pixel dimensions.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -396,6 +441,9 @@ def test_display_end_game_screen_pixel_shape():
 
 
 def test_display_end_game_screen_pixel_values_positive_score():
+    """
+    Test that the end game screen has correct pixel values.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -406,6 +454,10 @@ def test_display_end_game_screen_pixel_values_positive_score():
 
 
 def test_display_end_game_screen_pixel_values_negative_score():
+    """
+    Test that the end game screen has correct pixel values
+    when the score is negative.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = -100
@@ -416,6 +468,10 @@ def test_display_end_game_screen_pixel_values_negative_score():
 
 
 def test_display_end_game_screen_pixel_values_zero_score():
+    """
+    Test that the end game screen has correct pixel values
+    when the score is zero.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 0
