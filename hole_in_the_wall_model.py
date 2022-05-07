@@ -1,5 +1,5 @@
 """
-
+This is the model for the hole in the camera
 """
 import csv
 import cv2 as cv
@@ -8,7 +8,7 @@ import numpy as np
 from deep_pose.body import Body
 
 
-class HoleInTheWallGame:
+class HoleInTheCameraGame:
     """
     Hole in the wall game model.
 
