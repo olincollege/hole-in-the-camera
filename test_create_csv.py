@@ -3,9 +3,8 @@ Test functions for the create_csv.py script.
 """
 
 import os
-from create_csv import analyze_image, write_to_csv
 import csv
-import pdb
+from create_csv import analyze_image, write_to_csv
 
 def test_analyze_image_none():
     nonexistant_image = "not_an_image.png"
@@ -62,7 +61,9 @@ def test_write_to_csv_one_joint_values():
         csv_reader = csv.reader(csv_file)
         joint_counter = 0
         for row in csv_reader:
-            if row[0] != str(joint_counter) or row[1] != str(test_joint_positions[str(joint_counter)][0]) or row[2] != str(test_joint_positions[str(joint_counter)][1]):
+            if row[0] != str(joint_counter) or row[1] !=\
+                str(test_joint_positions[str(joint_counter)][0]) or\
+                row[2] != str(test_joint_positions[str(joint_counter)][1]):
                 assert False
             joint_counter += 1
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')
@@ -86,7 +87,9 @@ def test_write_to_csv_eighteen_joint_values():
         csv_reader = csv.reader(csv_file)
         joint_counter = 0
         for row in csv_reader:
-            if row[0] != str(joint_counter) or row[1] != str(test_joint_positions[str(joint_counter)][0]) or row[2] != str(test_joint_positions[str(joint_counter)][1]):
+            if row[0] != str(joint_counter) or row[1] !=\
+                str(test_joint_positions[str(joint_counter)][0]) or\
+                row[2] != str(test_joint_positions[str(joint_counter)][1]):
                 assert False
             joint_counter += 1
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')

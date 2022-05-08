@@ -2,9 +2,9 @@
 Test functions for the create_mask script.
 """
 
-from create_mask import get_camera_frame, analyze_camera_frame
-import numpy as np
 import cv2
+import numpy as np
+from create_mask import get_camera_frame, analyze_camera_frame
 
 def test_get_camera_frame_shape():
     test_frame = get_camera_frame()
@@ -26,7 +26,7 @@ def test_analyze_camera_frame_mask_values():
     _, test_mask = analyze_camera_frame(test_frame)
     for row in test_mask:
         for value in row:
-            if value != 0 and value != 255:
+            if value not in (0, 255):
                 assert False
     assert True
 
@@ -41,6 +41,6 @@ def test_analyze_camera_frame_mask_values_saved_image():
     _, test_mask = analyze_camera_frame(test_frame)
     for row in test_mask:
         for value in row:
-            if value != 0 and value != 255:
+            if value not in (0, 255):
                 assert False
     assert True

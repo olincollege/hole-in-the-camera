@@ -244,7 +244,7 @@ class PygameViewer(HoleInTheWallView):
         """
         self._display_background(10)
         self._display_text(["Game Over!", f"Final Score: {int(score)}/100"],
-        self.WHITE, self.BLACK)
+                           self.WHITE, self.BLACK)
 
     def display_round_screen(self, round_num):
         """

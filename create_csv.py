@@ -2,9 +2,9 @@
 Create csv files representing joints positions for each mask.
 """
 import csv
+import os
 import cv2
 from deep_pose.body import Body
-import os
 
 BODY_ESTIMATION = Body("deep_pose/body_pose_model.pth")
 
@@ -59,9 +59,9 @@ def write_to_csv(csv_name, joint_positions):
             the joint in the image, [-1, -1] if it is not found.
     """
     with open(f"mask_joint_positions/{csv_name}.csv", "w") as csv_file:
-            csv_writer = csv.writer(csv_file)
-            for key, value in joint_positions.items():
-                csv_writer.writerow([key, value[0], value[1]])
+        csv_writer = csv.writer(csv_file)
+        for key, value in joint_positions.items():
+            csv_writer.writerow([key, value[0], value[1]])
 
 def main():
     """
