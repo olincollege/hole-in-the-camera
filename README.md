@@ -49,3 +49,7 @@ After making these changes, you're all ready to play with your own holes!
 ### Acknowledgements
 1. Major inspiration for this game comes from Nickelodeon's game show, Hole in the Wall. Many of the features of our game are based on design features of the real life game and our implementation wouldn't have been possible without it.
 2. To analyze our final frames for how well users fit into the displayed holes, we relied on a public github repository called OpenPose (https://github.com/Hzzone/pytorch-openpose). OpenPose is an implementation of Deep Pose, which is a proposed method to finding body joint positions within a given image using a deep neural network. We used this repository for each of our stored holes for where a user's joints should be in the frame, and compared those values to the joint positions found from the user's actual position. All of the code the in deep_pose folder, along with the "body_pose_model.pth" file that users are asked to download are from the OpenPose repository and are not our own code.
+3. Backgrounds: 
+[istockphoto.com](https://www.istockphoto.com/vector/red-brick-wall-hole-gm587952908-100971081)
+[vectorstock.com](https://www.vectorstock.com/royalty-free-vector/human-silhouette-hole-in-brick-wall-pop-art-vector-15729119)
+4. Music: [Youtube Audio Library](https://www.youtube.com/c/audiolibrary-channel/videos)

@@ -58,10 +58,26 @@ While playing the game did you suddenly get inspiration to create your own holes
 6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 49) to be a list of all the holes you want the game to display.
 After making these changes, you're all ready to play with your own holes!
 ### About the Creators
-1. [Ayush Chakraborty](https://github.com/ayushchakra): 
-2. [Jiayuan Liu](https://github.com/Chidunbo): 
-<img src="profile-pictures/Anmol.jpg" width ="30%" height = "30%" style="float:right;margin:0px 30px">
-3. [Anmol Sandhu](https://github.com/AnmolRattanSingh): 
+
+<img src="profile-pictures/Ayush.jpeg" width ="20%" height = "30%">
+
+**[Ayush Chakraborty](https://github.com/ayushchakra)** 
+Olin College of Engineering '25
+
+<img src="profile-pictures/Jiayuan.jpeg" width ="17%" height = "30%">
+
+**[Jiayuan Liu](https://github.com/Chidunbo)** 
+Olin College of Engineering '25
+
+<img src="profile-pictures/Anmol.jpg" width ="20%" height = "30%">   
+
+**[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
+Olin College of Engineering '25   
+
 ### Acknowledgements
 1. Major inspiration for this game comes from Nickelodeon's game show, Hole in the Wall. Many of the features of our game are based on design features of the real life game and our implementation wouldn't have been possible without it.
 2. To analyze our final frames for how well users fit into the displayed holes, we relied on a public github repository called OpenPose (https://github.com/Hzzone/pytorch-openpose). OpenPose is an implementation of Deep Pose, which is a proposed method to finding body joint positions within a given image using a deep neural network. We used this repository for each of our stored holes for where a user's joints should be in the frame, and compared those values to the joint positions found from the user's actual position. All of the code the in deep_pose folder, along with the "body_pose_model.pth" file that users are asked to download are from the OpenPose repository and are not our own code.
+3. Backgrounds: 
+[istockphoto.com](https://www.istockphoto.com/vector/red-brick-wall-hole-gm587952908-100971081)
+[vectorstock.com](https://www.vectorstock.com/royalty-free-vector/human-silhouette-hole-in-brick-wall-pop-art-vector-15729119)
+4. Music: [Youtube Audio Library](https://www.youtube.com/c/audiolibrary-channel/videos)
