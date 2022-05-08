@@ -6,8 +6,10 @@ import os
 import cv2
 from deep_pose.body import Body
 
+# OpenPose instance used to analyze camera frames.
 BODY_ESTIMATION = Body("deep_pose/body_pose_model.pth")
 
+# List of image names to analyze.
 MASK_NAMES = [
     "first_mask",
     "second_mask",
@@ -31,11 +33,15 @@ def analyze_image(image_name):
             the joint in the image, [-1, -1] if it is not found.
     """
     joint_positions = {}
+    # All images to be analyzed are in the images/poses directory
     if os.path.exists(f"images/poses/{image_name}.png"):
         image = cv2.imread(f"images/poses/{image_name}.png")
+        # candidate is all the joints recognized by OpenPose and subset
+        # groups the joints in candidate by person (if multiple are detected)
         candidate, subset = BODY_ESTIMATION(image)
-
         for index, value in enumerate(subset[0]):
+            # if the value is 0, a particular joint was not found and should be
+            # mapped to [-1, -1] to indicate that.
             if value >= 0:
                 joint_positions[f"{index}"] = [
                     candidate[int(value)][0],
@@ -43,6 +49,9 @@ def analyze_image(image_name):
                 ]
             else:
                 joint_positions[f"{index}"] = [-1, -1]
+            # after index 16, subset contains information related to the
+            # accuracy of the neural network fit but not relevant information
+            # to joint positions.
             if index >= 17:
                 break
     return joint_positions
@@ -67,6 +76,7 @@ def main():
     """
     This is the main runner function to create csv files.
     """
+    # analyze each image in MASK_NAMES and write them to their own csvs.
     for file_name in MASK_NAMES:
         joint_positions = analyze_image(file_name)
         write_to_csv(file_name, joint_positions)

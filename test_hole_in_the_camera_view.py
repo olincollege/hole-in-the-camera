@@ -5,7 +5,7 @@ camera game.
 
 import pygame
 import numpy as np
-from cv2 import cv2
+import cv2
 from hole_in_the_camera_view import PygameViewer
 
 
@@ -25,6 +25,7 @@ def test_pygame_display_size_negative():
     Test that the pygame window size cannot be negative.
     """
     display_size = (-1, -1)
+    # negative display sizes should not be initialized
     try:
         _ = PygameViewer(display_size)
         _ = pygame.display.get_window_size()
@@ -94,6 +95,8 @@ def test_initialize_view_correct_caption():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
+    # get_caption returns 2 values, where only the first is the caption that
+    # is relevant to this test
     test_caption = pygame.display.get_caption()[0]
     expected_caption = "Hole in the Camera"
     pygame.quit()
@@ -118,6 +121,7 @@ def test_initialize_view_correct_icon_title():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
+    # second value of get_caption is the icon name, which is being tested here
     test_icon_title = pygame.display.get_caption()[1]
     expected_caption = "Hole in the Camera"
     pygame.quit()
@@ -145,6 +149,8 @@ def test_display_introduction_screen_type():
     test_view.display_introduction()
     test_screen_type = type(test_view.screen)
     pygame.quit()
+    # screen should be a pygame.Surface, which is the datatype inherent to
+    # pygame to display images to users
     assert test_screen_type == pygame.Surface
 
 

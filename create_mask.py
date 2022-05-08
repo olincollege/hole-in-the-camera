@@ -6,6 +6,7 @@ import cv2 as cv
 
 # Open a camera for video capturing.
 CAMERA = cv.VideoCapture(0)
+# Image name to be analyzed.
 MASK_NAME = "eighth_mask"
 
 def get_camera_frame():

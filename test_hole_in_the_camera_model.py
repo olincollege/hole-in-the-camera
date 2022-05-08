@@ -22,6 +22,7 @@ def test_initialization_joints_file_paths():
     """
     test_model = HoleInTheCameraGame()
     for _, csv in test_model.mask_and_joints:
+        # all paths to csv files should end in .csv
         if not csv[-4:] == ".csv":
             assert False
     assert True
@@ -65,6 +66,8 @@ def test_num_holes_remaining_three_trials_elapsed():
     test_model = HoleInTheCameraGame()
     for _ in range(3):
         test_model.get_mask_and_joints()
+    # after three iterations, the mask_and_joints length should also decrement
+    # by 3
     assert test_model.num_holes_remaining() == 4
 
 
@@ -121,6 +124,7 @@ def test_analyze_frame_black_image_joint_candidates():
     for an empty black image.
     """
     test_model = HoleInTheCameraGame()
+    # creates an all black image
     test_image = np.zeros([480, 640, 3])
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 0
@@ -143,6 +147,7 @@ def test_analyze_frame_white_image_joint_candidates():
     for a white image.
     """
     test_model = HoleInTheCameraGame()
+    # creates an all white image
     test_image = np.ones([480, 640, 3]) * 255
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 0
@@ -165,6 +170,7 @@ def test_analyze_frame_no_legs_joint_candidates():
     for a mask containing only the upper body of a person.
     """
     test_model = HoleInTheCameraGame()
+    # reads a stored image used to create game masks
     test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 14
@@ -199,6 +205,7 @@ def test_analyze_frame_half_upper_joint_candidates():
     for a mask containing only the upper body of a person.
     """
     test_model = HoleInTheCameraGame()
+    # splits the image in half to test behavior on a cut off person
     test_image = cv2.imread("images/poses/first_mask.png")[:, 0:325, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 7

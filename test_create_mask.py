@@ -41,6 +41,8 @@ def test_analyze_camera_frame_mask_values():
     _, test_mask = analyze_camera_frame(test_frame)
     for row in test_mask:
         for value in row:
+            # all values should be 0 or 255 as the mask is a black and white
+            # grayscaled image
             if value not in (0, 255):
                 assert False
     assert True
@@ -64,6 +66,8 @@ def test_analyze_camera_frame_mask_values_saved_image():
     _, test_mask = analyze_camera_frame(test_frame)
     for row in test_mask:
         for value in row:
+            # all values should be 0 or 255 as the mask is a black and white
+            # grayscaled image
             if value not in (0, 255):
                 assert False
     assert True

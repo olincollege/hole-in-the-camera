@@ -51,9 +51,13 @@ def run_game():
     Returns:
         (str): The next game state.
     """
+    # total trials is equal to the number of unique holes stroed in the model.
     total_trials = game_model.num_holes_remaining()
+    # number of trials remaining is equal to the number of unique holes
+    # remaining.
     num_trials_remaining = game_model.num_holes_remaining()
     while num_trials_remaining > 0:
+        # Display the initial round screen that specifies which round it is.
         game_view.display_round_screen(total_trials - num_trials_remaining + 1)
         next_screen_state = game_controller.next_screen()
         while next_screen_state == "stay":
@@ -61,9 +65,13 @@ def run_game():
         hole_mask, joints_file = game_model.get_mask_and_joints()
         game_controller.start_timer()
         current_timer_value = game_controller.get_timer_string()
+        # while loop runs until the timer has expired, signifying the end of
+        # the trial
         while True:
             current_frame = game_controller.get_display_frame()
             current_timer_value = game_controller.get_timer_string()
+            # displays the user's frame, along with the hole mask overlaid on
+            # top to the user.
             game_view.display_frame(current_frame, current_timer_value,
                                     hole_mask)
             if game_controller.next_screen() == "quit":
@@ -71,6 +79,8 @@ def run_game():
             if game_controller.determine_end_timer():
                 final_frame = current_frame
                 break
+        # these functions call the model to analyze the user's final frame and
+        # determine if the user was successful or not.
         game_model.analyze_frame(final_frame)
         game_model.parse_for_joint_positions()
         game_model.compute_accuracy(joints_file)
@@ -100,7 +110,8 @@ def end_game():
         next_screen_state = game_controller.next_screen()
     return "game_complete"
 
-# Dictionary of game states and their corresponding functions.
+# Dictionary of game states and their corresponding functions. Acts similar to
+# a switch statement in other languages.
 GAME_STATES = {
     "start_screen": game_start,
     "instruction_screen": show_instructions,
@@ -122,7 +133,6 @@ if __name__ == "__main__":
         current_game_state = GAME_STATES[current_game_state]()
         if current_game_state == "game_complete":
             break
-
     # Close the game.
     current_game_state = "game_complete"
     game_controller.release_camera()

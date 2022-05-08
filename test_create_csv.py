@@ -31,8 +31,10 @@ def test_analyze_image_values():
     test_image_name = "first_mask"
     test_joint_positions = analyze_image(test_image_name)
     for _, value in test_joint_positions.items():
+        # each value in joint_positions should be 2-entries
         if len(value) != 2:
             assert False
+        # each of the two entries should be inside of a 480x640 image
         if value[0] < -1 or value[0] > 640 or value[1] < -1 or value[1] > 480:
             assert False
     assert True
@@ -46,6 +48,7 @@ def test_write_to_csv_exists():
     test_csv_name = "test"
     write_to_csv(test_csv_name, test_joint_positions)
     csv_exists = os.path.exists(f'mask_joint_positions/{test_csv_name}.csv')
+    # file deleted to ensure a clean workspace
     if csv_exists:
         os.remove(f'mask_joint_positions/{test_csv_name}.csv')
     assert csv_exists
@@ -75,7 +78,9 @@ def test_write_to_csv_one_joint():
     write_to_csv(test_csv_name, test_joint_positions)
     with open(f'mask_joint_positions/{test_csv_name}.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
-        row_count = sum(1 for row in csv_reader)
+        # sum reach row in the csv file
+        row_count = sum(1 for _ in csv_reader)
+    # file deleted to ensure a clean workspace
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')
     assert row_count == 1
 
@@ -91,11 +96,14 @@ def test_write_to_csv_one_joint_values():
         csv_reader = csv.reader(csv_file)
         joint_counter = 0
         for row in csv_reader:
+            # check to make sure each row in the csv equals to inputted
+            # dictionary values
             if row[0] != str(joint_counter) or row[1] !=\
                 str(test_joint_positions[str(joint_counter)][0]) or\
                 row[2] != str(test_joint_positions[str(joint_counter)][1]):
                 assert False
             joint_counter += 1
+    # file deleted to ensure a clean workspace
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')
     assert True
 
@@ -111,6 +119,7 @@ def test_write_to_csv_eighteen_joints():
     with open(f'mask_joint_positions/{test_csv_name}.csv', 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
         row_count = sum(1 for row in csv_reader)
+    # file deleted to ensure a clean workspace
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')
     assert row_count == 18
 
@@ -131,5 +140,6 @@ def test_write_to_csv_eighteen_joint_values():
                 row[2] != str(test_joint_positions[str(joint_counter)][1]):
                 assert False
             joint_counter += 1
+    # file deleted to ensure a clean workspace
     os.remove(f'mask_joint_positions/{test_csv_name}.csv')
     assert True

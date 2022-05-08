@@ -4,12 +4,16 @@ Hole in the camera game view.
 from abc import ABC, abstractmethod
 import pygame
 from pygame import mixer
-from cv2 import cv2 as cv
+import cv2 as cv
 
 
 class HoleInTheWallView(ABC):
     """
     Create abstract class for game view.
+
+    Attributes:
+        _display_size: The pixel dimensions of the intended display to the
+            user.
     """
 
     def __init__(self, display_size):
@@ -17,7 +21,7 @@ class HoleInTheWallView(ABC):
         Initialize the game view object.
 
         Args:
-            display_size (tuple): Size of the display.
+            display_size (tuple): Size of the display in pixels.
         """
         self._display_size = display_size
 
@@ -69,28 +73,35 @@ class HoleInTheWallView(ABC):
             score (int): Final player score.
         """
 
+    @abstractmethod
+    def display_round_screen(self, round_num):
+        """
+        Display the round number.
+
+        Args:
+            round_num (int): The number of the current round.
+        """
+
 
 class PygameViewer(HoleInTheWallView):
     """
     Initializing game window view.
 
     Attributes:
-        BLACK (tuple): RGB value for black.
-        WHITE (tuple): RGB value for white.
-        BLUE (tuple): RGB value for blue.
-        FONT (str): Font name.
-        FONT_SIZE (int): Font size.
-        BACKGROUND_PATHS (list): The paths of the background images.
+        _BLACK (tuple): RGB value for black.
+        _WHITE (tuple): RGB value for white.
+        _FONT (str): Font name.
+        _FONT_SIZE (int): Font size.
+        _BACKGROUND_PATHS (list): The paths of the background images.
         _screen (pygame.Surface): The game window.
-        font (pygame.font.SysFont): The font used to display text.
+        _font (pygame.font.SysFont): The font used to display text.
     """
 
-    BLACK = (0, 0, 0)
-    WHITE = (255, 255, 255)
-    FONT_NAME = "Viga"
-
-    FONT_SIZE = 38
-    BACKGROUND_PATHS = ["images/assets/background.jpg",
+    _BLACK = (0, 0, 0)
+    _WHITE = (255, 255, 255)
+    _FONT_NAME = "Viga"
+    _FONT_SIZE = 38
+    _BACKGROUND_PATHS = ["images/assets/background.jpg",
                         "images/assets/lost_background.jpg",
                         "images/assets/win_background.jpg",
                         "images/assets/Backgrounds/round_1_00_00.jpg",
@@ -101,7 +112,6 @@ class PygameViewer(HoleInTheWallView):
                         "images/assets/Backgrounds/round_6_00_00.jpg",
                         "images/assets/Backgrounds/round_7_00_00.jpg",
                         "images/assets/Backgrounds/Final_00_00.jpg"
-
                         ]
 
     def __init__(self, display_size):
@@ -113,9 +123,10 @@ class PygameViewer(HoleInTheWallView):
         """
         super().__init__(display_size)
         pygame.font.init()
+        # mixer initializes the music playing functionality
         mixer.init()
         self._screen = pygame.display.set_mode(self._display_size)
-        self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
+        self._font = pygame.font.SysFont(self._FONT_NAME, self._FONT_SIZE)
 
     @property
     def screen(self):
@@ -148,7 +159,7 @@ class PygameViewer(HoleInTheWallView):
             background_path (str): The path of a png file as the background
             of the game window
         """
-        background = pygame.image.load(self.BACKGROUND_PATHS[background_num])
+        background = pygame.image.load(self._BACKGROUND_PATHS[background_num])
         background = pygame.transform.scale(background, (640, 480))
         self._screen.blit(background, (0, 0))
 
@@ -159,11 +170,13 @@ class PygameViewer(HoleInTheWallView):
 
         Args:
             texts (list): The text to be displayed.
+            top_color (tuple): A 3 entry tuple RGB value.
+            back_color (tuple): A 3 entry tuple RGB value.
         """
         y_offset = 0
         for text in texts:
-            _, font_height = self.font.size(text)
-            image = self.font.render(text, True, top_color, back_color)
+            _, font_height = self._font.size(text)
+            image = self._font.render(text, True, top_color, back_color)
             self._screen.blit(image, (55, 210 + y_offset))
             y_offset += font_height
         pygame.display.update()
@@ -176,7 +189,7 @@ class PygameViewer(HoleInTheWallView):
                         "Press any key to continue",
                         "Press esc to exit (Bye!)"]
         self._display_background(0)
-        self._display_text(welcome_text, self.WHITE, self.BLACK)
+        self._display_text(welcome_text, self._WHITE, self._BLACK)
 
     def display_instructions(self):
         """
@@ -185,7 +198,7 @@ class PygameViewer(HoleInTheWallView):
         instruction_text = ["Instructions:", "Adjust your pose (or camera) to",\
                         "fit into the holes.", "You have 10 sec each round!"]
         self._display_background(0)
-        self._display_text(instruction_text, self.WHITE, self.BLACK)
+        self._display_text(instruction_text, self._WHITE, self._BLACK)
 
     def display_frame(self, frame, timer_text, camera_mask):
         """
@@ -200,7 +213,7 @@ class PygameViewer(HoleInTheWallView):
         frame = pygame.transform.rotate(pygame.surfarray.make_surface(frame),
                                         -90)
         self._screen.blit(frame, (0, 0))
-        counting_text = self.font.render(timer_text, 1, self.WHITE)
+        counting_text = self.font.render(timer_text, 1, self._WHITE)
         counting_rect = counting_text.get_rect(
             bottomright=self._screen.get_rect().bottomright
         )
@@ -218,6 +231,8 @@ class PygameViewer(HoleInTheWallView):
             win (bool): True if the user has won, False otherwise.
         """
         if win_state:
+            # music stopped and then started to ensure it starts at the same
+            # point each time.
             mixer.music.stop()
             win_sound = mixer.Sound(
                 "sound/win_notif.wav"
@@ -225,14 +240,14 @@ class PygameViewer(HoleInTheWallView):
             win_sound.play()
             won_text = [f"Your score is: {int(score)}"]
             self._display_background(2)
-            self._display_text(won_text, self.BLACK, self.WHITE)
+            self._display_text(won_text, self._BLACK, self._WHITE)
         else:
             mixer.music.stop()
             crash_sound = mixer.Sound("sound/loss_notif.wav")
             crash_sound.play()
             lost_text = ["You lost!", f"Your score is {int(score)}"]
             self._display_background(1)
-            self._display_text(lost_text, self.WHITE, self.BLACK)
+            self._display_text(lost_text, self._WHITE, self._BLACK)
 
     def display_end_game(self, score):
         """
@@ -244,7 +259,7 @@ class PygameViewer(HoleInTheWallView):
         """
         self._display_background(10)
         self._display_text(["Game Over!", f"Final Score: {int(score)}/100"],
-                           self.WHITE, self.BLACK)
+                           self._WHITE, self._BLACK)
 
     def display_round_screen(self, round_num):
         """
@@ -258,4 +273,4 @@ class PygameViewer(HoleInTheWallView):
             mixer.music.load("sound/background_music.wav")
             mixer.music.play()
         self._display_background(round_num + 2)
-        self._display_text([""], self.BLACK, self.WHITE)
+        self._display_text([""], self._BLACK, self._WHITE)

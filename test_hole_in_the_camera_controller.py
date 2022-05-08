@@ -59,6 +59,7 @@ def test_next_screen_space_press():
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_view.display_introduction()
+    # posting pygame events simulates a user pressing down on a key
     pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
     state = test_controller.next_screen()
     pygame.quit()
@@ -151,6 +152,8 @@ def test_release_camera():
     test_controller = OpenCVController(0)
     test_controller.release_camera()
 
+    # cv2.error should be thrown when trying to get a camera frame with no
+    # initialized camera
     try:
         test_controller.get_display_frame()
         assert False
@@ -238,6 +241,7 @@ def test_get_timer_string_two_second_wait():
     test_controller = OpenCVController(0)
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
+    # sleep statements included to decrement the expected timer string
     time.sleep(2)
     test_timer_string = test_controller.get_timer_string()
     pygame.quit()
