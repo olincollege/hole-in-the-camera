@@ -137,7 +137,7 @@ class PygameViewer(HoleInTheWallView):
         icon = pygame.image.load("images/assets/gameicon.jpg")
         pygame.display.set_icon(icon)
 
-        mixer.music.load("Sound/No Doubt - Yung Logos.wav")
+        mixer.music.load("sound/background_music.wav")
         mixer.music.play()
 
     def _display_background(self, background_num):
@@ -220,7 +220,7 @@ class PygameViewer(HoleInTheWallView):
         if win_state:
             mixer.music.stop()
             win_sound = mixer.Sound(
-                "Sound/mixkit-fantasy-game-success-notification-270.wav"
+                "sound/win_notif.wav"
             )
             win_sound.play()
             won_text = [f"Your score is: {int(score)}"]
@@ -228,7 +228,7 @@ class PygameViewer(HoleInTheWallView):
             self._display_text(won_text, self.BLACK, self.WHITE)
         else:
             mixer.music.stop()
-            crash_sound = mixer.Sound("Sound/Crash .wav")
+            crash_sound = mixer.Sound("sound/loss_notif.wav")
             crash_sound.play()
             lost_text = ["You lost!", f"Your score is {int(score)}"]
             self._display_background(1)
@@ -255,7 +255,7 @@ class PygameViewer(HoleInTheWallView):
         """
         if round_num != 1:
             mixer.stop()
-            mixer.music.load("Sound/No Doubt - Yung Logos.wav")
+            mixer.music.load("sound/background_music.wav")
             mixer.music.play()
         self._display_background(round_num + 2)
         self._display_text([""], self.BLACK, self.WHITE)
