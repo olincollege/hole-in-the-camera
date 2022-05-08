@@ -67,6 +67,18 @@ def test_initialize_view_pygame_after_initialization():
     pygame.quit()
     assert display_state
 
+def test_initialize_view_music_before_initialization():
+    _ = PygameViewer((640, 480))
+    music_state = pygame.mixer.music.get_busy()
+    pygame.quit()
+    assert not music_state
+
+def test_initialize_view_music_after_initialization():
+    test_view = PygameViewer((640, 480))
+    test_view.initialize_view()
+    music_state = pygame.mixer.music.get_busy()
+    pygame.quit()
+    assert music_state
 
 def test_initialize_view_correct_caption():
     """

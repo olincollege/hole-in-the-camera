@@ -104,12 +104,9 @@ class PygameViewer(HoleInTheWallView):
         """
         super().__init__(display_size)
         pygame.font.init()
+        mixer.init()
         self._screen = pygame.display.set_mode(self._display_size)
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
-
-        mixer.init()
-        mixer.music.load("Sound/No Doubt - Yung Logos.wav")
-        mixer.music.play()
 
     @property
     def screen(self):
@@ -130,6 +127,9 @@ class PygameViewer(HoleInTheWallView):
         pygame.display.set_caption("Hole in the Camera")
         icon = pygame.image.load("images/assets/gameicon.jpg")
         pygame.display.set_icon(icon)
+
+        mixer.music.load("Sound/No Doubt - Yung Logos.wav")
+        mixer.music.play()
 
     def _display_background(self, background_num):
         """

@@ -333,6 +333,23 @@ def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
                 assert False
     assert True
 
+def test_compute_accuracy_white_image_total_score():
+    test_model = HoleInTheCameraGame()
+    test_image = np.ones([480, 640, 3]) * 255
+    test_csv = "mask_joint_positions/first_mask.csv"
+    test_model.analyze_frame(test_image)
+    test_model.parse_for_joint_positions()
+    test_model.compute_accuracy(test_csv)
+    assert test_model.total_score == 0
+
+def test_compute_accuracy_white_image_trial_score():
+    test_model = HoleInTheCameraGame()
+    test_image = np.ones([480, 640, 3]) * 255
+    test_csv = "mask_joint_positions/first_mask.csv"
+    test_model.analyze_frame(test_image)
+    test_model.parse_for_joint_positions()
+    test_model.compute_accuracy(test_csv)
+    assert test_model.trial_score == 0
 
 def test_compute_accuracy_same_image_total_score():
     test_model = HoleInTheCameraGame()
