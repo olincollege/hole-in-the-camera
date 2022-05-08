@@ -60,7 +60,7 @@ After making these changes, you're all ready to play with your own holes!
 ### About the Creators
 1. [Ayush Chakraborty](https://github.com/ayushchakra): 
 2. [Jiayuan Liu](https://github.com/Chidunbo): 
-<img src="profile-pictures/Anmol.png" width ="30%" height = "30%" style="float:right;margin:0px 30px">
+<img src="profile-pictures/Anmol.jpg" width ="30%" height = "30%" style="float:right;margin:0px 30px">
 3. [Anmol Sandhu](https://github.com/AnmolRattanSingh): 
 ### Acknowledgements
 1. Major inspiration for this game comes from Nickelodeon's game show, Hole in the Wall. Many of the features of our game are based on design features of the real life game and our implementation wouldn't have been possible without it.
