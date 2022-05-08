@@ -4,7 +4,7 @@ Hole in the camera game view.
 from abc import ABC, abstractmethod
 import pygame
 from pygame import mixer
-import cv2 as cv
+from cv2 import cv2 as cv
 
 
 class HoleInTheWallView(ABC):
@@ -26,21 +26,18 @@ class HoleInTheWallView(ABC):
         """
         Initialize the game view.
         """
-        pass
 
     @abstractmethod
     def display_introduction(self):
         """
         Display the introduction screen.
         """
-        pass
 
     @abstractmethod
     def display_instructions(self):
         """
         Display the instructions screen.
         """
-        pass
 
     @abstractmethod
     def display_frame(self, frame, timer_text, camera_mask):
@@ -52,7 +49,6 @@ class HoleInTheWallView(ABC):
             timer_text (str): Current timer value.
             camera_mask (numpy.ndarray): Current camera mask.
         """
-        pass
 
     @abstractmethod
     def display_win(self, win_state, score):
@@ -63,7 +59,6 @@ class HoleInTheWallView(ABC):
             win_state (str): Win state.
             score (int): Current score.
         """
-        pass
 
     @abstractmethod
     def display_end_game(self, score):
@@ -73,7 +68,6 @@ class HoleInTheWallView(ABC):
         Args:
             score (int): Final player score.
         """
-        pass
 
 
 class PygameViewer(HoleInTheWallView):
@@ -245,6 +239,12 @@ class PygameViewer(HoleInTheWallView):
         self._display_text(["Game Over!", f"Final Score: {int(score)}/700"])
 
     def display_round_screen(self, round_num):
+        """
+        Display the screen before each round.
+
+        Args:
+            round_num (int): The number of the current round.
+        """
         if round_num != 1:
             mixer.stop()
             mixer.music.load("Sound/No Doubt - Yung Logos.wav")

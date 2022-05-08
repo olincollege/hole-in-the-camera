@@ -1,9 +1,9 @@
 """
+Create csv files representing joints positions for each mask.
 """
-from deep_pose.body import Body
-import cv2
 import csv
-import numpy as np
+from cv2 import cv2
+from deep_pose.body import Body
 
 BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
 
@@ -25,7 +25,8 @@ for file_name in MASK_NAMES:
         if index >= 17:
             break
 
-    with open(f'mask_joint_positions/{file_name}.csv', 'w') as csv_file:
+    with open(f'mask_joint_positions/{file_name}.csv', 'w',
+              encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         for key, value in joint_positions.items():
             csv_writer.writerow([key, value[0], value[1]])

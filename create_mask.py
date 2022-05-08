@@ -1,6 +1,7 @@
 """
+Create masks to use in the game.
 """
-import cv2 as cv
+from cv2 import cv2 as cv
 
 # Open a camera for video capturing.
 CAMERA = cv.VideoCapture(0)

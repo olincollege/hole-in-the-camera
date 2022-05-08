@@ -2,8 +2,8 @@
 Tests for the HoleInTheCameraGame class
 """
 
-import cv2
 import os
+from cv2 import cv2
 import numpy as np
 from hole_in_the_camera_model import HoleInTheCameraGame
 
@@ -298,8 +298,8 @@ def test_parse_for_joint_positions_half_upper_found_joint_positions():
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key not in ['1', '5', '6', '7', '8', '9', '10', '11', '12', '13',\
-            '17']:
+        if key not in ['1', '5', '6', '7', '8', '9', '10', '11', '12', '13',
+                       '17']:
             if value[0] > 640 or value[0] < 0 or value[1] > 480 or value[1] < 0:
                 assert False
     assert True
@@ -311,8 +311,8 @@ def test_parse_for_joint_positions_other_half_upper_joints_detected():
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14', '15',\
-            '16']:
+        if key in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14', '15',
+                   '16']:
             if value != [-1, -1]:
                 assert False
         else:
@@ -327,8 +327,8 @@ def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key not in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14',\
-            '15', '16']:
+        if key not in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14',
+                       '15', '16']:
             if value[0] > 640 or value[0] < 0 or value[1] > 480 or value[1] < 0:
                 assert False
     assert True

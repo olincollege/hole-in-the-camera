@@ -8,9 +8,10 @@ https://github.com/Hzzone/pytorch-openpose
 """
 import csv
 import random
-import cv2 as cv
+from cv2 import cv2 as cv
 import numpy as np
 from deep_pose.body import Body
+
 
 class HoleInTheCameraGame:
     """
@@ -182,7 +183,8 @@ class HoleInTheCameraGame:
                 # Value will be -1 if the joint is not present in the image.
                 if value >= 0:
                     self._joint_positions[f'{index}'] = [
-                        self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
+                        self._joint_candidates[int(value)][0],
+                        self._joint_candidates[int(value)][1]]
                 else:
                     self._joint_positions[f'{index}'] = [-1, -1]
                 # After 16, the _joint_subsets variable contains information
@@ -207,7 +209,7 @@ class HoleInTheCameraGame:
 
         # Reads and stores the saved joint positions to compare against the
         # user's joint positions.
-        with open(saved_csv_for_mask, 'r') as csv_file:
+        with open(saved_csv_for_mask, 'r', encoding='utf-8') as csv_file:
             csv_reader = csv.reader(csv_file)
             for row in csv_reader:
                 joint_fits.append(row)
@@ -215,7 +217,7 @@ class HoleInTheCameraGame:
             # Ensures that comparisons are only made with joints that are
             # present.
             if joint[0] in self._joint_positions.keys() and\
-                self._joint_positions[joint[0]][1] != '-1':
+                    self._joint_positions[joint[0]][1] != '-1':
                 joint_counts += 1
                 reference_joint_position = np.array(
                     [int(float(joint[1])), int(float(joint[2]))])

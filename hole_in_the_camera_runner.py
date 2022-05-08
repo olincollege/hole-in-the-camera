@@ -1,10 +1,10 @@
 """
 Main runner code for hole in the camera game.
 """
+import sys
 from hole_in_the_camera_controller import OpenCVController
 from hole_in_the_camera_view import PygameViewer
 from hole_in_the_camera_model import HoleInTheCameraGame
-import sys
 
 # Set up view constants
 CAMERA_INDEX = 0
@@ -18,7 +18,7 @@ game_model = HoleInTheCameraGame()
 # Start the game and initialize pygame
 game_view.initialize_view()
 # set current game state to start screen
-current_game_state = 'start_screen'
+CURRENT_GAME_STATE = 'start_screen'
 
 
 def game_start():
@@ -121,11 +121,11 @@ GAME_STATES = {
 
 # Run the game until the user quits.
 while True:
-    current_game_state = GAME_STATES[current_game_state]()
-    if current_game_state == "game_complete":
+    CURRENT_GAME_STATE = GAME_STATES[CURRENT_GAME_STATE]()
+    if CURRENT_GAME_STATE == "game_complete":
         break
 
 # Close the game.
-current_game_state = "game_complete"
+CURRENT_GAME_STATE = "game_complete"
 game_controller.release_camera()
-GAME_STATES[current_game_state]()
+GAME_STATES[CURRENT_GAME_STATE]()

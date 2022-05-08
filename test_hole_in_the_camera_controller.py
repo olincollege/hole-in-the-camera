@@ -1,9 +1,9 @@
 """
 Tests for the OpenCVController class.
 """
-import pygame
 import time
-import cv2
+import pygame
+from cv2 import cv2
 import numpy as np
 from hole_in_the_camera_view import PygameViewer
 from hole_in_the_camera_controller import OpenCVController
@@ -263,7 +263,7 @@ def test_get_timer_string_end_timer():
 def test_get_timer_string_negative():
     """
     Test to ensure that the get_timer_string function
-    returns negative values when the wait is more than the 
+    returns negative values when the wait is more than the
     countdown.
     """
     test_controller = OpenCVController(0)
