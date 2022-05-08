@@ -102,7 +102,8 @@ def end_game():
     Returns:
         (str): The next game state.
     """
-    game_view.display_end_game(game_model.total_score)
+    average_score = game_model.total_score/ 7
+    game_view.display_end_game(average_score)
     next_screen_state = game_controller.next_screen()
     while next_screen_state == "stay":
         if next_screen_state == "quit":
