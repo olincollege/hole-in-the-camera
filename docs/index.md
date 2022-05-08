@@ -56,24 +56,25 @@ While playing the game did you suddenly get inspiration to create your own holes
 4. Repeat steps 1-3 for as many holes as you want, ensuring that you pick different names for each hole.
 5. Next, you need to run the create_csv.py script to analyze each picture you took for joint positions to be used to compare users against in each game round. To do this, change the MASK_NAMES variable (line 10) to be a list of each hole name that you made. Then, run the script.
 6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 49) to be a list of all the holes you want the game to display.
-After making these changes, you're all ready to play with your own holes!
+After making these changes, you're all ready to play with your own holes!   
+
 ### About the Creators
 
-<img src="profile-pictures/Ayush.jpeg" width ="20%" height = "30%">
-
+<img src="profile-pictures/Ayush.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
+ 
 **[Ayush Chakraborty](https://github.com/ayushchakra)** 
-Olin College of Engineering '25
-
-<img src="profile-pictures/Jiayuan.jpeg" width ="17%" height = "30%">
+Hey, my name is Ayush and I am a Engineering: Computing Major at the Olin College of Engineering. For this game, I took charge on implementing Deep Pose, including learning how it’s structured and how to parse it’s outputs. Some of my interests are embedded systems, machine learning, and back-end software development and I’m always looking for opportunities to learn more in these domains!
+<br>
+<img src="profile-pictures/Jiayuan.jpeg" width ="18%" height = "30%" style="float:right;margin:0px 0px">
 
 **[Jiayuan Liu](https://github.com/Chidunbo)** 
-Olin College of Engineering '25
-
-<img src="profile-pictures/Anmol.jpg" width ="20%" height = "30%">   
+Hi I am Jiayuan. In this project, I am in charge of the game workflow, visualization and sound effect aspect of the game. I am interested in game design and public interest technology.
+<br>
+<img src="profile-pictures/Anmol.jpg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
-Olin College of Engineering '25   
-
+Hey, I am Anmol. I am a Engineering: Computing major at Olin College. For this game I worked on implementing OpenCV to parse user input and also creating game masks. I am passionate about using platform technologies for solving social and environmental problems.
+<br>
 ### Acknowledgements
 1. Major inspiration for this game comes from Nickelodeon's game show, Hole in the Wall. Many of the features of our game are based on design features of the real life game and our implementation wouldn't have been possible without it.
 2. To analyze our final frames for how well users fit into the displayed holes, we relied on a public github repository called OpenPose (https://github.com/Hzzone/pytorch-openpose). OpenPose is an implementation of Deep Pose, which is a proposed method to finding body joint positions within a given image using a deep neural network. We used this repository for each of our stored holes for where a user's joints should be in the frame, and compared those values to the joint positions found from the user's actual position. All of the code the in deep_pose folder, along with the "body_pose_model.pth" file that users are asked to download are from the OpenPose repository and are not our own code.
