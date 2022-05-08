@@ -53,8 +53,7 @@ While playing the game did you suddenly get inspiration to create your own holes
 3. Once you are satisfied with your pose in the camera frame, press the 'd' key on your keyboard, which will save the hole and original image into their respective directories in the hole-in-the-camera folder.
 4. Repeat steps 1-3 for as many holes as you want, ensuring that you pick different names for each hole.
 5. Next, you need to run the create_csv.py script to analyze each picture you took for joint positions to be used to compare users against in each game round. To do this, change the MASK_NAMES variable (line 10) to be a list of each hole name that you made. Then, run the script.
-6. To make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 48) to be a list of all the holes you want the game to display.
-7. Finally, you need to update the final screen display so that the user's score is out of the actual maximum score they could have obtained. Go into the hole_in_the_camera_view.py file and in line 245, change the displayed score value to be out of 100 times the number of holes in the model (default is out of 700).
+6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 48) to be a list of all the holes you want the game to display.
 After making these changes, you're all ready to play with your own holes!
 ### About the Creators
 1. [Ayush Chakraborty](https://github.com/ayushchakra): 
