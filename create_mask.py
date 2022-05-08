@@ -4,6 +4,7 @@ import cv2 as cv
 
 # Open a camera for video capturing.
 CAMERA = cv.VideoCapture(0)
+MASK_NAME = "sixth_mask"
 
 while True:
     # Capture frame-by-frame
@@ -19,8 +20,8 @@ while True:
     if cv.waitKey(1) & 0xFF == ord('d'):
         # save the current frame and the mask applied on it
         frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
-        cv.imwrite("images/poses/sixth_mask.png", frame)
-        cv.imwrite("images/masks/sixth_mask.png", mask)
+        cv.imwrite(f"images/poses/{MASK_NAME}.png", frame)
+        cv.imwrite(f"images/masks/{MASK_NAME}.png", mask)
         break
 
 # close video and destroy all windows

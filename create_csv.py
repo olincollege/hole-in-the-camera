@@ -7,10 +7,10 @@ import numpy as np
 
 BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
 
-mask_names = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask',
+MASK_NAMES = ['first_mask', 'second_mask', 'third_mask', 'fourth_mask',
               'fifth_mask', 'sixth_mask', 'seventh_mask']
 
-for file_name in mask_names:
+for file_name in MASK_NAMES:
     image = cv2.imread(f'images/poses/{file_name}.png')
     # pdb.set_trace()
     candidate, subset = BODY_ESTIMATION(image)
