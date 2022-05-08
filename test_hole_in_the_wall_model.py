@@ -1,4 +1,5 @@
 """
+Tests for the HoleInTheCameraGame class
 """
 
 from hole_in_the_wall_model import HoleInTheCameraGame
@@ -8,11 +9,17 @@ import cv2
 
 
 def test_initialization_mask_and_joints_length():
+    """
+    Tests that the mask_and_joints list has the correct number of elements.
+    """
     test_model = HoleInTheCameraGame()
     assert len(test_model.mask_and_joints) == 7
 
 
 def test_initialization_joints_file_paths():
+    """
+    Tests that the joint files are the correct file type.
+    """
     test_model = HoleInTheCameraGame()
     for _, csv in test_model.mask_and_joints:
         if not csv[-4:] == '.csv':
@@ -21,6 +28,9 @@ def test_initialization_joints_file_paths():
 
 
 def test_initialization_mask_shape():
+    """
+    Tests that the mask has the correct shape.
+    """
     test_model = HoleInTheCameraGame()
     for image, _ in test_model.mask_and_joints:
         if np.shape(image) != (480, 640, 3):
@@ -29,6 +39,9 @@ def test_initialization_mask_shape():
 
 
 def test_initialization_mask_values():
+    """
+    Tests that the mask has correct RGB values.
+    """
     test_model = HoleInTheCameraGame()
     for image, _ in test_model.mask_and_joints:
         if np.mean(image) >= 255 or np.mean(image) <= 0:
@@ -37,11 +50,18 @@ def test_initialization_mask_values():
 
 
 def test_num_holes_remaining_start():
+    """
+    Tests that the number of holes remaining is 7 at the start.
+    """
     test_model = HoleInTheCameraGame()
     assert test_model.num_holes_remaining() == 7
 
 
 def test_num_holes_remaining_three_trials_elapsed():
+    """
+    Tests that the number of holes remaining decreases correctly
+    after a few trials.
+    """
     test_model = HoleInTheCameraGame()
     for _ in range(3):
         test_model.get_mask_and_joints()
@@ -49,6 +69,9 @@ def test_num_holes_remaining_three_trials_elapsed():
 
 
 def test_num_holes_remaining_all_trials_elapsed():
+    """
+    Tests that the number of holes remaining is 0 after all trials are done.
+    """
     test_model = HoleInTheCameraGame()
     for _ in range(7):
         test_model.get_mask_and_joints()
@@ -56,30 +79,47 @@ def test_num_holes_remaining_all_trials_elapsed():
 
 
 def test_get_mask_and_joints_joint_path():
+    """
+    Tests that the joint path is the correct file type.
+    """
     test_model = HoleInTheCameraGame()
     _, joint = test_model.get_mask_and_joints()
     assert joint[-4:] == '.csv'
 
 
 def test_get_mask_and_joints_joint_exists():
+    """
+    Tests that the joint returned by get_mask_and_joints is
+    a valid joint.
+    """
     test_model = HoleInTheCameraGame()
     _, joint = test_model.get_mask_and_joints()
     assert os.path.exists(joint)
 
 
 def test_get_mask_and_joints_mask_shape():
+    """
+    Tests that the mask has the correct shape.
+    """
     test_model = HoleInTheCameraGame()
-    mask, joints = test_model.get_mask_and_joints()
+    mask, _ = test_model.get_mask_and_joints()
     assert np.shape(mask) == (480, 640, 3)
 
 
 def test_get_mask_and_joints_mask_values():
+    """
+    Tests that the mask has correct RGB values.
+    """
     test_model = HoleInTheCameraGame()
     mask, _ = test_model.get_mask_and_joints()
     assert np.mean(mask) < 255 and np.mean(mask) > 0
 
 
 def test_analyze_frame_black_image_joint_candidates():
+    """
+    Tests that deep pose does not find any joints
+    for an empty black image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.zeros([480, 640, 3])
     test_model.analyze_frame(test_image)
@@ -87,6 +127,10 @@ def test_analyze_frame_black_image_joint_candidates():
 
 
 def test_analyze_frame_black_image_joint_subsets():
+    """
+    Tests that deep pose does not return any joint subsets
+    for an empty black image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.zeros([480, 640, 3])
     test_model.analyze_frame(test_image)
@@ -94,6 +138,10 @@ def test_analyze_frame_black_image_joint_subsets():
 
 
 def test_analyze_frame_white_image_joint_candidates():
+    """
+    Tests that deep pose does not find any joints
+    for a white image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.ones([480, 640, 3])*255
     test_model.analyze_frame(test_image)
@@ -101,6 +149,10 @@ def test_analyze_frame_white_image_joint_candidates():
 
 
 def test_analyze_frame_white_image_joint_subsets():
+    """
+    Tests that deep pose does not return any joint subsets
+    for a white image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.ones([480, 640, 3])*255
     test_model.analyze_frame(test_image)
@@ -108,6 +160,10 @@ def test_analyze_frame_white_image_joint_subsets():
 
 
 def test_analyze_frame_no_legs_joint_candidates():
+    """
+    Tests that deep pose does not find extra joints
+    for a mask containing only the upper body of a person.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread('images/poses/first_mask.png')
     test_model.analyze_frame(test_image)
@@ -115,6 +171,10 @@ def test_analyze_frame_no_legs_joint_candidates():
 
 
 def test_analyze_frame_no_legs_num_joint_subsets():
+    """
+    Test that deep pose only finds one person's joint subset
+    when there's only one person in the image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread('images/poses/first_mask.png')
     test_model.analyze_frame(test_image)
@@ -129,6 +189,10 @@ def test_analyze_frame_no_legs_first_joint_subset():
 
 
 def test_analyze_frame_half_upper_joint_candidates():
+    """
+    Tests that deep pose does not find extra joints
+    for a mask containing only the upper body of a person.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread('images/poses/first_mask.png')[:, 0:325, :]
     test_model.analyze_frame(test_image)
