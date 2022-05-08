@@ -19,31 +19,37 @@ class HoleInTheWallController(ABC):
 
     def __init__(self):
         """
+        Initialize the game controller object.
         """
 
     @abstractmethod
     def next_screen(self):
         """
+        Get the next screen to display.
         """
 
     @abstractmethod
     def start_timer(self):
         """
+        Start the countdown timer for each round.
         """
 
     @abstractmethod
     def get_display_frame(self):
         """
+        Get the current frame to display.
         """
 
     @abstractmethod
     def get_timer_string(self):
         """
+        Get the current timer string.
         """
 
     @abstractmethod
     def determine_end_timer(self):
         """
+        Determine when the countdown has ended.
         """
 
 
