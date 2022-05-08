@@ -29,7 +29,7 @@ def test_initialization_joints_file_paths():
 
 def test_initialization_mask_shape():
     """
-    Tests that the mask has the correct shape.
+    Tests that each mask has the correct shape.
     """
     test_model = HoleInTheCameraGame()
     for image, _ in test_model.mask_and_joints:
@@ -40,7 +40,7 @@ def test_initialization_mask_shape():
 
 def test_initialization_mask_values():
     """
-    Tests that the mask has correct RGB values.
+    Tests that each mask has realistic RGB values.
     """
     test_model = HoleInTheCameraGame()
     for image, _ in test_model.mask_and_joints:
@@ -60,7 +60,7 @@ def test_num_holes_remaining_start():
 def test_num_holes_remaining_three_trials_elapsed():
     """
     Tests that the number of holes remaining decreases correctly
-    after a few trials.
+    after three trials.
     """
     test_model = HoleInTheCameraGame()
     for _ in range(3):
@@ -70,7 +70,7 @@ def test_num_holes_remaining_three_trials_elapsed():
 
 def test_num_holes_remaining_all_trials_elapsed():
     """
-    Tests that the number of holes remaining is 0 after all trials are done.
+    Tests that the number of holes remaining is 0 after seven trials are done.
     """
     test_model = HoleInTheCameraGame()
     for _ in range(7):
@@ -89,8 +89,8 @@ def test_get_mask_and_joints_joint_path():
 
 def test_get_mask_and_joints_joint_exists():
     """
-    Tests that the joint returned by get_mask_and_joints is
-    a valid joint.
+    Tests that the joint file returned by get_mask_and_joints is
+    a valid file.
     """
     test_model = HoleInTheCameraGame()
     _, joint = test_model.get_mask_and_joints()
@@ -99,7 +99,7 @@ def test_get_mask_and_joints_joint_exists():
 
 def test_get_mask_and_joints_mask_shape():
     """
-    Tests that the mask has the correct shape.
+    Tests that the returned mask has the correct shape.
     """
     test_model = HoleInTheCameraGame()
     mask, _ = test_model.get_mask_and_joints()
@@ -108,7 +108,7 @@ def test_get_mask_and_joints_mask_shape():
 
 def test_get_mask_and_joints_mask_values():
     """
-    Tests that the mask has correct RGB values.
+    Tests that the mask has realistic RGB values.
     """
     test_model = HoleInTheCameraGame()
     mask, _ = test_model.get_mask_and_joints()
@@ -182,6 +182,11 @@ def test_analyze_frame_no_legs_num_joint_subsets():
 
 
 def test_analyze_frame_no_legs_first_joint_subset():
+    """
+    Test that the only joint subset found by deep pose contains all
+    expected information, including 17 joint positions and three
+    values about the accuracy of the fit.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
@@ -200,6 +205,10 @@ def test_analyze_frame_half_upper_joint_candidates():
 
 
 def test_analyze_frame_half_upper_num_joint_subsets():
+    """
+    Tests that deep pose only found one joint subset for an image
+    with only half a person.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
@@ -207,6 +216,11 @@ def test_analyze_frame_half_upper_num_joint_subsets():
 
 
 def test_analyze_frame_half_upper_first_joint_subset():
+    """
+    Test that the only joint subset found by deep pose contains all
+    expected information, including 17 joint positions and three
+    values about the accuracy of the fit.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
@@ -214,6 +228,10 @@ def test_analyze_frame_half_upper_first_joint_subset():
 
 
 def test_analyze_frame_other_half_upper_joint_candidates():
+    """
+    Tests that deep pose only found one joint subset for an image
+    with only the other half a person.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
@@ -221,6 +239,10 @@ def test_analyze_frame_other_half_upper_joint_candidates():
 
 
 def test_analyze_frame_other_half_upper_num_joint_subsets():
+    """
+    Tests that deep pose only found one joint subset for an image
+    with only the other half a person.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
@@ -228,6 +250,11 @@ def test_analyze_frame_other_half_upper_num_joint_subsets():
 
 
 def test_analyze_frame_other_half_upper_first_joint_subset():
+    """
+    Test that the only joint subset found by deep pose contains all
+    expected information, including 17 joint positions and three
+    values about the accuracy of the fit.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
@@ -235,6 +262,10 @@ def test_analyze_frame_other_half_upper_first_joint_subset():
 
 
 def test_parse_for_joint_positions_black_image():
+    """
+    Test that when analyzing the deep pose result, there are no joint
+    positions that can be found or parsed for in a black image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.zeros([480, 640, 3])
     test_model.analyze_frame(test_image)
@@ -243,6 +274,10 @@ def test_parse_for_joint_positions_black_image():
 
 
 def test_parse_for_joint_positions_white_image():
+    """
+    Test that when analyzing the deep pose result, there are no joint
+    positions that can be found or parsed for in a white image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.ones([480, 640, 3]) * 255
     test_model.analyze_frame(test_image)
@@ -251,6 +286,12 @@ def test_parse_for_joint_positions_white_image():
 
 
 def test_parse_for_joint_positions_no_legs_joints_detected():
+    """
+    Test that when analyzing and parsing through the deep pose result, the
+    joints that are expected to be missing (9, 10, 11, 12 as these are the leg
+    joint) are mapped to a [-1, -1] position and the others are not mapped to
+    [-1, -1].
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
@@ -266,6 +307,11 @@ def test_parse_for_joint_positions_no_legs_joints_detected():
 
 
 def test_parse_for_joint_positions_no_legs_found_joint_positions():
+    """
+    Test for when analyzing the parsing through the deep pose result, the
+    existing joints (joints not in the legs) are mapped to positions that lie
+    within the pixel bounds of the inputted image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
@@ -278,6 +324,13 @@ def test_parse_for_joint_positions_no_legs_found_joint_positions():
 
 
 def test_parse_for_joint_positions_half_upper_joints_detected():
+    """
+    Test that when analyzing and parsing through the deep pose result, the
+    joints that are expected to be missing (1, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    18 as these are the leg joint or upper body joints that are not included in
+    the inputted image) are mapped to a [-1, -1] position and the others are
+    not mapped to [-1, -1].
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
@@ -293,6 +346,11 @@ def test_parse_for_joint_positions_half_upper_joints_detected():
 
 
 def test_parse_for_joint_positions_half_upper_found_joint_positions():
+    """
+    Test for when analyzing the parsing through the deep pose result, the
+    existing joints (joints not in the legs or half of the upper body) are
+    mapped to positions that lie within the pixel bounds of the inputted image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
@@ -306,6 +364,13 @@ def test_parse_for_joint_positions_half_upper_found_joint_positions():
 
 
 def test_parse_for_joint_positions_other_half_upper_joints_detected():
+    """
+    Test that when analyzing and parsing through the deep pose result, the
+    joints that are expected to be missing (0, 2, 3, 4, 8, 9, 10, 11, 12, 13,
+    14, 15, 16 as these are the leg joint or upper body joints that are not
+    included in the inputted image) are mapped to a [-1, -1] position and the
+    others are not mapped to [-1, -1].
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
@@ -322,6 +387,11 @@ def test_parse_for_joint_positions_other_half_upper_joints_detected():
 
 
 def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
+    """
+    Test for when analyzing the parsing through the deep pose result, the
+    existing joints (joints not in the legs or half of the upper body) are
+    mapped to positions that lie within the pixel bounds of the inputted image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
@@ -334,6 +404,11 @@ def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
     assert True
 
 def test_compute_accuracy_white_image_total_score():
+    """
+    Test that the computed fit accuracy is 0 when a white image is analyzed and
+    compared to existing joint positions. Based on this computed accuracy, the
+    total score should be updated to be 0.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.ones([480, 640, 3]) * 255
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -343,6 +418,11 @@ def test_compute_accuracy_white_image_total_score():
     assert test_model.total_score == 0
 
 def test_compute_accuracy_white_image_trial_score():
+    """
+    Test that the computed fit accuracy is 0 when a white image is analyzed and
+    compared to existing joint positions. Based on this computed accuracy, the
+    trial score should be updated to be 0.
+    """
     test_model = HoleInTheCameraGame()
     test_image = np.ones([480, 640, 3]) * 255
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -352,6 +432,11 @@ def test_compute_accuracy_white_image_trial_score():
     assert test_model.trial_score == 0
 
 def test_compute_accuracy_same_image_total_score():
+    """
+    Test that when an image is analyzed and compared to against joint positions
+    obtained from the same image, the accuracy is a 100% match and the total
+    score is updated to reflect such (100).
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -362,6 +447,11 @@ def test_compute_accuracy_same_image_total_score():
 
 
 def test_compute_accuracy_same_image_trial_score():
+    """
+    Test that when an image is analyzed and compared to against joint positions
+    obtained from the same image, the accuracy is a 100% match and the trial
+    score is updated to reflect such (100).
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -372,6 +462,12 @@ def test_compute_accuracy_same_image_trial_score():
 
 
 def test_compute_accuracy_same_image_total_score_three_trials():
+    """
+    Test that when an image is analyzed and compared to against joint positions
+    obtained from the same image, the accuracy is a 100% match three times in a
+    row. This is reflected in the total score as it is updated three times with
+    a score of 100, yielding a total score of 300.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -383,6 +479,12 @@ def test_compute_accuracy_same_image_total_score_three_trials():
 
 
 def test_compute_accuracy_same_image_trial_score_three_trials():
+    """
+    Test that when an image is analyzed and compared to against joint positions
+    obtained from the same image, the accuracy is a 100% match three times in a
+    row. For the trial score, this should only reflect 100 as it stores the
+    most recent trial score.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -394,6 +496,12 @@ def test_compute_accuracy_same_image_trial_score_three_trials():
 
 
 def test_computer_accuracy_diff_image_total_score():
+    """
+    Test that when an image is analyzed and compared to against a different
+    image's joint positions, the accuracy is below 70%. This simulates a failed
+    trial of the real game where a user's position is different than the
+    expected position. This is reflected by the total score being less than 70.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/second_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -404,6 +512,12 @@ def test_computer_accuracy_diff_image_total_score():
 
 
 def test_computer_accuracy_diff_image_trial_score():
+    """
+    Test that when an image is analyzed and compared to against a different
+    image's joint positions, the accuracy is below 70%. This simulates a failed
+    trial of the real game where a user's position is different than the
+    expected position. This is reflected by the trial score being less than 70.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/second_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -414,6 +528,12 @@ def test_computer_accuracy_diff_image_trial_score():
 
 
 def test_computer_accuracy_diff_image_total_score_three_trials():
+    """
+    Test that when an image is analyzed and compared to against a different
+    image's joint positions, the accuracy is below 70%. This is done three
+    different times to ensure that total score is properly updated and has
+    a value less than the passing value for three total iterations.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/second_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -425,6 +545,11 @@ def test_computer_accuracy_diff_image_total_score_three_trials():
 
 
 def test_computer_accuracy_diff_image_trial_score_three_trials():
+    """
+    Test that when an image is analyzed and compared to against a different
+    image's joint positions three different times, the accuracy is below 70%
+    and the trial score only stores the accuracy of the most recent trial.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/second_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -436,6 +561,10 @@ def test_computer_accuracy_diff_image_trial_score_three_trials():
 
 
 def test_check_win_same_image():
+    """
+    This function checks to make sure the model correctly determines a win when
+    an image is analyzed against joints generated from the same exact image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -446,6 +575,10 @@ def test_check_win_same_image():
 
 
 def test_check_win_diff_image():
+    """
+    This function checks to make sure the model correctly determines a loss
+    when an image is analyzed against joints generated from a different image.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/second_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
@@ -456,6 +589,10 @@ def test_check_win_diff_image():
 
 
 def test_check_win_two_iterations():
+    """
+    Tests to make sure the check_win function correctly determines a win
+    followed by a loss in succession.
+    """
     test_model = HoleInTheCameraGame()
     test_image = cv2.imread("images/poses/first_mask.png")
     test_csv = "mask_joint_positions/first_mask.csv"
