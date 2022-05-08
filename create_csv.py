@@ -17,24 +17,31 @@ MASK_NAMES = [
     "seventh_mask",
 ]
 
-for file_name in MASK_NAMES:
-    image = cv2.imread(f"images/poses/{file_name}.png")
-    # pdb.set_trace()
-    candidate, subset = BODY_ESTIMATION(image)
+def main():
+    """
+    This is the main runner function to create csv files.
+    """
+    for file_name in MASK_NAMES:
+        image = cv2.imread(f"images/poses/{file_name}.png")
+        candidate, subset = BODY_ESTIMATION(image)
 
-    joint_positions = {}
-    for index, value in enumerate(subset[0]):
-        if value >= 0:
-            joint_positions[f"{index}"] = [
-                candidate[int(value)][0],
-                candidate[int(value)][1],
-            ]
-        else:
-            joint_positions[f"{index}"] = [-1, -1]
-        if index >= 17:
-            break
+        joint_positions = {}
+        for index, value in enumerate(subset[0]):
+            if value >= 0:
+                joint_positions[f"{index}"] = [
+                    candidate[int(value)][0],
+                    candidate[int(value)][1],
+                ]
+            else:
+                joint_positions[f"{index}"] = [-1, -1]
+            if index >= 17:
+                break
 
-    with open(f"mask_joint_positions/{file_name}.csv", "w") as csv_file:
-        csv_writer = csv.writer(csv_file)
-        for key, value in joint_positions.items():
-            csv_writer.writerow([key, value[0], value[1]])
+        with open(f"mask_joint_positions/{file_name}.csv", "w") as csv_file:
+            csv_writer = csv.writer(csv_file)
+            for key, value in joint_positions.items():
+                csv_writer.writerow([key, value[0], value[1]])
+
+
+if __name__ == "__main__":
+    main()
