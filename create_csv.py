@@ -4,6 +4,7 @@ Create csv files representing joints positions for each mask.
 import csv
 import cv2
 from deep_pose.body import Body
+import os
 
 BODY_ESTIMATION = Body("deep_pose/body_pose_model.pth")
 
@@ -29,20 +30,21 @@ def analyze_image(image_name):
             corresponding to a joint and each value is the pixel location of
             the joint in the image, [-1, -1] if it is not found.
     """
-    image = cv2.imread(f"images/poses/{image_name}.png")
-    candidate, subset = BODY_ESTIMATION(image)
-
     joint_positions = {}
-    for index, value in enumerate(subset[0]):
-        if value >= 0:
-            joint_positions[f"{index}"] = [
-                candidate[int(value)][0],
-                candidate[int(value)][1],
-            ]
-        else:
-            joint_positions[f"{index}"] = [-1, -1]
-        if index >= 17:
-            break
+    if os.path.exists(f"images/poses/{image_name}.png"):
+        image = cv2.imread(f"images/poses/{image_name}.png")
+        candidate, subset = BODY_ESTIMATION(image)
+
+        for index, value in enumerate(subset[0]):
+            if value >= 0:
+                joint_positions[f"{index}"] = [
+                    candidate[int(value)][0],
+                    candidate[int(value)][1],
+                ]
+            else:
+                joint_positions[f"{index}"] = [-1, -1]
+            if index >= 17:
+                break
     return joint_positions
 
 def write_to_csv(csv_name, joint_positions):

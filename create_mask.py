@@ -6,11 +6,14 @@ from cv2 import cv2 as cv
 
 # Open a camera for video capturing.
 CAMERA = cv.VideoCapture(0)
-MASK_NAME = "smask"
+MASK_NAME = "eighth_mask"
 
-def analyze_camera_frame():
+def get_camera_frame():
     # Capture frame-by-frame
     _, frame = CAMERA.read()
+    return frame
+
+def analyze_camera_frame(frame):
     # convert to HSV colorspace and apply threshold
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     mask = cv.inRange(frame, (0, 14, 0), (180, 255, 255))
@@ -26,6 +29,7 @@ def main():
     """
 
     while True:
+        frame = get_camera_frame()
         frame, mask = analyze_camera_frame()
         # break if user presses 'd'
         if cv.waitKey(1) & 0xFF == ord("d"):
