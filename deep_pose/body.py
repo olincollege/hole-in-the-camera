@@ -1,3 +1,10 @@
+"""
+This script was taken from a public github repository OpenPose
+(https://github.com/Hzzone/pytorch-openpose) and was not written by us. This
+script is used to generate the joint candidates and subsets that we use to
+detect a user's fit into a mask.
+"""
+
 import cv2
 import numpy as np
 import math

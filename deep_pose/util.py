@@ -1,3 +1,10 @@
+"""
+This script was taken from a public github repository OpenPose
+(https://github.com/Hzzone/pytorch-openpose) and was not written by us. This
+script is a utility script with helper functions that can be used to visualize
+the deep pose result.
+"""
+
 import numpy as np
 import math
 import cv2

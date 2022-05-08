@@ -1,3 +1,10 @@
+"""
+This script was taken from a public github repository OpenPose
+(https://github.com/Hzzone/pytorch-openpose) and was not written by us. This
+script defines the deep neural network architecture that is trained and used
+to analyzed a given image for joints.
+"""
+
 import torch
 from collections import OrderedDict
 
