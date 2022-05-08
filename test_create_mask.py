@@ -4,7 +4,7 @@ Test functions for the create_mask script.
 
 import cv2
 import numpy as np
-from create_mask import get_camera_frame, analyze_camera_frame
+from create_mask import get_camera_frame, analyze_camera_frame, release_camera
 
 def test_get_camera_frame_shape():
     """
@@ -12,6 +12,7 @@ def test_get_camera_frame_shape():
     """
     test_frame = get_camera_frame()
     test_shape = np.shape(test_frame)
+
     assert test_shape[0] != 0 and test_shape[1] != 0 and test_shape[2] == 3
 
 def test_get_camera_frame_values():
@@ -39,6 +40,7 @@ def test_analyze_camera_frame_mask_values():
     """
     test_frame = get_camera_frame()
     _, test_mask = analyze_camera_frame(test_frame)
+    release_camera()
     for row in test_mask:
         for value in row:
             # all values should be 0 or 255 as the mask is a black and white
@@ -71,3 +73,17 @@ def test_analyze_camera_frame_mask_values_saved_image():
             if value not in (0, 255):
                 assert False
     assert True
+
+def test_release_camera():
+    """
+    Test that camera output cannot be received and analyzed after releasing
+    the camera.
+    """
+    get_camera_frame()
+    release_camera()
+    try:
+        test_frame = get_camera_frame()
+        analyze_camera_frame(test_frame)
+        assert False
+    except cv2.error:
+        assert True

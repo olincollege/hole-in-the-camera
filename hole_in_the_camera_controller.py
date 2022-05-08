@@ -21,7 +21,7 @@ class HoleInTheCameraController(ABC):
         """
         self._start_time = 0
         self._current_time = 0
-        
+
     @property
     def start_time(self):
         """

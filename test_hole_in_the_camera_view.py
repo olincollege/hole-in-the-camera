@@ -513,8 +513,8 @@ def test_display_round_screen_width():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_score = 100
-    test_view.display_round_screen(test_score)
+    test_round_num = 4
+    test_view.display_round_screen(test_round_num)
     test_width = test_view.screen.get_width()
     pygame.quit()
     assert test_width == 640
@@ -526,8 +526,8 @@ def test_display_round_screen_height():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_score = 100
-    test_view.display_round_screen(test_score)
+    test_round_num = 3
+    test_view.display_round_screen(test_round_num)
     test_width = test_view.screen.get_height()
     pygame.quit()
     assert test_width == 480
@@ -539,8 +539,8 @@ def test_display_round_screen_pixel_shape():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_score = 100
-    test_view.display_round_screen(test_score)
+    test_round_num = 2
+    test_view.display_round_screen(test_round_num)
     pixel_values = pygame.surfarray.array3d(test_view.screen)
     pygame.quit()
     assert np.shape(pixel_values) == (640, 480, 3)
@@ -552,8 +552,8 @@ def test_dispaly_round_screen_pixel_values():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_score = 0
-    test_view.display_round_screen(test_score)
+    test_round_num = 1
+    test_view.display_round_screen(test_round_num)
     pixel_values = pygame.surfarray.array3d(test_view.screen)
     pygame.quit()
     assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
