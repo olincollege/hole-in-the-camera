@@ -50,12 +50,12 @@ Note: If you get any errors with camera access or would like to select a differe
 
 ### Want to Create Your Own Holes?
 While playing the game did you suddenly get inspiration to create your own holes for your friends to try to fit into? Well if so, you're in luck! With our code, you can create your own holes (we recommend having a friend help you with this). Follow the steps below to create your own holes:
-1. In the create_mask.py file, change the MASK_NAME variable (line 7) to the name you wish to save the hole as. Note: You can choose to override the game's existing holes by having the same as an existing hole, or pick an entirely new name to add to the potential holes.
+1. In the create_mask.py file, change the MASK_NAME variable (line 10) to the name you wish to save the hole as. Note: You can choose to override the game's existing holes by having the same as an existing hole, or pick an entirely new name to add to the potential holes.
 2. Run the create_mask.py file with proper lighting conditions. We recommend wearing dark colored clothing and having a white background for the best results.
 3. Once you are satisfied with your pose in the camera frame, press the 'd' key on your keyboard, which will save the hole and original image into their respective directories in the hole-in-the-camera folder.
 4. Repeat steps 1-3 for as many holes as you want, ensuring that you pick different names for each hole.
 5. Next, you need to run the create_csv.py script to analyze each picture you took for joint positions to be used to compare users against in each game round. To do this, change the MASK_NAMES variable (line 10) to be a list of each hole name that you made. Then, run the script.
-6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 48) to be a list of all the holes you want the game to display.
+6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 49) to be a list of all the holes you want the game to display.
 After making these changes, you're all ready to play with your own holes!
 ### About the Creators
 1. [Ayush Chakraborty](https://github.com/ayushchakra): 
