@@ -4,7 +4,7 @@ Hole in the camera game view.
 from abc import ABC, abstractmethod
 import pygame
 from pygame import mixer
-import cv2 as cv
+from cv2 import cv2 as cv
 
 
 class HoleInTheWallView(ABC):
@@ -76,8 +76,6 @@ class PygameViewer(HoleInTheWallView):
 
     Attributes:
         BLACK (tuple): RGB value for black.
-        RED (tuple): RGB value for red.
-        GRAY (tuple): RGB value for gray.
         WHITE (tuple): RGB value for white.
         BLUE (tuple): RGB value for blue.
         FONT (str): Font name.
@@ -88,17 +86,14 @@ class PygameViewer(HoleInTheWallView):
     """
 
     BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
-    GRAY = (200, 200, 200)
     WHITE = (255, 255, 255)
-    BLUE = (50, 50, 200)
-    FONT_NAME = "Helvetica"
-    FONT_SIZE = 40
-    BACKGROUND_PATHS = [
-        "images/assets/background.jpg",
-        "images/assets/lost_background.jpg",
-        "images/assets/win_background.jpg",
-    ]
+    FONT_NAME = "Viga"
+
+    FONT_SIZE = 38
+    BACKGROUND_PATHS = ["images/assets/background.jpg",
+                        "images/assets/lost_background.jpg",
+                        "images/assets/win_background.jpg"
+                        ]
 
     def __init__(self, display_size):
         """
@@ -148,7 +143,7 @@ class PygameViewer(HoleInTheWallView):
         background = pygame.transform.scale(background, (640, 480))
         self._screen.blit(background, (0, 0))
 
-    def _display_text(self, texts):
+    def _display_text(self, texts, top_color, back_color):
         """
         Display text on the game window with background image.
 
@@ -167,27 +162,20 @@ class PygameViewer(HoleInTheWallView):
         """
         Display the introduction text.
         """
-        welcome_text = [
-            "Welcome to Hole in the Camera!",
-            "Press any key to continue",
-            "Or press esc to exit (Bye!)",
-        ]
+        welcome_text = ["Welcome to Hole in the Camera!",
+                        "Press any key to continue",
+                        "Press esc to exit (Bye!)"]
         self._display_background(0)
-        self._display_text(welcome_text)
+        self._display_text(welcome_text, self.WHITE, self.BLACK)
 
     def display_instructions(self):
         """
         Display the instructions text.
         """
-        instruction_text = [
-            "Instructions",
-            "Adjust your pose (or camera) to\
-                            fit into the holes.",
-            "You have 10 seconds each\
-                            round.",
-        ]
+        instruction_text = ["Instructions:", "Adjust your pose (or camera) to",\
+                        "fit into the holes.", "You have 10 sec each round!"]
         self._display_background(0)
-        self._display_text(instruction_text)
+        self._display_text(instruction_text, self.WHITE, self.BLACK)
 
     def display_frame(self, frame, timer_text, camera_mask):
         """
@@ -227,14 +215,14 @@ class PygameViewer(HoleInTheWallView):
             win_sound.play()
             won_text = [f"Your score is: {int(score)}"]
             self._display_background(2)
-            self._display_text(won_text)
+            self._display_text(won_text, self.BLACK, self.WHITE)
         else:
             mixer.music.stop()
             crash_sound = mixer.Sound("Sound/Crash .wav")
             crash_sound.play()
             lost_text = ["You lost!", f"Your score is {int(score)}"]
             self._display_background(1)
-            self._display_text(lost_text)
+            self._display_text(lost_text, self.WHITE, self.BLACK)
 
     def display_end_game(self, score):
         """
@@ -245,12 +233,19 @@ class PygameViewer(HoleInTheWallView):
             how well player fits through the hole.
         """
         self._display_background(2)
-        self._display_text(["Game Over!", f"Final Score: {int(score)}/700"])
+        self._display_text(["Game Over!", f"Final Score: {int(score)}/100"],
+        self.WHITE, self.BLACK)
 
     def display_round_screen(self, round_num):
+        """
+        Display the screen before each round.
+
+        Args:
+            round_num (int): The number of the current round.
+        """
         if round_num != 1:
             mixer.stop()
             mixer.music.load("Sound/No Doubt - Yung Logos.wav")
             mixer.music.play()
         self._display_background(0)
-        self._display_text([f"Round #{round_num}"])
+        self._display_text([f'Round {round_num}'], self.WHITE, self.BLACK)

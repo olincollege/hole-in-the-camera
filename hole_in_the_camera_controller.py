@@ -54,6 +54,16 @@ class HoleInTheWallController(ABC):
 
 
 class OpenCVController(HoleInTheWallController):
+    """
+    OpenCV implementation of the HoleInTheWallController class.
+
+    Attributes:
+        _camera_index (int): Index of the camera to use.
+        _camera_capture (numpy.ndarray): Current caputured video frame.
+        _start_time (float): Start time of the game.
+        _current_time (float): Current time in the countdown timer.
+    """
+
     def __init__(self, camera_index):
         """
         Initialize the OpenCV controller.
@@ -61,6 +71,7 @@ class OpenCVController(HoleInTheWallController):
         Args:
             _camera_index (int): Index of the camera to use.
         """
+        super().__init__()
         self._camera_index = camera_index
         self._camera_capture = cv2.VideoCapture(self._camera_index)
         self._start_time = 0
@@ -68,17 +79,29 @@ class OpenCVController(HoleInTheWallController):
 
     @property
     def start_time(self):
+        """
+        Start the game window timer.
+        """
         return self._start_time
 
     @property
     def camera_capture(self):
+        """
+        Return the camera capture object.
+        """
         return self._camera_capture
 
     @property
     def camera_index(self):
+        """
+        Return the camera index.
+        """
         return self._camera_index
 
     def release_camera(self):
+        """
+        Release the camera.
+        """
         self._camera_capture.release()
 
     def next_screen(self):

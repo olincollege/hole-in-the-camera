@@ -8,7 +8,7 @@ https://github.com/Hzzone/pytorch-openpose
 """
 import csv
 import random
-import cv2 as cv
+from cv2 import cv2 as cv
 import numpy as np
 from deep_pose.body import Body
 
@@ -182,10 +182,9 @@ class HoleInTheCameraGame:
             for index, value in enumerate(self._joint_subsets[0]):
                 # Value will be -1 if the joint is not present in the image.
                 if value >= 0:
-                    self._joint_positions[f"{index}"] = [
+                    self._joint_positions[f'{index}'] = [
                         self._joint_candidates[int(value)][0],
-                        self._joint_candidates[int(value)][1],
-                    ]
+                        self._joint_candidates[int(value)][1]]
                 else:
                     self._joint_positions[f"{index}"] = [-1, -1]
                 # After 16, the _joint_subsets variable contains information
@@ -217,8 +216,8 @@ class HoleInTheCameraGame:
         for joint in joint_fits:
             # Ensures that comparisons are only made with joints that are
             # present.
-            if (joint[0] in self._joint_positions.keys()
-                    and self._joint_positions[joint[0]][1] != "-1"):
+            if joint[0] in self._joint_positions.keys() and\
+                    self._joint_positions[joint[0]][1] != '-1':
                 joint_counts += 1
                 reference_joint_position = np.array(
                     [int(float(joint[1])), int(float(joint[2]))]

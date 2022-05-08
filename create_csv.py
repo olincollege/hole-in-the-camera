@@ -1,6 +1,5 @@
 """
-This script uses OpenPose to create joint position csvs based on the images in
-the images/poses directory.
+Create csv files representing joints positions for each mask.
 """
 import csv
 import cv2

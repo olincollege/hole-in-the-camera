@@ -2,7 +2,7 @@
 This script is used to make holes for users to fit into and saves the original
 frame and the hole to iamges/poses and images/masks respectively.
 """
-import cv2 as cv
+from cv2 import cv2 as cv
 
 # Open a camera for video capturing.
 CAMERA = cv.VideoCapture(0)
