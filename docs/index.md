@@ -64,12 +64,16 @@ After making these changes, you're all ready to play with your own holes!
  
 **[Ayush Chakraborty](https://github.com/ayushchakra)** 
 Hey, my name is Ayush and I am a Engineering: Computing Major at the Olin College of Engineering. For this game, I took charge on implementing Deep Pose, including learning how it’s structured and how to parse it’s outputs. Some of my interests are embedded systems, machine learning, and back-end software development and I’m always looking for opportunities to learn more in these domains!
-<br>
+
+<br><br>
+
 <img src="profile-pictures/Jiayuan.jpeg" width ="18%" height = "30%" style="float:right;margin:0px 0px">
 
 **[Jiayuan Liu](https://github.com/Chidunbo)** 
 Hi I am Jiayuan. In this project, I am in charge of the game workflow, visualization and sound effect aspect of the game. I am interested in game design and public interest technology.
-<br>
+
+<br><br>
+
 <img src="profile-pictures/Anmol.jpg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
