@@ -14,7 +14,7 @@ def get_camera_frame():
 
     Returns:
         frame (numpy.ndarray): A 3-D numpy array of RGB values representing
-            the user's camera output.        
+            the user's camera output.
     """
     # Capture frame-by-frame
     _, frame = CAMERA.read()
@@ -27,10 +27,10 @@ def analyze_camera_frame(frame):
 
     Args:
         frame (numpy.ndarray): A 3-D numpy array of RGB values representing
-            the user's camera output. 
+            the user's camera output.
     Returns:
         frame (numpy.ndarray): A 3-D numpy array of HSV values representing
-            the user's camera output. 
+            the user's camera output.
         mask (numpy.ndarray): A 2-D numpy array representing black and white
             pixel values (gray scaled) that should either be 0 or 255 and is
             the mask to be overlaid over the user's screen.
