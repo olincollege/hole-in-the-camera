@@ -1,9 +1,9 @@
 """
 Main runner code for hole in the camera game.
 """
-from hole_in_the_wall_controller import OpenCVController
-from hole_in_the_wall_view import PygameViewer
-from hole_in_the_wall_model import HoleInTheCameraGame
+from hole_in_the_camera_controller import OpenCVController
+from hole_in_the_camera_view import PygameViewer
+from hole_in_the_camera_model import HoleInTheCameraGame
 import sys
 
 # Set up view constants
@@ -75,7 +75,8 @@ def run_game():
         while True:
             current_frame = game_controller.get_display_frame()
             current_timer_value = game_controller.get_timer_string()
-            game_view.display_frame(current_frame, current_timer_value, hole_mask)
+            game_view.display_frame(
+                current_frame, current_timer_value, hole_mask)
             if game_controller.next_screen() == "quit":
                 sys.exit()
             if game_controller.determine_end_timer():
