@@ -240,8 +240,12 @@ class HoleInTheCameraGame:
                     accuracy += 0.25
         # Updates the _total_score and _trial_score variables with the results
         # of this trial.
-        self._total_score += accuracy / joint_counts * 100
-        self._trial_score = accuracy / joint_counts * 100
+        if joint_counts == 0:
+            self._total_score += 0
+            self._trial_score = 0
+        else:
+            self._total_score += accuracy / joint_counts * 100
+            self._trial_score = accuracy / joint_counts * 100
 
     def check_win(self):
         """
