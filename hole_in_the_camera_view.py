@@ -182,17 +182,11 @@ class PygameViewer(HoleInTheWallView):
         """
         Display the instructions text.
         """
-        instruction_text = ["Instructions"]
+        instruction_text = ["Instructions", "Adjust your pose (or camera) to\
+                            fit into the holes.", "You have 10 seconds each\
+                            round."]
         self._display_background(0)
         self._display_text(instruction_text)
-
-    def display_instructions_content(self):
-        """
-        Display the detailed content of instructions.
-        """
-        instruction_content = ["Adjust your pose (or camera) to \
-                                fit into the holes",
-                               "You have 10 seconds each round"]
 
     def display_frame(self, frame, timer_text, camera_mask):
         """
