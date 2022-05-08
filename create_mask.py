@@ -1,4 +1,6 @@
 """
+This script is used to make holes for users to fit into and saves the original
+frame and the hole to iamges/poses and images/masks respectively.
 """
 import cv2 as cv
 
@@ -8,7 +10,7 @@ MASK_NAME = "sixth_mask"
 
 while True:
     # Capture frame-by-frame
-    isTrue, frame = CAMERA.read()
+    _, frame = CAMERA.read()
     # convert to HSV colorspace and apply threshold
     frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     mask = cv.inRange(frame, (0, 14, 0), (180, 255, 255))
@@ -17,7 +19,7 @@ while True:
     mask = cv.dilate(mask, None, iterations=5)
     cv.imshow("video", mask)
     # break if user presses 'd'
-    if cv.waitKey(1) & 0xFF == ord('d'):
+    if cv.waitKey(1) & 0xFF == ord("d"):
         # save the current frame and the mask applied on it
         frame = cv.cvtColor(frame, cv.COLOR_HSV2BGR)
         cv.imwrite(f"images/poses/{MASK_NAME}.png", frame)

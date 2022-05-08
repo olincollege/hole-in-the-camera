@@ -12,6 +12,7 @@ import cv2 as cv
 import numpy as np
 from deep_pose.body import Body
 
+
 class HoleInTheCameraGame:
     """
     Hole in the wall game model with helper functions that dictate gameflow.
@@ -42,11 +43,11 @@ class HoleInTheCameraGame:
     """
 
     # Instance of Body class from open pose that will be used to analyze frames.
-    BODY_ESTIMATION = Body('deep_pose/body_pose_model.pth')
+    BODY_ESTIMATION = Body("deep_pose/body_pose_model.pth")
 
     # List of each mask that will be available for users to play with.
-    MASK_NAMES = ['first_mask', 'second_mask', 'third_mask',
-                  'fourth_mask', 'fifth_mask', 'sixth_mask', 'seventh_mask']
+    MASK_NAMES = ["first_mask", "second_mask", "third_mask", "fourth_mask",
+                  "fifth_mask", "sixth_mask", "seventh_mask",]
 
     def __init__(self):
         """
@@ -60,13 +61,13 @@ class HoleInTheCameraGame:
         self._mask_and_joints = []
         for mask in self.MASK_NAMES:
             # Each image can be found in the images/masks folder.
-            frame = cv.imread(f'images/masks/{mask}.png')
+            frame = cv.imread(f"images/masks/{mask}.png")
             # By default. OpenCV stores images as BGR and need to be converted
             # to properly display them in pygame.
             cv.cvtColor(frame, cv.COLOR_BGR2RGB)
             # Images need to be resized to ensure images fit the screen.
             frame = cv.resize(frame, (640, 480))
-            joints = f'mask_joint_positions/{mask}.csv'
+            joints = f"mask_joint_positions/{mask}.csv"
             self._mask_and_joints.append((frame, joints))
         self._joint_positions = {}
         self._joint_candidates = []
@@ -147,7 +148,7 @@ class HoleInTheCameraGame:
         if len(self._mask_and_joints) == 1:
             index = 0
         else:
-            index = random.randint(0, len(self._mask_and_joints)-1)
+            index = random.randint(0, len(self._mask_and_joints) - 1)
         random_mask_and_joint = self._mask_and_joints[index]
         # Remove the mask and joint tuple from the list to ensure that it isn't
         # replayed during the same game iteration.
@@ -165,8 +166,8 @@ class HoleInTheCameraGame:
                 values of the frame to be analyzed by open pose. This frame
                 array should be of size 480x640x3.
         """
-        self._joint_candidates, self._joint_subsets = self.BODY_ESTIMATION(
-            frame)
+        self._joint_candidates, self._joint_subsets =\
+            self.BODY_ESTIMATION(frame)
 
     def parse_for_joint_positions(self):
         """
@@ -181,10 +182,12 @@ class HoleInTheCameraGame:
             for index, value in enumerate(self._joint_subsets[0]):
                 # Value will be -1 if the joint is not present in the image.
                 if value >= 0:
-                    self._joint_positions[f'{index}'] = [
-                        self._joint_candidates[int(value)][0], self._joint_candidates[int(value)][1]]
+                    self._joint_positions[f"{index}"] = [
+                        self._joint_candidates[int(value)][0],
+                        self._joint_candidates[int(value)][1],
+                    ]
                 else:
-                    self._joint_positions[f'{index}'] = [-1, -1]
+                    self._joint_positions[f"{index}"] = [-1, -1]
                 # After 16, the _joint_subsets variable contains information
                 # about the data and accuracy, but is not useful for mapping
                 # joint positions so it is ignored.
@@ -207,23 +210,25 @@ class HoleInTheCameraGame:
 
         # Reads and stores the saved joint positions to compare against the
         # user's joint positions.
-        with open(saved_csv_for_mask, 'r') as csv_file:
+        with open(saved_csv_for_mask, "r") as csv_file:
             csv_reader = csv.reader(csv_file)
             for row in csv_reader:
                 joint_fits.append(row)
         for joint in joint_fits:
             # Ensures that comparisons are only made with joints that are
             # present.
-            if joint[0] in self._joint_positions.keys() and\
-                self._joint_positions[joint[0]][1] != '-1':
+            if (joint[0] in self._joint_positions.keys()
+                    and self._joint_positions[joint[0]][1] != "-1"):
                 joint_counts += 1
                 reference_joint_position = np.array(
-                    [int(float(joint[1])), int(float(joint[2]))])
+                    [int(float(joint[1])), int(float(joint[2]))]
+                )
                 user_joint_position = np.array(self._joint_positions[joint[0]])
                 # Calculates the Euclidian distance (in pixels) between the
                 # saved joint positions and the user's joint positions.
                 distance = np.linalg.norm(
-                    reference_joint_position - user_joint_position)
+                    reference_joint_position - user_joint_position
+                )
 
                 # Gives users a score based on how well they fit, where a
                 # perfect match (distance is less than 20 pixels) corresponds
@@ -231,13 +236,13 @@ class HoleInTheCameraGame:
                 if distance < 30:
                     accuracy += 1
                 elif distance < 40:
-                    accuracy += .5
+                    accuracy += 0.5
                 elif distance < 50:
                     accuracy += 0.25
         # Updates the _total_score and _trial_score variables with the results
         # of this trial.
-        self._total_score += accuracy/joint_counts * 100
-        self._trial_score = accuracy/joint_counts * 100
+        self._total_score += accuracy / joint_counts * 100
+        self._trial_score = accuracy / joint_counts * 100
 
     def check_win(self):
         """

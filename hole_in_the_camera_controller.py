@@ -1,8 +1,8 @@
 """
 Hole in the wall game controller.
 """
-import pygame
 from abc import ABC, abstractmethod
+import pygame
 import cv2
 
 
@@ -123,7 +123,7 @@ class OpenCVController(HoleInTheWallController):
             counting_string (str): Current time in the countdown timer.
         """
         self._current_time = pygame.time.get_ticks() - self._start_time
-        counting_string = f'{10-self._current_time//500}'
+        counting_string = f"{10-self._current_time//500}"
         return counting_string
 
     def determine_end_timer(self):

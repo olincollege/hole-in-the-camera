@@ -246,9 +246,9 @@ def test_display_disp_screen_width():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_frame = cv2.imread('images/poses/first_mask.png')
-    test_timer = '10'
-    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_frame = cv2.imread("images/poses/first_mask.png")
+    test_timer = "10"
+    test_mask = cv2.imread("images/masks/first_mask.png")
     test_view.display_frame(test_frame, test_timer, test_mask)
     test_width = test_view.screen.get_width()
     pygame.quit()
@@ -261,9 +261,9 @@ def test_display_frame_screen_height():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_frame = cv2.imread('images/poses/first_mask.png')
-    test_timer = '10'
-    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_frame = cv2.imread("images/poses/first_mask.png")
+    test_timer = "10"
+    test_mask = cv2.imread("images/masks/first_mask.png")
     test_view.display_frame(test_frame, test_timer, test_mask)
     test_width = test_view.screen.get_height()
     pygame.quit()
@@ -277,9 +277,9 @@ def test_display_frame_screen_pixel_shape():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_frame = cv2.imread('images/poses/first_mask.png')
-    test_timer = '10'
-    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_frame = cv2.imread("images/poses/first_mask.png")
+    test_timer = "10"
+    test_mask = cv2.imread("images/masks/first_mask.png")
     test_view.display_frame(test_frame, test_timer, test_mask)
     pixel_values = pygame.surfarray.array3d(test_view.screen)
     pygame.quit()
@@ -293,9 +293,9 @@ def test_display_frame_screen_pixel_values():
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
-    test_frame = cv2.imread('images/poses/first_mask.png')
-    test_timer = '10'
-    test_mask = cv2.imread('images/masks/first_mask.png')
+    test_frame = cv2.imread("images/poses/first_mask.png")
+    test_timer = "10"
+    test_mask = cv2.imread("images/masks/first_mask.png")
     test_view.display_frame(test_frame, test_timer, test_mask)
     pixel_values = pygame.surfarray.array3d(test_view.screen)
     pygame.quit()

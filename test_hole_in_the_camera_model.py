@@ -2,8 +2,8 @@
 Tests for the HoleInTheCameraGame class
 """
 
-import cv2
 import os
+import cv2
 import numpy as np
 from hole_in_the_camera_model import HoleInTheCameraGame
 
@@ -22,7 +22,7 @@ def test_initialization_joints_file_paths():
     """
     test_model = HoleInTheCameraGame()
     for _, csv in test_model.mask_and_joints:
-        if not csv[-4:] == '.csv':
+        if not csv[-4:] == ".csv":
             assert False
     assert True
 
@@ -84,7 +84,7 @@ def test_get_mask_and_joints_joint_path():
     """
     test_model = HoleInTheCameraGame()
     _, joint = test_model.get_mask_and_joints()
-    assert joint[-4:] == '.csv'
+    assert joint[-4:] == ".csv"
 
 
 def test_get_mask_and_joints_joint_exists():
@@ -143,7 +143,7 @@ def test_analyze_frame_white_image_joint_candidates():
     for a white image.
     """
     test_model = HoleInTheCameraGame()
-    test_image = np.ones([480, 640, 3])*255
+    test_image = np.ones([480, 640, 3]) * 255
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 0
 
@@ -154,7 +154,7 @@ def test_analyze_frame_white_image_joint_subsets():
     for a white image.
     """
     test_model = HoleInTheCameraGame()
-    test_image = np.ones([480, 640, 3])*255
+    test_image = np.ones([480, 640, 3]) * 255
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets) == 0
 
@@ -165,7 +165,7 @@ def test_analyze_frame_no_legs_joint_candidates():
     for a mask containing only the upper body of a person.
     """
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
+    test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 14
 
@@ -176,14 +176,14 @@ def test_analyze_frame_no_legs_num_joint_subsets():
     when there's only one person in the image.
     """
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
+    test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets) == 1
 
 
 def test_analyze_frame_no_legs_first_joint_subset():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
+    test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets[0]) == 20
 
@@ -194,42 +194,42 @@ def test_analyze_frame_half_upper_joint_candidates():
     for a mask containing only the upper body of a person.
     """
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 0:325, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 0:325, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 7
 
 
 def test_analyze_frame_half_upper_num_joint_subsets():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, :325, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets) == 1
 
 
 def test_analyze_frame_half_upper_first_joint_subset():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, :325, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets[0]) == 20
 
 
 def test_analyze_frame_other_half_upper_joint_candidates():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 350:, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_candidates) == 7
 
 
 def test_analyze_frame_other_half_upper_num_joint_subsets():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 350:, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets) == 1
 
 
 def test_analyze_frame_other_half_upper_first_joint_subset():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 350:, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
     assert len(test_model.joint_subsets[0]) == 20
 
@@ -244,7 +244,7 @@ def test_parse_for_joint_positions_black_image():
 
 def test_parse_for_joint_positions_white_image():
     test_model = HoleInTheCameraGame()
-    test_image = np.ones([480, 640, 3])*255
+    test_image = np.ones([480, 640, 3]) * 255
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     assert test_model.joint_positions == {}
@@ -252,11 +252,11 @@ def test_parse_for_joint_positions_white_image():
 
 def test_parse_for_joint_positions_no_legs_joints_detected():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
+    test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key in ['9', '10', '12', '13']:
+        if key in ["9", "10", "12", "13"]:
             if value != [-1, -1]:
                 assert False
         else:
@@ -267,11 +267,11 @@ def test_parse_for_joint_positions_no_legs_joints_detected():
 
 def test_parse_for_joint_positions_no_legs_found_joint_positions():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
+    test_image = cv2.imread("images/poses/first_mask.png")
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key not in ['9', '10', '12', '13']:
+        if key not in ["9", "10", "12", "13"]:
             if value[0] > 640 or value[0] < 0 or value[1] > 480 or value[1] < 0:
                 assert False
     assert True
@@ -279,11 +279,11 @@ def test_parse_for_joint_positions_no_legs_found_joint_positions():
 
 def test_parse_for_joint_positions_half_upper_joints_detected():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, :325, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key in ['1', '5', '6', '7', '8', '9', '10', '11', '12', '13', '17']:
+        if key in ["1", "5", "6", "7", "8", "9", "10", "11", "12", "13", "17"]:
             if value != [-1, -1]:
                 assert False
         else:
@@ -294,12 +294,12 @@ def test_parse_for_joint_positions_half_upper_joints_detected():
 
 def test_parse_for_joint_positions_half_upper_found_joint_positions():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, :325, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, :325, :]
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key not in ['1', '5', '6', '7', '8', '9', '10', '11', '12', '13',\
-            '17']:
+        if key not in ["1", "5", "6", "7", "8", "9", "10", "11", "12", "13",
+                       "17"]:
             if value[0] > 640 or value[0] < 0 or value[1] > 480 or value[1] < 0:
                 assert False
     assert True
@@ -307,12 +307,12 @@ def test_parse_for_joint_positions_half_upper_found_joint_positions():
 
 def test_parse_for_joint_positions_other_half_upper_joints_detected():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 350:, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14', '15',\
-            '16']:
+        if key in ["0", "2", "3", "4", "8", "9", "10", "12", "13", "14", "15",
+                   "16"]:
             if value != [-1, -1]:
                 assert False
         else:
@@ -323,12 +323,12 @@ def test_parse_for_joint_positions_other_half_upper_joints_detected():
 
 def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')[:, 350:, :]
+    test_image = cv2.imread("images/poses/first_mask.png")[:, 350:, :]
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     for key, value in test_model.joint_positions.items():
-        if key not in ['0', '2', '3', '4', '8', '9', '10', '12', '13', '14',\
-            '15', '16']:
+        if key not in ["0", "2", "3", "4", "8", "9", "10", "12", "13", "14",
+                       "15", "16"]:
             if value[0] > 640 or value[0] < 0 or value[1] > 480 or value[1] < 0:
                 assert False
     assert True
@@ -336,8 +336,8 @@ def test_parse_for_joint_positions_other_half_upper_found_joint_positions():
 
 def test_compute_accuracy_same_image_total_score():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -346,8 +346,8 @@ def test_compute_accuracy_same_image_total_score():
 
 def test_compute_accuracy_same_image_trial_score():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -356,8 +356,8 @@ def test_compute_accuracy_same_image_trial_score():
 
 def test_compute_accuracy_same_image_total_score_three_trials():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     for _ in range(3):
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
@@ -367,8 +367,8 @@ def test_compute_accuracy_same_image_total_score_three_trials():
 
 def test_compute_accuracy_same_image_trial_score_three_trials():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     for _ in range(3):
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
@@ -378,8 +378,8 @@ def test_compute_accuracy_same_image_trial_score_three_trials():
 
 def test_computer_accuracy_diff_image_total_score():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/second_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/second_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -388,8 +388,8 @@ def test_computer_accuracy_diff_image_total_score():
 
 def test_computer_accuracy_diff_image_trial_score():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/second_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/second_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -398,8 +398,8 @@ def test_computer_accuracy_diff_image_trial_score():
 
 def test_computer_accuracy_diff_image_total_score_three_trials():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/second_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/second_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     for _ in range(3):
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
@@ -409,8 +409,8 @@ def test_computer_accuracy_diff_image_total_score_three_trials():
 
 def test_computer_accuracy_diff_image_trial_score_three_trials():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/second_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/second_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     for _ in range(3):
         test_model.analyze_frame(test_image)
         test_model.parse_for_joint_positions()
@@ -420,8 +420,8 @@ def test_computer_accuracy_diff_image_trial_score_three_trials():
 
 def test_check_win_same_image():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -430,8 +430,8 @@ def test_check_win_same_image():
 
 def test_check_win_diff_image():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/second_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/second_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
@@ -440,14 +440,14 @@ def test_check_win_diff_image():
 
 def test_check_win_two_iterations():
     test_model = HoleInTheCameraGame()
-    test_image = cv2.imread('images/poses/first_mask.png')
-    test_csv = 'mask_joint_positions/first_mask.csv'
+    test_image = cv2.imread("images/poses/first_mask.png")
+    test_csv = "mask_joint_positions/first_mask.csv"
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)
     if not test_model.check_win():
         assert False
-    test_image = cv2.imread('images/poses/second_mask.png')
+    test_image = cv2.imread("images/poses/second_mask.png")
     test_model.analyze_frame(test_image)
     test_model.parse_for_joint_positions()
     test_model.compute_accuracy(test_csv)

@@ -1,8 +1,8 @@
 """
 Tests for the OpenCVController class.
 """
-import pygame
 import time
+import pygame
 import cv2
 import numpy as np
 from hole_in_the_camera_view import PygameViewer
@@ -119,7 +119,7 @@ def test_next_screen_escape_and_letter_press():
     test_view.initialize_view()
     test_view.display_introduction()
     pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE))
-    time.sleep(.2)
+    time.sleep(0.2)
     pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_a))
     state = test_controller.next_screen()
     pygame.quit()
@@ -136,7 +136,7 @@ def test_next_screen_escape_and_space_press():
     test_view.initialize_view()
     test_view.display_introduction()
     pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_ESCAPE))
-    time.sleep(.2)
+    time.sleep(0.2)
     pygame.event.post(pygame.event.Event(pygame.KEYDOWN, key=pygame.K_SPACE))
     state = test_controller.next_screen()
     pygame.quit()
@@ -263,7 +263,7 @@ def test_get_timer_string_end_timer():
 def test_get_timer_string_negative():
     """
     Test to ensure that the get_timer_string function
-    returns negative values when the wait is more than the 
+    returns negative values when the wait is more than the
     countdown.
     """
     test_controller = OpenCVController(0)

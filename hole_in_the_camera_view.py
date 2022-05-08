@@ -26,21 +26,18 @@ class HoleInTheWallView(ABC):
         """
         Initialize the game view.
         """
-        pass
 
     @abstractmethod
     def display_introduction(self):
         """
         Display the introduction screen.
         """
-        pass
 
     @abstractmethod
     def display_instructions(self):
         """
         Display the instructions screen.
         """
-        pass
 
     @abstractmethod
     def display_frame(self, frame, timer_text, camera_mask):
@@ -52,7 +49,6 @@ class HoleInTheWallView(ABC):
             timer_text (str): Current timer value.
             camera_mask (numpy.ndarray): Current camera mask.
         """
-        pass
 
     @abstractmethod
     def display_win(self, win_state, score):
@@ -63,7 +59,6 @@ class HoleInTheWallView(ABC):
             win_state (str): Win state.
             score (int): Current score.
         """
-        pass
 
     @abstractmethod
     def display_end_game(self, score):
@@ -73,7 +68,6 @@ class HoleInTheWallView(ABC):
         Args:
             score (int): Final player score.
         """
-        pass
 
 
 class PygameViewer(HoleInTheWallView):
@@ -92,6 +86,7 @@ class PygameViewer(HoleInTheWallView):
         _screen (pygame.Surface): The game window.
         font (pygame.font.SysFont): The font used to display text.
     """
+
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
     GRAY = (200, 200, 200)
@@ -99,10 +94,11 @@ class PygameViewer(HoleInTheWallView):
     BLUE = (50, 50, 200)
     FONT_NAME = "Helvetica"
     FONT_SIZE = 40
-    BACKGROUND_PATHS = ["images/assets/background.jpg",
-                        "images/assets/lost_background.jpg",
-                        "images/assets/win_background.jpg"
-                        ]
+    BACKGROUND_PATHS = [
+        "images/assets/background.jpg",
+        "images/assets/lost_background.jpg",
+        "images/assets/win_background.jpg",
+    ]
 
     def __init__(self, display_size):
         """
@@ -113,8 +109,7 @@ class PygameViewer(HoleInTheWallView):
         """
         super().__init__(display_size)
         pygame.font.init()
-        self._screen = pygame.display.set_mode(
-            self._display_size, pygame.RESIZABLE)
+        self._screen = pygame.display.set_mode(self._display_size)
         self.font = pygame.font.SysFont(self.FONT_NAME, self.FONT_SIZE)
 
         mixer.init()
@@ -138,7 +133,7 @@ class PygameViewer(HoleInTheWallView):
         """
         pygame.init()
         pygame.display.set_caption("Hole in the Camera")
-        icon = pygame.image.load('images/assets/gameicon.jpg')
+        icon = pygame.image.load("images/assets/gameicon.jpg")
         pygame.display.set_icon(icon)
 
     def _display_background(self, background_num):
@@ -164,7 +159,7 @@ class PygameViewer(HoleInTheWallView):
         for text in texts:
             _, font_height = self.font.size(text)
             image = self.font.render(text, True, self.WHITE, self.BLACK)
-            self._screen.blit(image, (55, 210+y_offset))
+            self._screen.blit(image, (55, 210 + y_offset))
             y_offset += font_height
         pygame.display.update()
 
@@ -172,9 +167,11 @@ class PygameViewer(HoleInTheWallView):
         """
         Display the introduction text.
         """
-        welcome_text = ["Welcome to Hole in the Camera!",
-                        "Press any key to continue",
-                        "Or press esc to exit (Bye!)"]
+        welcome_text = [
+            "Welcome to Hole in the Camera!",
+            "Press any key to continue",
+            "Or press esc to exit (Bye!)",
+        ]
         self._display_background(0)
         self._display_text(welcome_text)
 
@@ -182,9 +179,13 @@ class PygameViewer(HoleInTheWallView):
         """
         Display the instructions text.
         """
-        instruction_text = ["Instructions", "Adjust your pose (or camera) to\
-                            fit into the holes.", "You have 10 seconds each\
-                            round."]
+        instruction_text = [
+            "Instructions",
+            "Adjust your pose (or camera) to\
+                            fit into the holes.",
+            "You have 10 seconds each\
+                            round.",
+        ]
         self._display_background(0)
         self._display_text(instruction_text)
 
@@ -198,12 +199,13 @@ class PygameViewer(HoleInTheWallView):
             mask (numpy.ndarray): The mask to be overlaid on the frame.
         """
         frame = cv.bitwise_and(frame, camera_mask)
-        frame = pygame.transform.rotate(
-            pygame.surfarray.make_surface(frame), -90)
+        frame = pygame.transform.rotate(pygame.surfarray.make_surface(frame),
+                                        -90)
         self._screen.blit(frame, (0, 0))
         counting_text = self.font.render(timer_text, 1, self.WHITE)
         counting_rect = counting_text.get_rect(
-            bottomright=self._screen.get_rect().bottomright)
+            bottomright=self._screen.get_rect().bottomright
+        )
         self._screen.blit(counting_text, counting_rect)
         pygame.display.update()
 
@@ -220,7 +222,8 @@ class PygameViewer(HoleInTheWallView):
         if win_state:
             mixer.music.stop()
             win_sound = mixer.Sound(
-                "Sound/mixkit-fantasy-game-success-notification-270.wav")
+                "Sound/mixkit-fantasy-game-success-notification-270.wav"
+            )
             win_sound.play()
             won_text = [f"Your score is: {int(score)}"]
             self._display_background(2)
@@ -250,4 +253,4 @@ class PygameViewer(HoleInTheWallView):
             mixer.music.load("Sound/No Doubt - Yung Logos.wav")
             mixer.music.play()
         self._display_background(0)
-        self._display_text([f'Round #{round_num}'])
+        self._display_text([f"Round #{round_num}"])
