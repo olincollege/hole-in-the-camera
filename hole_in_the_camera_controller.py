@@ -66,6 +66,18 @@ class OpenCVController(HoleInTheWallController):
         self._start_time = 0
         self._current_time = 0
 
+    @property
+    def start_time(self):
+        return self._start_time
+
+    @property
+    def camera_capture(self):
+        return self._camera_capture
+
+    @property
+    def camera_index(self):
+        return self._camera_index
+
     def release_camera(self):
         self._camera_capture.release()
 

@@ -6,7 +6,7 @@ camera game.
 import pygame
 import numpy as np
 import cv2
-from hole_in_the_wall_view import PygameViewer
+from hole_in_the_camera_view import PygameViewer
 
 
 def test_pygame_display_size_default():
@@ -273,7 +273,7 @@ def test_display_frame_screen_height():
 def test_display_frame_screen_pixel_shape():
     """
     Test that the game screen with mask overlaid has correct
-    pixel dimensions. 
+    pixel dimensions.
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()

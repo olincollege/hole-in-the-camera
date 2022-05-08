@@ -1,12 +1,12 @@
 """
 Tests for the OpenCVController class.
 """
-from hole_in_the_wall_controller import OpenCVController
+import pygame
+import time
 import cv2
 import numpy as np
-from hole_in_the_wall_view import PygameViewer
-import time
-import pygame
+from hole_in_the_camera_view import PygameViewer
+from hole_in_the_camera_controller import OpenCVController
 
 
 def test_camera_index_initialization_zero():
@@ -16,7 +16,7 @@ def test_camera_index_initialization_zero():
     camera_index = 0
     test_controller = OpenCVController(camera_index)
 
-    assert test_controller._camera_index == camera_index
+    assert test_controller.camera_index == camera_index
 
 
 def test_camera_index_initialization_positive():
@@ -26,7 +26,7 @@ def test_camera_index_initialization_positive():
     camera_index = 1
     test_controller = OpenCVController(camera_index)
 
-    assert test_controller._camera_index == camera_index
+    assert test_controller.camera_index == camera_index
 
 
 def test_camera_index_initialization_negative():
@@ -37,7 +37,7 @@ def test_camera_index_initialization_negative():
     camera_index = -1
     test_controller = OpenCVController(camera_index)
 
-    assert test_controller._camera_index == camera_index
+    assert test_controller.camera_index == camera_index
 
 
 def test_camera_capture_initialization():
@@ -47,7 +47,7 @@ def test_camera_capture_initialization():
     camera_index = 0
     test_controller = OpenCVController(camera_index)
 
-    assert type(test_controller._camera_capture) == cv2.VideoCapture
+    assert isinstance(test_controller.camera_capture, cv2.VideoCapture)
 
 
 def test_next_screen_space_press():
@@ -165,7 +165,7 @@ def test_non_started_timer():
     """
     test_controller = OpenCVController(0)
 
-    assert test_controller._start_time == 0
+    assert test_controller.start_time == 0
 
 
 def test_started_timer():
@@ -178,7 +178,7 @@ def test_started_timer():
     test_view.initialize_view()
     test_controller.start_timer()
     pygame.quit()
-    assert test_controller._start_time != 0
+    assert test_controller.start_time != 0
 
 
 def test_get_display_frame_shape():
@@ -213,7 +213,7 @@ def test_get_timer_string_type():
     test_view.initialize_view()
     test_timer_string = test_controller.get_timer_string()
     pygame.quit()
-    assert type(test_timer_string) == str
+    assert isinstance(test_timer_string, str)
 
 
 def test_get_timer_string_no_wait():
@@ -288,7 +288,7 @@ def test_determine_end_timer_not_end():
     test_controller.get_timer_string()
     test_end_state = test_controller.determine_end_timer()
     pygame.quit()
-    assert test_end_state == False
+    assert not test_end_state
 
 
 def test_determine_end_timer_end():
@@ -303,7 +303,7 @@ def test_determine_end_timer_end():
     test_controller.get_timer_string()
     test_end_state = test_controller.determine_end_timer()
     pygame.quit()
-    assert test_end_state == True
+    assert test_end_state
 
 
 def test_determine_end_timer_beyond_end():
@@ -318,4 +318,4 @@ def test_determine_end_timer_beyond_end():
     test_controller.get_timer_string()
     test_end_state = test_controller.determine_end_timer()
     pygame.quit()
-    assert test_end_state == True
+    assert test_end_state
