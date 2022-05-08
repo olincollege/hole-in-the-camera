@@ -92,7 +92,16 @@ class PygameViewer(HoleInTheWallView):
     FONT_SIZE = 38
     BACKGROUND_PATHS = ["images/assets/background.jpg",
                         "images/assets/lost_background.jpg",
-                        "images/assets/win_background.jpg"
+                        "images/assets/win_background.jpg",
+                        "images/assets/Backgrounds/round_1_00_00.jpg",
+                        "images/assets/Backgrounds/round_2_00_00.jpg",
+                        "images/assets/Backgrounds/round_3_00_00.jpg",
+                        "images/assets/Backgrounds/round_4_00_00.jpg",
+                        "images/assets/Backgrounds/round_5_00_00.jpg",
+                        "images/assets/Backgrounds/round_6_00_00.jpg",
+                        "images/assets/Backgrounds/round_7_00_00.jpg",
+                        "images/assets/Backgrounds/Final_00_00.jpg"
+
                         ]
 
     def __init__(self, display_size):
@@ -143,6 +152,7 @@ class PygameViewer(HoleInTheWallView):
         background = pygame.transform.scale(background, (640, 480))
         self._screen.blit(background, (0, 0))
 
+
     def _display_text(self, texts, top_color, back_color):
         """
         Display text on the game window with background image.
@@ -153,7 +163,7 @@ class PygameViewer(HoleInTheWallView):
         y_offset = 0
         for text in texts:
             _, font_height = self.font.size(text)
-            image = self.font.render(text, True, self.WHITE, self.BLACK)
+            image = self.font.render(text, True, top_color, back_color)
             self._screen.blit(image, (55, 210 + y_offset))
             y_offset += font_height
         pygame.display.update()
@@ -232,7 +242,7 @@ class PygameViewer(HoleInTheWallView):
             score (float): A float that represents the accuracy of
             how well player fits through the hole.
         """
-        self._display_background(2)
+        self._display_background(10)
         self._display_text(["Game Over!", f"Final Score: {int(score)}/100"],
         self.WHITE, self.BLACK)
 
@@ -247,5 +257,5 @@ class PygameViewer(HoleInTheWallView):
             mixer.stop()
             mixer.music.load("Sound/No Doubt - Yung Logos.wav")
             mixer.music.play()
-        self._display_background(0)
-        self._display_text([f'Round {round_num}'], self.WHITE, self.BLACK)
+        self._display_background(round_num + 2)
+        self._display_text([""], self.BLACK, self.WHITE)
