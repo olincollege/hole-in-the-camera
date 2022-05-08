@@ -68,12 +68,20 @@ def test_initialize_view_pygame_after_initialization():
     assert display_state
 
 def test_initialize_view_music_before_initialization():
+    """
+    Tests to make sure that there is no music playing from pygame before the
+    view it initialized.
+    """
     _ = PygameViewer((640, 480))
     music_state = pygame.mixer.music.get_busy()
     pygame.quit()
     assert not music_state
 
 def test_initialize_view_music_after_initialization():
+    """
+    Tests to make sure that the music is properly initialized and playing after
+    the pygame display is initialized.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     music_state = pygame.mixer.music.get_busy()
@@ -493,6 +501,10 @@ def test_display_end_game_screen_pixel_values_zero_score():
     assert np.mean(pixel_values) > 0 and np.mean(pixel_values) < 255
 
 def test_display_round_screen_width():
+    """
+    Test to make sure that the display width is correctly maintained when the
+    round screen is displayed.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -502,6 +514,10 @@ def test_display_round_screen_width():
     assert test_width == 640
 
 def test_display_round_screen_height():
+    """
+    Test to make sure that the display height is correctly maintained when the
+    round screen is displayed.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -511,6 +527,10 @@ def test_display_round_screen_height():
     assert test_width == 480
 
 def test_display_round_screen_pixel_shape():
+    """
+    Test to make sure that the pygame.surfarray is correctly defined with 3-D
+    pixel values when the round screen is displayed.
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 100
@@ -520,6 +540,10 @@ def test_display_round_screen_pixel_shape():
     assert np.shape(pixel_values) == (640, 480, 3)
 
 def test_dispaly_round_screen_pixel_values():
+    """
+    Test to make sure that the pixel values in the pygame.surfarray are
+    realistic values for the array (between 0 and 255).
+    """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
     test_score = 0
@@ -530,6 +554,8 @@ def test_dispaly_round_screen_pixel_values():
 
 def test_display_round_screen_music():
     """
+    Test to make sure that the display round function correctly plays music
+    when called.
     """
     test_view = PygameViewer((640, 480))
     test_view.initialize_view()
