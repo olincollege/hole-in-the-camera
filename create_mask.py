@@ -45,6 +45,14 @@ def analyze_camera_frame(frame):
     cv.imshow("video", mask)
     return frame, mask
 
+def release_camera():
+    """
+    Release the camera at the end of the script to ensure that the camera is
+    no longer being called.
+    """
+    CAMERA.release()
+    cv.destroyAllWindows()
+
 def main():
     """
     This is the runner function to create and save masks.
@@ -61,9 +69,7 @@ def main():
             cv.imwrite(f"images/masks/{MASK_NAME}.png", mask)
             break
 
-    # close video and destroy all windows
-    CAMERA.release()
-    cv.destroyAllWindows()
+    release_camera()
 
 if __name__ == "__main__":
     main()

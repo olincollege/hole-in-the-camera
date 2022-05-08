@@ -102,16 +102,16 @@ class PygameViewer(HoleInTheWallView):
     _FONT_NAME = "Viga"
     _FONT_SIZE = 38
     _BACKGROUND_PATHS = ["images/assets/background.jpg",
-                        "images/assets/lost_background.jpg",
-                        "images/assets/win_background.jpg",
-                        "images/assets/Backgrounds/round_1_00_00.jpg",
-                        "images/assets/Backgrounds/round_2_00_00.jpg",
-                        "images/assets/Backgrounds/round_3_00_00.jpg",
-                        "images/assets/Backgrounds/round_4_00_00.jpg",
-                        "images/assets/Backgrounds/round_5_00_00.jpg",
-                        "images/assets/Backgrounds/round_6_00_00.jpg",
-                        "images/assets/Backgrounds/round_7_00_00.jpg",
-                        "images/assets/Backgrounds/Final_00_00.jpg"
+                         "images/assets/lost_background.jpg",
+                         "images/assets/win_background.jpg",
+                         "images/assets/Backgrounds/round_1_00_00.jpg",
+                         "images/assets/Backgrounds/round_2_00_00.jpg",
+                         "images/assets/Backgrounds/round_3_00_00.jpg",
+                         "images/assets/Backgrounds/round_4_00_00.jpg",
+                         "images/assets/Backgrounds/round_5_00_00.jpg",
+                         "images/assets/Backgrounds/round_6_00_00.jpg",
+                         "images/assets/Backgrounds/round_7_00_00.jpg",
+                         "images/assets/Backgrounds/Final_00_00.jpg"
                         ]
 
     def __init__(self, display_size):
@@ -213,7 +213,7 @@ class PygameViewer(HoleInTheWallView):
         frame = pygame.transform.rotate(pygame.surfarray.make_surface(frame),
                                         -90)
         self._screen.blit(frame, (0, 0))
-        counting_text = self.font.render(timer_text, 1, self._WHITE)
+        counting_text = self._font.render(timer_text, 1, self._WHITE)
         counting_rect = counting_text.get_rect(
             bottomright=self._screen.get_rect().bottomright
         )
