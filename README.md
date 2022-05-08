@@ -44,6 +44,8 @@ In order to evaluate how well players fit into the holes, the game employs Deep 
 #### Running the Code
 Once you have all the dependencies installed and placed "body_pose_model.pth" in its appropriate folder, you're ready to play the game! Navigate to the hole_in_the_camera_runner.py script and run it. Make sure your text editor has access to your camera and can display a pygame pop-up screen and then you're good to go. Have fun!
 
+Note: If you get any errors with camera access or would like to select a different camera for input, go into the hole_in_the_camera_runner.py function and change the CAMERA_INDEX variable (line 10) to be equal to the index of the camera you would like to use.
+
 ### Video of Gameplay
 
 ### Want to Create Your Own Holes?
