@@ -72,7 +72,7 @@ Hey, my name is Ayush and I am a Engineering: Computing Major at the Olin Colleg
 **[Jiayuan Liu](https://github.com/Chidunbo)** 
 Hi I am Jiayuan. In this project, I am in charge of the game workflow, visualization and sound effect aspect of the game. I am interested in game design and public interest technology.
 
-<br><br><br><br>
+<br><br><br><br><br><br>
 
 <img src="profile-pictures/Anmol.jpg" width ="19%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
 
