@@ -67,19 +67,19 @@ Hey, my name is Ayush and I am a Engineering: Computing Major at the Olin Colleg
 
 <br><br>
 
-<img src="profile-pictures/Jiayuan.jpeg" width ="18%" height = "30%" style="float:right;margin:10px 0px">
+<img src="profile-pictures/Jiayuan.jpeg" width ="16%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Jiayuan Liu](https://github.com/Chidunbo)** 
 Hi I am Jiayuan. In this project, I am in charge of the game workflow, visualization and sound effect aspect of the game. I am interested in game design and public interest technology.
 
-<br><br><br><br>
+<br><br>
 
-<img src="profile-pictures/Anmol.jpg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
+<img src="profile-pictures/Anmol.jpg" width ="19%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
 Hey, I am Anmol. I am a Engineering: Computing major at Olin College. For this game I worked on implementing OpenCV to parse user input and also creating game masks. I am passionate about using platform technologies for solving social and environmental problems.   
 
-<br>
+<br><br><br>
 
 ### Acknowledgements
 1. Major inspiration for this game comes from Nickelodeon's game show, Hole in the Wall. Many of the features of our game are based on design features of the real life game and our implementation wouldn't have been possible without it.
