@@ -72,8 +72,9 @@ While playing the game did you suddenly get inspiration to create your own holes
 After making these changes, you're all ready to play with your own holes!   
 
 ### Game Demo
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=Sm--6dE8Xso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<br>
+
+[Hole in the camera](https://www.youtube.com/watch?v=Sm--6dE8Xso)
+
 
 ### About the Creators
 
