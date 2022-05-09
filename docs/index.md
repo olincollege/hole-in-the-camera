@@ -1,3 +1,4 @@
+# Hole in the Camera
 ## Contributors: Ayush Chakraborty, Jiayuan Liu, Anmol Sandhu
 ### Game Description
 Growing up, did you ever watch the game show, Hole In The Wall, and think to yourself, "Wow! I wish that was me!"? Well, if so, you're in luck! Our game, Hole In the Camera, is an at-home friendly version of the popular game show. Each competitor will be presented with 7 holes that they have to fit into. For each trial, they have 10 seconds to fit into the hole and, at the end, will receive a score 0-100 based on how well they fit into the hole. At the end, users will see their final score (the average of the seven rounds) out of 100. Compete against your friends to see who will conquer the holes! The full game repository can be found here: https://github.com/olincollege/hole-in-the-camera.   
