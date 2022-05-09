@@ -6,8 +6,19 @@ Growing up, did you ever watch the game show, Hole In The Wall, and think to you
 ### Game Features
 Our game leverages three main features in order to ensure a smooth gameflow for users: OpenCV, pygame, and OpenPose. Below is a detailed description of how each features is used within our game:
 - OpenCV: OpenCV is one of python's computer vision libraries that allows creators interact with computer cameras and analyze these images. In our game, we use OpenCV to access the user's camera and continuously resize and stream frames into our model to be analyzed. In addition, OpenCV also allows us to create holes for users to fit into. This is done by parsing through the camera output for specific HSV values, and then eroding and dilating them sufficiently until they are rendered to being black and white images representing where a human was in the camera. These become the holes that our game uses for users to fit into.
+
+<img src="website-images/opencv.png" width ="50%" height = "70%" style="float:center; margin: 0px 0px 0px 100px">
+<br><br>
+
 - Pygame: Pygame allows us to display our game user interface to players. We employ pygame as our view, displaying instructions and results to users as they play the game. Pygame also allows us to constantly display the user's position in the camera frame through the OpenCV output for them to adjust themselves as they try to fit into the displayed hole. In addition, pygame enables us to play music and sound effects during game play to enhance the user experience.
-- OpenPose: OpenPose is a public implementation of the Deep Pose algorithm that can be used to determine a human's joint positions in a given image. Our game employs OpenPoses on each hole that will be displayed to users. This determines where each of their joints should line up relative to the camera frame. Then, the user's final position is also analyzed through OpenPose. Once these two sets of joints are calculated, they are compared against each other to determine how well the user fit into the hole they were presented with.   
+
+<img src="website-images/pygame.png" width ="50%" height = "70%" style="float:center; margin: 0px 0px 0px 100px">
+<br><br>
+
+- OpenPose: OpenPose is a public implementation of the Deep Pose algorithm that can be used to determine a human's joint positions in a given image. Our game employs OpenPoses on each hole that will be displayed to users. This determines where each of their joints should line up relative to the camera frame. Then, the user's final position is also analyzed through OpenPose. Once these two sets of joints are calculated, they are compared against each other to determine how well the user fit into the hole they were presented with.  
+
+<img src="website-images/open-pose.png" width ="50%" height = "70%" style="float:center; margin: 0px 0px 0px 100px">
+<br><br>
 
 ### Project Goals
 Throughout this project, our team was working with three main learning objectives in mind. This goals were:
@@ -60,23 +71,27 @@ While playing the game did you suddenly get inspiration to create your own holes
 6. Finally, to make sure your holes are called by the actual game, you need to edit the model of the game. Go into the hole_in_the_camera_model.py file and edit the MASK_NAMES variable (line 49) to be a list of all the holes you want the game to display.
 After making these changes, you're all ready to play with your own holes!   
 
+### Game Demo
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=Sm--6dE8Xso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+
 ### About the Creators
 
-<img src="profile-pictures/Ayush.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/Ayush.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
  
 **[Ayush Chakraborty](https://github.com/ayushchakra)** 
 Hey, my name is Ayush and I am a Engineering: Computing Major at the Olin College of Engineering. For this game, I took charge on implementing Deep Pose, including learning how it’s structured and how to parse it’s outputs. Some of my interests are embedded systems, machine learning, and back-end software development and I’m always looking for opportunities to learn more in these domains!
 
 <br><br>
 
-<img src="profile-pictures/Jiayuan.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
+<img src="website-images/Jiayuan.jpeg" width ="20%" height = "30%" style="float:left;margin:0px 10px 0px 0px">
 
 **[Jiayuan Liu](https://github.com/Chidunbo)** 
 Hi I am Jiayuan. In this project, I am in charge of the game workflow, visualization and sound effect aspect of the game. I am interested in game design and public interest technology.
 
-<br><br><br><br><br><br>
+<br><br><br><br><br>
 
-<img src="profile-pictures/Anmol.jpg" width ="19%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
+<img src="website-images/Anmol.jpg" width ="19%" height = "30%" style="float:left;margin:0px 10px 0px 0px">   
 
 **[Anmol Sandhu](https://github.com/AnmolRattanSingh)**
 Hey, I am Anmol. I am a Engineering: Computing major at Olin College. For this game I worked on implementing OpenCV to parse user input and also creating game masks. I am passionate about using platform technologies for solving social and environmental problems.   
